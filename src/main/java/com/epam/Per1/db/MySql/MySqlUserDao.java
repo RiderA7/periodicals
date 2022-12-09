@@ -5,10 +5,8 @@ import com.epam.Per1.db.ConnectionPool;
 import com.epam.Per1.db.UserDao;
 import com.epam.Per1.db.model.User;
 import com.epam.Per1.utils.SqlUtils;
+import com.epam.Per1.utils.Utils;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,8 +29,18 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public User login(String login, char[] password) throws DbException {
-
-        return null;
+        String hashPassword = Utils.hash(password);
+        try (Connection con = ConnectionPool.getInstance().getConnection();
+            PreparedStatement ps = con.prepareStatement(SqlUtils.LOGIN)) {
+            ps.setString(1, login);
+            ps.setString(2, hashPassword);
+            try (ResultSet rs = ps.executeQuery()){
+                if (!rs.next()) return null;
+                return mapUser(rs);
+            }
+        } catch (SQLException e) {
+            throw new DbException("Cannot login", e);
+        }
     }
 
     @Override
