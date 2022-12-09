@@ -6,6 +6,9 @@ import com.epam.Per1.db.UserDao;
 import com.epam.Per1.db.model.User;
 import com.epam.Per1.utils.SqlUtils;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +31,7 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public User login(String login, char[] password) throws DbException {
+
         return null;
     }
 
