@@ -51,14 +51,12 @@ public class probe extends HttpServlet {
 
         User user = new User();
         Dao dao = Dao.getDao();
-        out.println(dao.toString());
         try {
             user = dao.getUserDao().getUserByLogin("admin");
-            out.println("111");
         } catch (DbException e) {
             System.out.println("User admin not found");
             e.printStackTrace();
         }
-        out.println(user.getLogin().toString());
+        out.println(user.toString());
     }
 }

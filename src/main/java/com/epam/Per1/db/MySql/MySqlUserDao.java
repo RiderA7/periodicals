@@ -16,16 +16,16 @@ import java.util.List;
 
 public class MySqlUserDao implements UserDao {
 
-    private static User mapUser(ResultSet rs) {
+    private static User mapUser(ResultSet rs) throws SQLException {
         StringBuilder out = new StringBuilder();
         System.out.println(rs.toString());
         return new User.Builder()
-                .setId(1)
-                .setName("Aaa")
-                .setLogin("AaaaL")
-                .setRoleId(1)
-                .setEmail("asd@asd.com")
-                .setCreateDate(new Date())
+                .setId(rs.getInt("user_id"))
+                .setName(rs.getString("user_name"))
+                .setLogin(rs.getString("user_login"))
+                .setRoleId(rs.getInt("user_role"))
+                .setEmail(rs.getString("user_email"))
+                .setCreateDate(rs.getTimestamp("user_create_date"))
                 .getUser();
     }
 
