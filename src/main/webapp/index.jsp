@@ -12,5 +12,6 @@ Hellllllllloooooooooo!!!!
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 <a href="probe">probe</a>
-</body>
+<a href="ind.jsp">ind</a></body>
+<a href="jsp/login.jsp">login</a></body>
 </html>

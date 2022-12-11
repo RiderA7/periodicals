@@ -49,14 +49,27 @@ public class probe extends HttpServlet {
 //        char[] pass = "password".toCharArray();
 //        System.out.println(Utils.hash(pass)); // 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
 
-        User user = new User();
+        //testing find user function
+//        User user = new User();
+//        Dao dao = Dao.getDao();
+//        try {
+//            user = dao.getUserDao().getUserByLogin("admin");
+//        } catch (DbException e) {
+//            System.out.println("User admin not found");
+//            e.printStackTrace();
+//        }
+//        out.println(user.toString());
+
         Dao dao = Dao.getDao();
+        User user = new User();
         try {
-            user = dao.getUserDao().getUserByLogin("admin");
+            user = dao.getUserDao().login("admin", "password".toCharArray());
         } catch (DbException e) {
-            System.out.println("User admin not found");
+            System.out.println("User can't login");
             e.printStackTrace();
         }
-        out.println(user.toString());
+        out.println("Logged " + user.toString());
+
+        req.getRequestDispatcher("jsp/login.jsp").forward(req, resp);
     }
 }
