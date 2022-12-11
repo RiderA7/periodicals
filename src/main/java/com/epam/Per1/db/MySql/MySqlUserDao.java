@@ -17,6 +17,8 @@ import java.util.List;
 public class MySqlUserDao implements UserDao {
 
     private static User mapUser(ResultSet rs) {
+        StringBuilder out = new StringBuilder();
+        System.out.println(rs.toString());
         return new User.Builder()
                 .setId(1)
                 .setName("Aaa")

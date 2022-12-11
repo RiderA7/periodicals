@@ -13,6 +13,6 @@ public class MySqlDao extends Dao {
 
     @Override
     public UserDao getUserDao() {
-        return null;
+        return new MySqlUserDao();
     }
 }

@@ -2,8 +2,12 @@ package com.epam.Per1;
 
 import com.epam.Per1.db.ConnectionPool;
 import com.epam.Per1.db.Dao;
+import com.epam.Per1.db.MySql.MySqlDao;
 import com.epam.Per1.db.MySql.MySqlTopicDao;
+import com.epam.Per1.db.MySql.MySqlUserDao;
+import com.epam.Per1.db.UserDao;
 import com.epam.Per1.db.model.Topic;
+import com.epam.Per1.db.model.User;
 import com.epam.Per1.utils.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -27,7 +31,7 @@ public class probe extends HttpServlet {
 //        super.doGet(req, resp);
         PrintWriter out = resp.getWriter();
 
-        out.println("HiHi");
+        out.println("HiHi Login admin");
 //        Connection con = ConnectionPool.getInstance().getConnection();
 //        System.out.println(con);
         // List of all topics from DB:
@@ -40,7 +44,21 @@ public class probe extends HttpServlet {
 //        for(Topic topic : topics){
 //            System.out.println(topic.getName());
 //        }
-        char[] pass = "password".toCharArray();
-        System.out.println(Utils.hash(pass));
+
+        // testing hash function
+//        char[] pass = "password".toCharArray();
+//        System.out.println(Utils.hash(pass)); // 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+
+        User user = new User();
+        Dao dao = Dao.getDao();
+        out.println(dao.toString());
+        try {
+            user = dao.getUserDao().getUserByLogin("admin");
+            out.println("111");
+        } catch (DbException e) {
+            System.out.println("User admin not found");
+            e.printStackTrace();
+        }
+        out.println(user.getLogin().toString());
     }
 }
