@@ -20,4 +20,8 @@ public class Utils {
         return hashed.toString();
     }
 
+    public static String getErrMessage(Exception e) {
+        return e + "; Caused by: " + e.getCause().toString();
+    }
+
 }
