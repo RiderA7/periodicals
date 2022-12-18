@@ -1,18 +1,24 @@
-package com.epam.Per1.db.model;
+package com.epam.Per1.db.Entity;
 
 import java.util.Date;
 
-public class User {
+public class User extends Entity{
 
-    private int id;
     private String login;
     private String name;
     private int roleId;
     private String email;
     private Date createDate;
 
-    public int getId() {
-        return id;
+    public User(){}
+
+    public User(Long id, String login, String name, int roleId, String email, Date createDate) {
+        super(id);
+        this.login = login;
+        this.name = name;
+        this.roleId = roleId;
+        this.email = email;
+        this.createDate = createDate;
     }
 
     public String getLogin() {
@@ -38,7 +44,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", login='" + login + '\'' +
                 ", name='" + name + '\'' +
                 ", roleId=" + roleId +
@@ -50,8 +56,8 @@ public class User {
     public static class Builder {
         User user = new User();
 
-        public Builder setId(int id){
-            user.id = id;
+        public Builder setId(Long id){
+            user.setId(id);
             return this;
         }
         public Builder setLogin(String login){

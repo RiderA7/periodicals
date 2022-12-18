@@ -1,14 +1,7 @@
 package com.epam.Per1;
 
-import com.epam.Per1.db.ConnectionPool;
 import com.epam.Per1.db.Dao;
-import com.epam.Per1.db.MySql.MySqlDao;
-import com.epam.Per1.db.MySql.MySqlTopicDao;
-import com.epam.Per1.db.MySql.MySqlUserDao;
-import com.epam.Per1.db.UserDao;
-import com.epam.Per1.db.model.Topic;
-import com.epam.Per1.db.model.User;
-import com.epam.Per1.utils.Utils;
+import com.epam.Per1.db.Entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,11 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 
 @WebServlet("/probe")
 public class probe extends HttpServlet {

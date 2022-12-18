@@ -3,7 +3,7 @@ package com.epam.Per1.web.servlet.account;
 import com.epam.Per1.AppException;
 import com.epam.Per1.DbException;
 import com.epam.Per1.db.Dao;
-import com.epam.Per1.db.model.User;
+import com.epam.Per1.db.Entity.User;
 import com.epam.Per1.utils.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -31,15 +31,22 @@ public class LoginServlet extends HttpServlet {
         char[] password = req.getParameter("password").toCharArray();
 
         if (login.isEmpty() || password.length == 0) {
-            resp.sendRedirect(req.getContextPath() + "/account/login");
+            log.info("Login not success");
+            req.setAttribute("err", "You must enter login and password");
+//            resp.sendRedirect(req.getContextPath() + "/account/login");
+            req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
+            return;
         }
 
         try {
             User user = Dao.getDao().getUserDao().login(login, password);
             if(user == null) {
-                req.setAttribute("err", "true");
-                resp.sendRedirect(req.getContextPath() + "/account/login");
+                log.info("User "+login+" not found");
+                req.setAttribute("err", "Wrong login or password!");
+//                resp.sendRedirect(req.getContextPath() + "/account/login");
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
             } else {
+                log.info("User "+login+" logged in");
                 req.getSession().setAttribute("user", user);
                 resp.sendRedirect(req.getContextPath() + "/account");
             }

@@ -3,7 +3,7 @@ package com.epam.Per1.db.MySql;
 import com.epam.Per1.DbException;
 import com.epam.Per1.db.ConnectionPool;
 import com.epam.Per1.db.UserDao;
-import com.epam.Per1.db.model.User;
+import com.epam.Per1.db.Entity.User;
 import com.epam.Per1.utils.SqlUtils;
 import com.epam.Per1.utils.Utils;
 
@@ -11,16 +11,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 public class MySqlUserDao implements UserDao {
 
     private static User mapUser(ResultSet rs) throws SQLException {
         StringBuilder out = new StringBuilder();
-        System.out.println(rs.toString());
+//        System.out.println(rs.toString());
         return new User.Builder()
-                .setId(rs.getInt("user_id"))
+                .setId(rs.getLong("user_id"))
                 .setName(rs.getString("user_name"))
                 .setLogin(rs.getString("user_login"))
                 .setRoleId(rs.getInt("user_role"))

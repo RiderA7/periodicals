@@ -1,16 +1,13 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: anase
-  Date: 12.12.2022
-  Time: 0:05
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8"
+         language="java" pageEncoding="UTF-8" %>
 <head>
     <title>Title</title>
 </head>
 <body>
+<c:if test="${param.err ne null}">ura</c:if>
+<c:set var="salary" scope="page" value="${23400*2}"/>
+${param.err+salary}
 
 </body>
 </html>

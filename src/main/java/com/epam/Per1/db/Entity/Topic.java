@@ -1,4 +1,4 @@
-package com.epam.Per1.db.model;
+package com.epam.Per1.db.Entity;
 
 public class Topic {
 

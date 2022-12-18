@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <c:set var="title" value="Login" scope="page"/>
@@ -6,9 +6,9 @@
     <title>${title}</title>
 </head>
 <body>
-<c:out value="16+64*2"/>=<c:out value="${16+64*2}"/>
-<c:if test="${param.err != null}">
-    <p class="ls_err">You entered wrong login or password</p>
+<%--<c:out value="16+64*2"/>=<c:out value="${16+64*2}"/>--%>
+<c:if test="${err ne null}">
+    <p class="login_error">${err}</p>
 </c:if>
 <div>
     <form class="loginform"
