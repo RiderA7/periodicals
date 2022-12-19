@@ -1,6 +1,6 @@
-package com.epam.Per1.db;
+package com.epam.Per1.dao;
 
-import com.epam.Per1.db.MySql.MySqlDao;
+import com.epam.Per1.dao.MySql.MySqlDao;
 
 public abstract class Dao {
 

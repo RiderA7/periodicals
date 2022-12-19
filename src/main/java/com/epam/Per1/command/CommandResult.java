@@ -1,4 +1,4 @@
-package com.epam.Per1.Command;
+package com.epam.Per1.command;
 
 public class CommandResult {
     private String page;

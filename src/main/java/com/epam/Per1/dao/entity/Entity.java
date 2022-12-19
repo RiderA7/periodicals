@@ -1,4 +1,4 @@
-package com.epam.Per1.db.Entity;
+package com.epam.Per1.dao.entity;
 
 import java.io.Serializable;
 

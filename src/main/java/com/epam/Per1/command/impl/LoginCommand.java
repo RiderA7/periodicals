@@ -1,7 +1,7 @@
-package com.epam.Per1.Command.impl;
+package com.epam.Per1.command.impl;
 
-import com.epam.Per1.Command.ActionCommand;
-import com.epam.Per1.Command.CommandResult;
+import com.epam.Per1.command.ActionCommand;
+import com.epam.Per1.command.CommandResult;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

@@ -1,6 +1,6 @@
-package com.epam.Per1.Command;
+package com.epam.Per1.command;
 
-import com.epam.Per1.Command.impl.EmptyCommand;
+import com.epam.Per1.command.impl.EmptyCommand;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

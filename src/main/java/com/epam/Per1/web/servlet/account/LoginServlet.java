@@ -2,8 +2,8 @@ package com.epam.Per1.web.servlet.account;
 
 import com.epam.Per1.AppException;
 import com.epam.Per1.DbException;
-import com.epam.Per1.db.Dao;
-import com.epam.Per1.db.Entity.User;
+import com.epam.Per1.dao.Dao;
+import com.epam.Per1.dao.entity.User;
 import com.epam.Per1.utils.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-@WebServlet("/account/login")
+@WebServlet("/account1/login")
 public class LoginServlet extends HttpServlet {
 
     private static final Logger log = LogManager.getLogger(LoginServlet.class.getName());

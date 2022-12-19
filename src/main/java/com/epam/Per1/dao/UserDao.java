@@ -1,7 +1,7 @@
-package com.epam.Per1.db;
+package com.epam.Per1.dao;
 
 import com.epam.Per1.DbException;
-import com.epam.Per1.db.Entity.User;
+import com.epam.Per1.dao.entity.User;
 
 import java.util.List;
 

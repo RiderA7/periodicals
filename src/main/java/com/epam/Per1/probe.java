@@ -1,7 +1,7 @@
 package com.epam.Per1;
 
-import com.epam.Per1.db.Dao;
-import com.epam.Per1.db.Entity.User;
+import com.epam.Per1.dao.Dao;
+import com.epam.Per1.dao.entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

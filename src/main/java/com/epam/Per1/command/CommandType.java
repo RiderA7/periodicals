@@ -1,6 +1,6 @@
-package com.epam.Per1.Command;
+package com.epam.Per1.command;
 
-import com.epam.Per1.Command.impl.LoginCommand;
+import com.epam.Per1.command.impl.LoginCommand;
 
 public enum CommandType {
 

@@ -1,8 +1,8 @@
-package com.epam.Per1.db.MySql;
+package com.epam.Per1.dao.MySql;
 
-import com.epam.Per1.db.Dao;
-import com.epam.Per1.db.TopicDao;
-import com.epam.Per1.db.UserDao;
+import com.epam.Per1.dao.Dao;
+import com.epam.Per1.dao.TopicDao;
+import com.epam.Per1.dao.UserDao;
 
 public class MySqlDao extends Dao {
 

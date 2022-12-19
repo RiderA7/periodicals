@@ -1,4 +1,4 @@
-package com.epam.Per1.db.Entity;
+package com.epam.Per1.dao.entity;
 
 import java.util.Date;
 
@@ -9,16 +9,22 @@ public class User extends Entity{
     private int roleId;
     private String email;
     private Date createDate;
+    private double money;
+    private boolean blocked;
 
     public User(){}
 
-    public User(Long id, String login, String name, int roleId, String email, Date createDate) {
+    public User(Long id, String login, String name,
+                int roleId, String email, Date createDate,
+                double money, boolean blocked) {
         super(id);
         this.login = login;
         this.name = name;
         this.roleId = roleId;
         this.email = email;
         this.createDate = createDate;
+        this.money = money;
+        this.blocked = blocked;
     }
 
     public String getLogin() {
@@ -41,6 +47,14 @@ public class User extends Entity{
         return createDate;
     }
 
+    public double getMoney() {
+        return money;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -50,6 +64,8 @@ public class User extends Entity{
                 ", roleId=" + roleId +
                 ", email='" + email + '\'' +
                 ", createDate=" + createDate +
+                ", money=" + money +
+                ", blocked=" + blocked +
                 '}';
     }
 
@@ -78,6 +94,14 @@ public class User extends Entity{
         }
         public Builder setCreateDate(Date date){
             user.createDate = date;
+            return this;
+        }
+        public Builder setMoney(double money){
+            user.money = money;
+            return this;
+        }
+        public Builder setBlocked(boolean blocked){
+            user.blocked = blocked;
             return this;
         }
         public User getUser(){

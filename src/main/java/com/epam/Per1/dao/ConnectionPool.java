@@ -1,4 +1,4 @@
-package com.epam.Per1.db;
+package com.epam.Per1.dao;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

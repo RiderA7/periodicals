@@ -1,9 +1,9 @@
-package com.epam.Per1.db.MySql;
+package com.epam.Per1.dao.MySql;
 
 import com.epam.Per1.DbException;
-import com.epam.Per1.db.ConnectionPool;
-import com.epam.Per1.db.TopicDao;
-import com.epam.Per1.db.Entity.Topic;
+import com.epam.Per1.dao.ConnectionPool;
+import com.epam.Per1.dao.TopicDao;
+import com.epam.Per1.dao.entity.Topic;
 import com.epam.Per1.utils.SqlUtils;
 
 import java.sql.Connection;
