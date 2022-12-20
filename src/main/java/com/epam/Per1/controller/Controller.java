@@ -3,12 +3,15 @@ package com.epam.Per1.controller;
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.ActionFactory;
 import com.epam.Per1.command.CommandResult;
+import com.epam.Per1.command.impl.LoginCommand;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
@@ -16,6 +19,9 @@ import static com.epam.Per1.utils.Pages.WELCOME_PAGE;
 
 @WebServlet(name = "Controller", urlPatterns = {"/account/*"})
 public class Controller extends HttpServlet {
+
+    private static Logger log = LogManager.getLogger(LoginCommand.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doRequest(req, resp);
@@ -27,6 +33,7 @@ public class Controller extends HttpServlet {
     }
 
     private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        log.info("enter controller");
         ActionFactory actionFactory = new ActionFactory();
         ActionCommand command = actionFactory.defineCommand(req);
         CommandResult commandResult = command.execute(req, resp);

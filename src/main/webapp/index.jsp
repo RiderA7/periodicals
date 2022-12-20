@@ -8,10 +8,11 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
+${sessionScope.user.login}
 Hellllllllloooooooooo!!!!
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 <a href="probe">probe</a>
 <a href="ind.jsp">ind</a></body>
-<a href="jsp/login.jsp">login</a></body>
+<a href="account/login">login</a></body>
 </html>

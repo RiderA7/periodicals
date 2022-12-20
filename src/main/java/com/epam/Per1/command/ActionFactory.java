@@ -11,8 +11,11 @@ public class ActionFactory {
 
     public ActionCommand defineCommand(HttpServletRequest request) {
         ActionCommand currentCommand = new EmptyCommand();
-        String action = request.getRequestURI().replace("/", "");
+        String action = request.getRequestURI()
+                .replace("/", "")
+                .replace("Per1", "");
         action += request.getContentType() == null ? "get" : "post";
+        log.info("Found command: "+action);
         if (action == null || action.isEmpty()) {
             return currentCommand;
         }
@@ -20,7 +23,7 @@ public class ActionFactory {
             currentCommand = CommandType.getCurrentCommand(action);
         } catch (IllegalArgumentException e) {
             request.setAttribute("wrongAction", true);
-            log.info("Wrong action!");
+            log.info("Wrong action!: "+action);
         }
         return currentCommand;
     }

@@ -1,10 +1,16 @@
 package com.epam.Per1.command;
 
+import com.epam.Per1.command.impl.EmptyCommand;
 import com.epam.Per1.command.impl.LoginCommand;
+import com.epam.Per1.command.impl.LoginGetCommand;
 
 public enum CommandType {
 
-    SIGNINPOST(new LoginCommand()); //,
+    ACCOUNTLOGINPOST(new LoginCommand()),
+
+    ACCOUNTLOGINGET(new LoginGetCommand()),
+
+    ACCOUNTGET(new EmptyCommand()); //,
 
 //    INFOCONTACTGET(new ContactsPageCommand());
 
