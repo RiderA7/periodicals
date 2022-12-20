@@ -16,14 +16,13 @@ public class ActionFactory {
                 .replace("Per1", "");
         action += request.getContentType() == null ? "get" : "post";
         log.info("Found command: "+action);
-        if (action == null || action.isEmpty()) {
-            return currentCommand;
-        }
-        try {
-            currentCommand = CommandType.getCurrentCommand(action);
-        } catch (IllegalArgumentException e) {
-            request.setAttribute("wrongAction", true);
-            log.info("Wrong action!: "+action);
+        if (action != null && !action.isEmpty()) {
+            try {
+                currentCommand = CommandType.getCurrentCommand(action);
+            } catch (IllegalArgumentException e) {
+                request.setAttribute("wrongAction", true);
+                log.info("Wrong action!: " + action);
+            }
         }
         return currentCommand;
     }
