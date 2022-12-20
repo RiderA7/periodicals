@@ -7,6 +7,7 @@
 <body>
 <h1><%= "Hello World!" %>
 </h1>
+${sessionScope.user}
 <br/>
 ${sessionScope.user.login}
 Hellllllllloooooooooo!!!!

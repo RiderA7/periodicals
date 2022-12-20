@@ -96,12 +96,16 @@ public class User extends Entity{
             user.createDate = date;
             return this;
         }
-        public Builder setMoney(double money){
-            user.money = money;
+        public Builder setMoney(int money){
+            user.money = money/100.0;
             return this;
         }
-        public Builder setBlocked(boolean blocked){
-            user.blocked = blocked;
+        public Builder setBlocked(int blocked){
+            if(blocked == 0){
+                user.blocked = false;
+            } else {
+                user.blocked = true;
+            }
             return this;
         }
         public User getUser(){

@@ -25,6 +25,8 @@ public class MySqlUserDao implements UserDao {
                 .setRoleId(rs.getInt("user_role"))
                 .setEmail(rs.getString("user_email"))
                 .setCreateDate(rs.getTimestamp("user_create_date"))
+                .setMoney(rs.getInt("user_money"))
+                .setBlocked(rs.getInt("user_blocked"))
                 .getUser();
     }
 
