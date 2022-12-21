@@ -1,6 +1,5 @@
 package com.epam.Per1;
 
-import com.epam.Per1.dao.entity.UserRole;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -61,7 +60,5 @@ public class probe extends HttpServlet {
 //
 //        req.getRequestDispatcher("jsp/login.jsp").forward(req, resp);
 
-        String userRole = UserRole.ADMIN.getUserRoleId();
-        out.println(userRole);
     }
 }

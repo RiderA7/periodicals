@@ -6,7 +6,7 @@ public class User extends Entity{
 
     private String login;
     private String name;
-    private int roleId;
+    private Long roleId;
     private String email;
     private Date createDate;
     private double money;
@@ -15,7 +15,7 @@ public class User extends Entity{
     public User(){}
 
     public User(Long id, String login, String name,
-                int roleId, String email, Date createDate,
+                Long roleId, String email, Date createDate,
                 double money, boolean blocked) {
         super(id);
         this.login = login;
@@ -35,7 +35,7 @@ public class User extends Entity{
         return name;
     }
 
-    public int getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
@@ -84,7 +84,7 @@ public class User extends Entity{
             user.name = name;
             return this;
         }
-        public Builder setRoleId(int id){
+        public Builder setRoleId(Long id){
             user.roleId = id;
             return this;
         }
@@ -101,11 +101,7 @@ public class User extends Entity{
             return this;
         }
         public Builder setBlocked(int blocked){
-            if(blocked == 0){
-                user.blocked = false;
-            } else {
-                user.blocked = true;
-            }
+            user.blocked = blocked != 0;
             return this;
         }
         public User getUser(){

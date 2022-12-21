@@ -6,6 +6,7 @@ import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
 import com.epam.Per1.dao.Dao;
 import com.epam.Per1.dao.entity.User;
+import com.epam.Per1.dao.entity.UserRole;
 import com.epam.Per1.utils.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +45,10 @@ public class LoginCommand implements ActionCommand {
                 return new CommandResult("/jsp/login.jsp");
             } else {
                 log.info("User "+login+" logged in");
+                UserRole userRole = Dao.getDao().getUserRoleDao().getUserRole(user.getRoleId());
+                log.info("Got role " + userRole.getUserRole());
                 req.getSession().setAttribute("user", user);
+                req.getSession().setAttribute("role", userRole);
 //                resp.sendRedirect(req.getContextPath() + "/account");
                 return new CommandResult("/account", true);
             }

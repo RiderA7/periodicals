@@ -3,7 +3,6 @@ package com.epam.Per1.controller;
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.ActionFactory;
 import com.epam.Per1.command.CommandResult;
-import com.epam.Per1.command.impl.LoginCommand;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,7 +19,7 @@ import static com.epam.Per1.utils.Pages.WELCOME_PAGE;
 @WebServlet(name = "Controller", urlPatterns = {"/account/*"})
 public class Controller extends HttpServlet {
 
-    private static Logger log = LogManager.getLogger(LoginCommand.class);
+    private static Logger log = LogManager.getLogger(Controller.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

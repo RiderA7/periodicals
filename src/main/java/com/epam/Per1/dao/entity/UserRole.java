@@ -1,23 +1,41 @@
 package com.epam.Per1.dao.entity;
 
-public enum UserRole{
+public class UserRole extends Entity{
 
-    UNREGISTERED("1", "UNREGISTERED"),
-    REGISTERED("2", "REGISTERED"),
-    ADMIN("3", "ADMIN");
-
-    private String id;
     private String role;
 
-    UserRole(String id, String role){
-        this.id = id;
+    UserRole(){}
+
+    UserRole(Long id, String role){
+        super(id);
         this.role = role;
     }
 
     public String getUserRole(){
         return role;
     }
-    public String getUserRoleId(){
-        return id;
+
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                "id=" + getId() +
+                "role='" + role + '\'' +
+                '}';
+    }
+
+    public static class Builder{
+        UserRole userRole = new UserRole();
+
+        public Builder setId(Long id){
+            userRole.setId(id);
+            return this;
+        }
+        public Builder setUserRole(String role){
+            userRole.role = role;
+            return this;
+        }
+        public UserRole getUserRole(){
+            return userRole;
+        }
     }
 }

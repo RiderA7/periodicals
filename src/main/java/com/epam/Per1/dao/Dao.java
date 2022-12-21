@@ -10,4 +10,5 @@ public abstract class Dao {
 
     public abstract TopicDao getTopicDao();
     public abstract UserDao getUserDao();
+    public abstract UserRoleDao getUserRoleDao();
 }
