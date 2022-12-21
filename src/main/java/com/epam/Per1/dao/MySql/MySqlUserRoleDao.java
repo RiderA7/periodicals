@@ -3,7 +3,7 @@ package com.epam.Per1.dao.MySql;
 import com.epam.Per1.DbException;
 import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.UserRoleDao;
-import com.epam.Per1.dao.entity.UserRole;
+import com.epam.Per1.entity.UserRole;
 import com.epam.Per1.utils.SqlUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

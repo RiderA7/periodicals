@@ -2,8 +2,8 @@ package com.epam.Per1.web.servlet.account;
 
 import com.epam.Per1.AppException;
 import com.epam.Per1.DbException;
-import com.epam.Per1.dao.Dao;
-import com.epam.Per1.dao.entity.User;
+import com.epam.Per1.dao.DaoFactory;
+import com.epam.Per1.entity.User;
 import com.epam.Per1.utils.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            User user = Dao.getDao().getUserDao().login(login, password);
+            User user = DaoFactory.getInstance().getUserDao().login(login, password);
             if(user == null) {
                 log.info("User "+login+" not found");
                 req.setAttribute("err", "Wrong login or password!");

@@ -1,4 +1,4 @@
-package com.epam.Per1.dao.entity;
+package com.epam.Per1.entity;
 
 public class Topic {
 

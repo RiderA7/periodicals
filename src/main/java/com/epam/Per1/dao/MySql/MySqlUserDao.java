@@ -3,7 +3,7 @@ package com.epam.Per1.dao.MySql;
 import com.epam.Per1.DbException;
 import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.UserDao;
-import com.epam.Per1.dao.entity.User;
+import com.epam.Per1.entity.User;
 import com.epam.Per1.utils.SqlUtils;
 import com.epam.Per1.utils.Utils;
 
@@ -23,8 +23,6 @@ public class MySqlUserDao implements UserDao {
                 .setName(rs.getString("user_name"))
                 .setLogin(rs.getString("user_login"))
                 .setRoleId(rs.getLong("user_role"))
-                .setEmail(rs.getString("user_email"))
-                .setCreateDate(rs.getTimestamp("user_create_date"))
                 .setMoney(rs.getInt("user_money"))
                 .setBlocked(rs.getInt("user_blocked"))
                 .getUser();

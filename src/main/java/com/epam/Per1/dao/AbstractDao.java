@@ -1,7 +1,7 @@
 package com.epam.Per1.dao;
 
 import com.epam.Per1.DbException;
-import com.epam.Per1.dao.entity.Entity;
+import com.epam.Per1.entity.Entity;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -3,7 +3,7 @@ package com.epam.Per1.dao.MySql;
 import com.epam.Per1.DbException;
 import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.TopicDao;
-import com.epam.Per1.dao.entity.Topic;
+import com.epam.Per1.entity.Topic;
 import com.epam.Per1.utils.SqlUtils;
 
 import java.sql.Connection;
