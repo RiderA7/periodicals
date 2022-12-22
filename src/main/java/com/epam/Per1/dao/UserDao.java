@@ -9,7 +9,7 @@ public interface UserDao {
 
     User login(String login, char[] password) throws DbException;
 
-    User signup(String login, char[] password) throws DbException;
+    boolean create(User user) throws DbException;
 
     boolean isLoginExist(String login) throws DbException;
 

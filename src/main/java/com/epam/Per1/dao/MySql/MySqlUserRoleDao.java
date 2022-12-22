@@ -16,7 +16,7 @@ public class MySqlUserRoleDao implements UserRoleDao {
 
     private static Logger log = LogManager.getLogger(MySqlUserRoleDao.class);
 
-    private static UserRole mapUserRole(ResultSet rs) throws SQLException {
+    private static UserRole buildUserRole(ResultSet rs) throws SQLException {
         return new UserRole.Builder()
                 .setId(rs.getLong("role_id"))
                 .setUserRole(rs.getString("role_name"))
@@ -30,7 +30,7 @@ public class MySqlUserRoleDao implements UserRoleDao {
              Statement st = con.createStatement()){
             ResultSet rs = st.executeQuery(SqlUtils.GET_ALL_USER_ROLES);
             while (rs.next()) {
-                userRoles.add(mapUserRole(rs));
+                userRoles.add(buildUserRole(rs));
             }
             return userRoles;
         } catch (SQLException e) {
@@ -45,7 +45,7 @@ public class MySqlUserRoleDao implements UserRoleDao {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()){
                 if (!rs.next()) return null;
-                return mapUserRole(rs);
+                return buildUserRole(rs);
             }
         } catch (SQLException e) {
             throw new DbException("Cannot find role with id '"+id+"'",e);

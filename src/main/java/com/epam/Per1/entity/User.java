@@ -4,17 +4,19 @@ public class User extends Entity{
 
     private String login;
     private String name;
+    private String password;
     private Long roleId;
     private double money;
     private boolean blocked;
 
     public User(){}
 
-    public User(Long id, String login, String name,
+    public User(Long id, String login, String name, String password,
                 Long roleId, double money, boolean blocked) {
         super(id);
         this.login = login;
         this.name = name;
+        this.password = password;
         this.roleId = roleId;
         this.money = money;
         this.blocked = blocked;
@@ -26,6 +28,10 @@ public class User extends Entity{
 
     public String getName() {
         return name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public Long getRoleId() {
@@ -61,6 +67,10 @@ public class User extends Entity{
         }
         public Builder setLogin(String login){
             user.login = login;
+            return this;
+        }
+        public Builder setPassword(String password){
+            user.password = password;
             return this;
         }
         public Builder setName(String name){

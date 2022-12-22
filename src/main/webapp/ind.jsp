@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<%@ include file="jsp/inc/menu.jsp" %>
 <c:if test="${param.err ne null}">ura</c:if>
 <c:set var="salary" scope="page" value="${23400*2}"/>
 ${param.err+salary}

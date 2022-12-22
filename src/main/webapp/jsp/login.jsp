@@ -6,7 +6,7 @@
     <title>${title}</title>
 </head>
 <body>
-<%--<c:out value="16+64*2"/>=<c:out value="${16+64*2}"/>--%>
+<%@ include file="inc/menu.jsp" %>
 <c:if test="${err ne null}">
     <p class="login_error">${err}</p>
 </c:if>

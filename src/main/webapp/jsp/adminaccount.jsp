@@ -4,6 +4,7 @@
     <title>Admin back office</title>
 </head>
 <body>
+<%@ include file="inc/menu.jsp" %>
 <h1>Admin account</h1>
 </body>
 </html>

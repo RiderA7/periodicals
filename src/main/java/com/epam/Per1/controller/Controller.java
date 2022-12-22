@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import static com.epam.Per1.utils.Pages.WELCOME_PAGE;
 
-@WebServlet(name = "Controller", urlPatterns = {"/account/*"})
+@WebServlet(name = "Controller", urlPatterns = {"/account/*", "/admin/*"})
 public class Controller extends HttpServlet {
 
     private static Logger log = LogManager.getLogger(Controller.class);
@@ -42,7 +42,7 @@ public class Controller extends HttpServlet {
             if (commandResult.isRedirect()) {
                 resp.sendRedirect(req.getContextPath() + page);
             } else {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+                RequestDispatcher dispatcher = req.getRequestDispatcher(page);
                 dispatcher.forward(req, resp);
             }
         } else {

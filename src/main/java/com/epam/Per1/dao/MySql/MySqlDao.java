@@ -1,9 +1,6 @@
 package com.epam.Per1.dao.MySql;
 
-import com.epam.Per1.dao.DaoFactory;
-import com.epam.Per1.dao.TopicDao;
-import com.epam.Per1.dao.UserDao;
-import com.epam.Per1.dao.UserRoleDao;
+import com.epam.Per1.dao.*;
 
 public class MySqlDao extends DaoFactory {
 
@@ -20,5 +17,15 @@ public class MySqlDao extends DaoFactory {
     @Override
     public UserRoleDao getUserRoleDao() {
         return new MySqlUserRoleDao();
+    }
+
+    @Override
+    public PublicationDao getPublicationDao() {
+        return new MySqlPublicationDao();
+    }
+
+    @Override
+    public SubscriptionDao getSubscriptionDao() {
+        return new MySqlSubscriptionDao();
     }
 }

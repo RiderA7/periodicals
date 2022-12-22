@@ -41,8 +41,6 @@ public class LoginCommand implements ActionCommand {
                 String error = "User "+login+" not found";
                 log.info(error);
                 req.setAttribute("err", "Wrong login or password!");
-//                resp.sendRedirect(req.getContextPath() + "/account/login");
-//                req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
                 return new CommandResult(Pages.LOGIN_PAGE);
             } else {
                 log.info("User "+login+" logged in");
@@ -52,9 +50,8 @@ public class LoginCommand implements ActionCommand {
                 req.getSession().setAttribute("role", userRole);
                 String page;
                 switch (userRole.getId().intValue()) {
-//                    case 1: page = Pages.LOGIN_PAGE; break;
-                    case 2: page = Pages.USER_ACCOUNT; break;
-                    case 3: page = Pages.ADMIN_ACCOUNT; break;
+                    case 1: page = Pages.USER_ACCOUNT; break;
+                    case 2: page = Pages.ADMIN_ACCOUNT; break;
                     default: page = Pages.LOGIN_PAGE;
                 }
                 return new CommandResult(page, true);

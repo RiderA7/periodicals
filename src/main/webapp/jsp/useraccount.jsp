@@ -5,6 +5,7 @@
     <title>User Account</title>
 </head>
 <body>
+<%@ include file="inc/menu.jsp" %>
 <h1>User Account</h1>
 <c:if test="${sessionScope.user ne null}">
     <div class="greetings">Hello ${sessionScope.user.name}</div>
