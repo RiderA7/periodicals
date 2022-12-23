@@ -6,4 +6,5 @@ public class Pages {
     public static final String LOGIN_PAGE = "/jsp/login.jsp";
     public static final String USER_ACCOUNT = "/jsp/useraccount.jsp";
     public static final String ADMIN_ACCOUNT = "/jsp/adminaccount.jsp";
+    public static final String REGISTER_PAGE = "/jsp/register.jsp";
 }

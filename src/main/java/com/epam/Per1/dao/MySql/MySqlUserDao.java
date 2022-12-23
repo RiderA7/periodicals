@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class MySqlUserDao implements UserDao {
 
@@ -30,15 +31,15 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public User login(String login, char[] password) throws DbException {
+    public Optional<User> login(String login, char[] password) throws DbException {
         String hashPassword = Utils.hash(password);
         try (Connection con = ConnectionPool.getInstance().getConnection();
             PreparedStatement ps = con.prepareStatement(SqlUtils.LOGIN)) {
             ps.setString(1, login);
             ps.setString(2, hashPassword);
             try (ResultSet rs = ps.executeQuery()){
-                if (!rs.next()) return null;
-                return buildUser(rs);
+                if (!rs.next()) return Optional.empty();
+                return Optional.ofNullable(buildUser(rs));
             }
         } catch (SQLException e) {
             throw new DbException("Cannot login", e);
@@ -70,17 +71,17 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public boolean isLoginExist(String login) throws DbException {
-        return getUserByLogin(login) != null;
+        return getUserByLogin(login).isPresent();
     }
 
     @Override
-    public User getUserByLogin(String login) throws DbException {
+    public Optional<User> getUserByLogin(String login) throws DbException {
         try (Connection con = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.FIND_USER_BY_LOGIN)) {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()){
-                if (!rs.next()) return null;
-                return buildUser(rs);
+                if (!rs.next()) return Optional.empty();
+                return Optional.ofNullable(buildUser(rs));
             }
         } catch (SQLException e) {
             throw new DbException("Cannot find user with login '"+login+"'",e);

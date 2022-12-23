@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class LoginCommand implements ActionCommand {
 
@@ -36,14 +37,15 @@ public class LoginCommand implements ActionCommand {
         }
 
         try {
-            User user = DaoFactory.getInstance().getUserDao().login(login, password);
-            if(user == null) {
+            Optional<User> userOptional = DaoFactory.getInstance().getUserDao().login(login, password);
+            if(userOptional.isEmpty()) {
                 String error = "User "+login+" not found";
                 log.info(error);
                 req.setAttribute("err", "Wrong login or password!");
                 return new CommandResult(Pages.LOGIN_PAGE);
             } else {
                 log.info("User "+login+" logged in");
+                User user = userOptional.get();
                 UserRole userRole = DaoFactory.getInstance().getUserRoleDao().getUserRole(user.getRoleId());
                 log.info("Got role " + userRole.getUserRole());
                 req.getSession().setAttribute("user", user);

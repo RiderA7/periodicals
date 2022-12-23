@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet("/account1/login")
 public class LoginServlet extends HttpServlet {
@@ -39,13 +40,14 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            User user = DaoFactory.getInstance().getUserDao().login(login, password);
-            if(user == null) {
+            Optional<User> userOptional = DaoFactory.getInstance().getUserDao().login(login, password);
+            if(userOptional.isEmpty()) {
                 log.info("User "+login+" not found");
                 req.setAttribute("err", "Wrong login or password!");
 //                resp.sendRedirect(req.getContextPath() + "/account/login");
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
             } else {
+                User user = userOptional.get();
                 log.info("User "+login+" logged in");
                 req.getSession().setAttribute("user", user);
                 resp.sendRedirect(req.getContextPath() + "/account");
