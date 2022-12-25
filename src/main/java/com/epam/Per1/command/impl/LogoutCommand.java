@@ -21,10 +21,14 @@ public class LogoutCommand implements ActionCommand {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         final HttpSession session = req.getSession();
-        Long userId = ((User) session.getAttribute("user")).getId();
+        try {
+            Long userId = ((User) session.getAttribute("user")).getId();
+            log.info("user with id = " + userId + " logged out");
+        } catch (NullPointerException e) {
+            log.info("Session expired - no logout");
+        }
         session.removeAttribute("user");
         session.removeAttribute("role");
-        log.info("user with id = " + userId + " logged out");
         return new CommandResult(Pages.WELCOME_PAGE, true);
     }
 }

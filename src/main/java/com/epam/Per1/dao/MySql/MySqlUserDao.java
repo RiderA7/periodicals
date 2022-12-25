@@ -48,8 +48,6 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public boolean create(User user) throws DbException {
-        boolean created = false;
-        Long userID;
         try (Connection con = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.CREATE_USER)){
             int k = 0;
@@ -57,16 +55,13 @@ public class MySqlUserDao implements UserDao {
             ps.setString(++k, user.getName());
             ps.setString(++k, user.getPassword());
             ps.setLong(++k, user.getRoleId());
-            ResultSet resultSet = ps.executeQuery();
-            if (resultSet != null && resultSet.next()) {
-                userID = resultSet.getLong("id");
-                user.setId(userID);
-                created = true;
+            if (ps.executeUpdate() == 0) {
+                throw new DbException("User not created!");
             }
         } catch (SQLException e) {
             throw new DbException("User not created!",e);
         }
-        return created;
+        return true;
     }
 
     @Override

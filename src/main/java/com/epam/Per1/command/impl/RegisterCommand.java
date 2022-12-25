@@ -3,7 +3,9 @@ package com.epam.Per1.command.impl;
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
 import com.epam.Per1.entity.User;
+import com.epam.Per1.service.impl.UserService;
 import com.epam.Per1.utils.Pages;
+import com.epam.Per1.utils.Utils;
 import com.epam.Per1.utils.Validator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,8 +14,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class RegisterCommand implements ActionCommand {
+
+    private final UserService userService = new UserService();
 
     private static Logger log = LogManager.getLogger(RegisterCommand.class);
 
@@ -35,7 +40,7 @@ public class RegisterCommand implements ActionCommand {
         }
 
         String confirm = req.getParameter("password2");
-        if (!confirm.equals(password)){
+        if (!confirm.equals(password)) {
             log.info("Passwords not match: " + password + " / " + confirm);
             req.setAttribute("err", "Passwords not match!");
             return new CommandResult((Pages.REGISTER_PAGE));
@@ -48,9 +53,25 @@ public class RegisterCommand implements ActionCommand {
             return new CommandResult(Pages.REGISTER_PAGE);
         }
 
-        User user;
+        User user = buildUser(req);
+        if (userService.createUser(user)) {
+            Optional<User> userOptional = userService.getUserByLogin(user.getLogin());
+            if (userOptional.isPresent()) {
+                String page = userService.loginUser(userOptional.get(), req.getSession());
+                return new CommandResult(page, true);
+            }
+        }
+        log.info("Something wrong during registration!");
+        req.setAttribute("err", "Registration maybe not success. Ask Administrator");
+        return new CommandResult(Pages.REGISTER_PAGE);
+    }
 
-
-        return null;
+    private User buildUser(HttpServletRequest req) {
+        return new User.Builder()
+                .setLogin(req.getParameter("login"))
+                .setPassword(Utils.hash(req.getParameter("password").toCharArray()))
+                .setName(req.getParameter("name"))
+                .setRoleId(1L)
+                .getUser();
     }
 }

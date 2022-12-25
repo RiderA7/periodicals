@@ -1,9 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<head>
-    <title>User Account</title>
-</head>
+<c:set var="title" value="User Account" scope="page"/>
+<%@ include file="inc/head.jsp" %>
 <body>
 <%@ include file="inc/menu.jsp" %>
 <h1>User Account</h1>

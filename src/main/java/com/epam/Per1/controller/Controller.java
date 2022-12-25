@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import static com.epam.Per1.utils.Pages.WELCOME_PAGE;
 
-@WebServlet(name = "Controller", urlPatterns = {"/account/*", "/admin/*"})
+@WebServlet(name = "Controller", urlPatterns = {"/account/*", "/admin/*", "/topics", "/publications",})
 public class Controller extends HttpServlet {
 
     private static Logger log = LogManager.getLogger(Controller.class);

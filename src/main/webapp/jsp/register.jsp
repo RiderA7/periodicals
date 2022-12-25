@@ -2,9 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <c:set var="title" value="Register" scope="page"/>
-<head>
-    <title>${title}</title>
-</head>
+<%@ include file="inc/head.jsp" %>
 <body>
 <%@ include file="inc/menu.jsp" %>
 <c:if test="${err ne null}">
