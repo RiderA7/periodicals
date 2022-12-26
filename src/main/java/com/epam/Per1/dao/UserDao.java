@@ -16,7 +16,9 @@ public interface UserDao {
 
     Optional<User> getUserByLogin(String login) throws DbException;
 
-    void changePassword(int userId, char[] newPassword) throws DbException;
+    Optional<User> getUserById(Long id) throws DbException;
+
+    boolean updateUser(User user) throws DbException;
 
     List<User> getAllUsers() throws DbException;
 

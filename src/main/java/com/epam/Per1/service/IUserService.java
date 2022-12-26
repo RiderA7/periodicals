@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface IUserService {
 
     Optional<User> getUserByLogin(String login);
+    Optional<User> getUserById(Long id);
     boolean createUser(User user);
     String loginUser(User user, HttpSession session);
     boolean updateUser(User user);

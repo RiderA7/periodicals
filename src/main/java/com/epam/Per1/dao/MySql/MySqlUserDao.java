@@ -84,8 +84,40 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public void changePassword(int userId, char[] newPassword) throws DbException {
+    public Optional<User> getUserById(Long id) throws DbException {
+        try (Connection con = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(SqlUtils.FIND_USER_BY_ID)) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()){
+                if (!rs.next()) return Optional.empty();
+                return Optional.ofNullable(buildUser(rs));
+            }
+        } catch (SQLException e) {
+            throw new DbException("Cannot find user with login '"+id+"'",e);
+        }
+    }
 
+    @Override
+    public boolean updateUser(User user) throws DbException {
+        boolean updated = false;
+        try (Connection con = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(SqlUtils.UPDATE_USER)){
+            int k = 0;
+            ps.setString(++k, user.getLogin());
+            ps.setString(++k, user.getName());
+            ps.setString(++k, user.getPassword());
+            ps.setLong(++k, user.getRoleId());
+            ps.setInt(++k, (int)user.getMoney()*100);
+            ps.setInt(++k, user.isBlocked()?1:0);
+            ps.setLong(++k, user.getId());
+            System.out.println(ps);
+            if (ps.executeUpdate() != 0) {
+                updated = true;
+            }
+        } catch (SQLException e) {
+            throw new DbException("User not updated! (dao)",e);
+        }
+        return updated;
     }
 
     @Override

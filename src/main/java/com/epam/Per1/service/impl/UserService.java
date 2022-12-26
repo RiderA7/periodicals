@@ -29,6 +29,18 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public Optional<User> getUserById(Long id) {
+        Optional<User> user;
+        try {
+            user = DaoFactory.getInstance().getUserDao().getUserById(id);
+        } catch (DbException e) {
+            log.error("Can't find user with id = " + id, e);
+            return Optional.empty();
+        }
+        return user;
+    }
+
+    @Override
     public boolean createUser(User user) {
         boolean created = false;
         try {
@@ -62,7 +74,13 @@ public class UserService implements IUserService {
 
     @Override
     public boolean updateUser(User user) {
-        return false;
+        boolean updated = false;
+            try {
+                updated = DaoFactory.getInstance().getUserDao().updateUser(user);
+            } catch (DbException e) {
+                log.error("User not updated! (service)" + e.getMessage());
+            }
+        return updated;
     }
 
     @Override

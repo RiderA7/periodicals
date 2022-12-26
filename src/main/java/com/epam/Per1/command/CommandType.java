@@ -10,7 +10,10 @@ public enum CommandType {
     ACCOUNTLOGOUTGET(new LogoutCommand()),
     ADMINLOGOUTGET(new LogoutCommand()),
     ACCOUNTREGISTERPOST(new RegisterCommand()),
-    ACCOUNTREGISTERGET(new RegisterGetCommand()); //,
+    ACCOUNTREGISTERGET(new RegisterGetCommand()),
+    ACCOUNTPROFILEGET(new AccountProfileGetCommand()),
+    ACCOUNTUPDATEGET(new AccountUpdateGetCommand()),
+    ACCOUNTUPDATEPOST(new AccountUpdatePostCommand()); //,
 
 //    INFOCONTACTGET(new ContactsPageCommand());
 
