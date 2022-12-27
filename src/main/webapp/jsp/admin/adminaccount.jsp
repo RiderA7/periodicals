@@ -5,6 +5,6 @@
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/menu.jsp" %>
-<h1>Admin account</h1>
+<%@ include file="../inc/header.jsp" %>
 </body>
 </html>

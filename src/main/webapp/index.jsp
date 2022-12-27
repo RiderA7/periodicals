@@ -1,14 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
 <html>
-<head>
-    <title>JSP - Hello World</title>
-</head>
+<c:set var="title" value="Welcome to Periodicals" scope="page"/>
+<%@ include file="jsp/inc/head.jsp" %>
 <body>
 <%@ include file="jsp/inc/menu.jsp" %>
-<h1><%= "Hello World!" %>
-</h1>
+<%@ include file="jsp/inc/header.jsp" %>
 ${sessionScope.user}
 <br/>
 ${sessionScope.user.login}

@@ -13,7 +13,9 @@ public enum CommandType {
     ACCOUNTREGISTERGET(new RegisterGetCommand()),
     ACCOUNTPROFILEGET(new AccountProfileGetCommand()),
     ACCOUNTUPDATEGET(new AccountUpdateGetCommand()),
-    ACCOUNTUPDATEPOST(new AccountUpdatePostCommand()); //,
+    ACCOUNTUPDATEPOST(new AccountUpdatePostCommand()), //,
+    ACCOUNTUPDATEPASSGET(new AccountChangePassGetCommand()),
+    ACCOUNTUPDATEPASSPOST(new AccountChangePassPostCommand()); //,
 
 //    INFOCONTACTGET(new ContactsPageCommand());
 

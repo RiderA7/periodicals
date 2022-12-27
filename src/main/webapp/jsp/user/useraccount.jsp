@@ -5,7 +5,7 @@
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/menu.jsp" %>
-<h1>User Account</h1>
+<%@ include file="../inc/header.jsp" %>
 <c:if test="${sessionScope.user ne null}">
     <div class="greetings">Hello ${sessionScope.user.name}</div>
 </c:if>

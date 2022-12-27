@@ -5,9 +5,7 @@
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/menu.jsp" %>
-<c:if test="${err ne null}">
-    <p class="login_error">${err}</p>
-</c:if>
+<%@ include file="../inc/header.jsp" %>
 <div>
     <form class="loginform"
           action="${pageContext.request.contextPath}/account/register"
