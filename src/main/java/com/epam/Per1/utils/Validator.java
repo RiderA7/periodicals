@@ -20,4 +20,11 @@ public class Validator {
         return Pattern.matches(REGEX_CHECK_FOR_NAME, name);
     }
 
+    public static boolean validateDeposit(int deposit){
+        boolean test = false;
+        if(deposit>=1){
+            test = true;
+        }
+        return test;
+    }
 }

@@ -46,10 +46,10 @@ public class AccountChangePassPostCommand implements ActionCommand {
         if (updated) {
             req.getSession().setAttribute("user", newUser);
             return new CommandResult(Pages.USER_PROFILE);
-        } else return new CommandResult(Pages.USER_UPDATE);
+        } else return new CommandResult(Pages.USER_CHANGE_PASSWORD);
     }
 
-    private User buildUser(User user, HttpServletRequest req) {
+    private User buildUser(User user, HttpServletRequest req) throws NullPointerException{
         return new User.Builder()
                 .setId(user.getId())
                 .setLogin(user.getLogin())

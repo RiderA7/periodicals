@@ -10,4 +10,5 @@ public class Pages {
     public static final String USER_UPDATE = "/jsp/user/updateuser.jsp";
     public static final String USER_CHANGE_PASSWORD = "/jsp/user/changepassword.jsp";
     public static final String USER_PROFILE = "/jsp/user/profile.jsp";
+    public static final String USER_REPLENISH = "/jsp/user/replenish.jsp";
 }

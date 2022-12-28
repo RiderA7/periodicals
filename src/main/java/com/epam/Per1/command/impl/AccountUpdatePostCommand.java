@@ -47,7 +47,7 @@ public class AccountUpdatePostCommand implements ActionCommand {
         } else return new CommandResult(Pages.USER_UPDATE);
     }
 
-    private User buildUser(User user, HttpServletRequest req) {
+    private User buildUser(User user, HttpServletRequest req) throws NullPointerException{
         return new User.Builder()
                 .setId(user.getId())
                 .setLogin(req.getParameter("login"))

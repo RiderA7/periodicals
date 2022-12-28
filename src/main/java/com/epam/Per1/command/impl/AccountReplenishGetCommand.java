@@ -12,8 +12,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-public class AccountChangePassGetCommand implements ActionCommand {
-    private static Logger log = LogManager.getLogger(AccountChangePassGetCommand.class);
+public class AccountReplenishGetCommand implements ActionCommand {
+    private static Logger log = LogManager.getLogger(AccountReplenishGetCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,7 +21,7 @@ public class AccountChangePassGetCommand implements ActionCommand {
         log.info("User in session found:" + user);
         if(user != null) {
             req.setAttribute("user", user);
-            return new CommandResult(Pages.USER_CHANGE_PASSWORD);
+            return new CommandResult(Pages.USER_REPLENISH);
         } else {
             return new CommandResult(Pages.WELCOME_PAGE, true);
         }

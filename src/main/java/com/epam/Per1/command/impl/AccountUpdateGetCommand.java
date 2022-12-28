@@ -7,18 +7,23 @@ import com.epam.Per1.utils.Pages;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
 public class AccountUpdateGetCommand implements ActionCommand {
+    private static Logger log = LogManager.getLogger(AccountUpdateGetCommand.class);
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute("user");
+        log.info("User in session found:" + user);
+        if(user != null) {
             req.setAttribute("user", user);
             return new CommandResult(Pages.USER_UPDATE);
-        } catch (NullPointerException e) {
-            return new CommandResult(Pages.WELCOME_PAGE);
+        } else {
+            return new CommandResult(Pages.WELCOME_PAGE, true);
         }
     }
 }
