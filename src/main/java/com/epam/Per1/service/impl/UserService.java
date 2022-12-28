@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserService implements IUserService {
@@ -81,6 +82,26 @@ public class UserService implements IUserService {
                 log.error("User not updated! (service)" + e.getMessage());
             }
         return updated;
+    }
+
+    @Override
+    public int countAllUsers() {
+        try {
+            return DaoFactory.getInstance().getUserDao().countAllUsers();
+        } catch (DbException e) {
+            log.error("Can't count users in DB!!!");
+            return 0;
+        }
+    }
+
+    @Override
+    public List<User> getLimitUsers(String where, String groupBy, String sort, int offset, int limit) {
+        try {
+            return DaoFactory.getInstance().getUserDao().getLimitUsers(where, groupBy, sort, offset, limit);
+        } catch (DbException e) {
+            log.error("Can't get list of users from DB!!!");
+            return null;
+        }
     }
 
     @Override

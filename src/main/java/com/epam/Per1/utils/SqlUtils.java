@@ -21,4 +21,6 @@ public class SqlUtils {
                     " user_blocked=?" +
                     " WHERE user_id=?";
     public static final String FIND_USER_BY_ID = "SELECT * FROM user WHERE user_id=?";
+    public static final String COUNT_ALL_USERS = "SELECT COUNT(*) FROM user";
+    public static final String SELECT_LIMIT_USERS = "SELECT * FROM user ? ? ? LIMIT ?, ?";
 }

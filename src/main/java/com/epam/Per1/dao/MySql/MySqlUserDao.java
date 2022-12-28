@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,6 +124,46 @@ public class MySqlUserDao implements UserDao {
     @Override
     public List<User> getAllUsers() throws DbException {
         return null;
+    }
+
+    @Override
+    public int countAllUsers() throws DbException {
+        int count = 0;
+        try (Connection con = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(SqlUtils.COUNT_ALL_USERS)){
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    count = rs.getInt(1);
+                }
+        } catch (SQLException e) {
+            throw new DbException("Can't count users", e);
+        }
+        return count;
+    }
+
+    @Override
+    public List<User> getLimitUsers(String where, String groupBy, String sort, int offset, int limit) throws DbException {
+        List<User> users = new ArrayList<>();
+        String limitStr = "";
+        if(offset >= 0 && limit > 0){
+            limitStr = "LIMIT " + offset + "," + limit;
+        }
+        try (Connection con = ConnectionPool.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(SqlUtils.SELECT_LIMIT_USERS)) {
+            int k = 0;
+            ps.setString(++k, where);
+            ps.setString(++k, groupBy);
+            ps.setString(++k, sort);
+            ps.setString(++k, limitStr);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()){
+                    User user = buildUser(rs);
+                    users.add(user);
+                }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return users;
     }
 
     @Override
