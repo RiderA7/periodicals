@@ -6,6 +6,7 @@ import com.epam.Per1.entity.User;
 import com.epam.Per1.entity.UserRole;
 import com.epam.Per1.service.IUserService;
 import com.epam.Per1.utils.Pages;
+import com.epam.Per1.utils.PagingParams;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -85,6 +86,16 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public List<User> getAllUsers() {
+        try {
+            return DaoFactory.getInstance().getUserDao().getAllUsers();
+        } catch (DbException e) {
+            log.error("Can't get list of all users from DB!!!");
+            return null;
+        }
+    }
+
+    @Override
     public int countAllUsers() {
         try {
             return DaoFactory.getInstance().getUserDao().countAllUsers();
@@ -95,7 +106,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> getLimitUsers(String where, String groupBy, String sort, int offset, int limit) {
+    public List<User> getLimitUsers(String where, String groupBy, String sort, PagingParams pagingParams) {
+        int offset = pagingParams.getOffset();
+        int limit = pagingParams.getLimit();
         try {
             return DaoFactory.getInstance().getUserDao().getLimitUsers(where, groupBy, sort, offset, limit);
         } catch (DbException e) {
@@ -108,4 +121,61 @@ public class UserService implements IUserService {
     public boolean deleteUser(User user) {
         return false;
     }
+
+    @Override
+    public void banUser(int id, boolean ban) {
+        try {
+            Optional<User> optionalUser = DaoFactory.getInstance().getUserDao().getUserById((long) id);
+            optionalUser.ifPresent(user -> updateUser(buildUser(user, ban)));
+        } catch (DbException e) {
+            log.error("Can't ban/unban userId="+id);
+            e.printStackTrace();
+        }
+    }
+
+    public User buildUser(User user, String login, String name){
+        return new User.Builder()
+                .setId(user.getId())
+                .setLogin(login)
+                .setName(name)
+                .setPassword(user.getPassword())
+                .setRoleId(user.getRoleId())
+                .setMoney((int) user.getMoney() * 100)
+                .setBlocked(user.isBlocked() ? 1 : 0)
+                .getUser();
+    }
+    public User buildUser(User user, String password){
+        return new User.Builder()
+                .setId(user.getId())
+                .setLogin(user.getLogin())
+                .setName(user.getName())
+                .setPassword(password)
+                .setRoleId(user.getRoleId())
+                .setMoney((int) user.getMoney() * 100)
+                .setBlocked(user.isBlocked() ? 1 : 0)
+                .getUser();
+    }
+    public User buildUser(User user, int deposit){
+        return new User.Builder()
+                .setId(user.getId())
+                .setLogin(user.getLogin())
+                .setName(user.getName())
+                .setPassword(user.getPassword())
+                .setRoleId(user.getRoleId())
+                .setMoney((int) (user.getMoney() + deposit) * 100)
+                .setBlocked(user.isBlocked() ? 1 : 0)
+                .getUser();
+    }
+    public User buildUser(User user, boolean ban){
+        return new User.Builder()
+                .setId(user.getId())
+                .setLogin(user.getLogin())
+                .setName(user.getName())
+                .setPassword(user.getPassword())
+                .setRoleId(user.getRoleId())
+                .setMoney((int) user.getMoney() * 100)
+                .setBlocked(ban ? 1 : 0)
+                .getUser();
+    }
+
 }

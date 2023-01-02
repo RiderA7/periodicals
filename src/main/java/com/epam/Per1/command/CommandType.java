@@ -4,6 +4,8 @@ import com.epam.Per1.command.impl.*;
 
 public enum CommandType {
 
+    ADMINUSERSGET(new AdminUsersGetCommand()),
+    ADMINUSERSPOST(new AdminUsersPostCommand()),
     ACCOUNTLOGINPOST(new LoginCommand()),
     ACCOUNTLOGINGET(new LoginGetCommand()),
     ACCOUNTGET(new EmptyCommand()),

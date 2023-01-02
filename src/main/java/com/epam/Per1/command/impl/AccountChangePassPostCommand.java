@@ -38,7 +38,7 @@ public class AccountChangePassPostCommand implements ActionCommand {
         User newUser = null;
         try {
             User user = (User) req.getSession().getAttribute("user");
-            newUser = buildUser(user, req);
+            newUser = userService.buildUser(user, Utils.hash(req.getParameter("password").toCharArray()));
             updated = userService.updateUser(newUser);
         } catch (NullPointerException e) {
             log.error("No user logged in for update!");
@@ -49,15 +49,4 @@ public class AccountChangePassPostCommand implements ActionCommand {
         } else return new CommandResult(Pages.USER_CHANGE_PASSWORD);
     }
 
-    private User buildUser(User user, HttpServletRequest req) throws NullPointerException{
-        return new User.Builder()
-                .setId(user.getId())
-                .setLogin(user.getLogin())
-                .setName(user.getName())
-                .setPassword(Utils.hash(req.getParameter("password").toCharArray()))
-                .setRoleId(user.getRoleId())
-                .setMoney((int) user.getMoney() * 100)
-                .setBlocked(user.isBlocked() ? 1 : 0)
-                .getUser();
-    }
 }

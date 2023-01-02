@@ -36,7 +36,7 @@ public class AccountUpdatePostCommand implements ActionCommand {
         User newUser = null;
         try {
             User user = (User) req.getSession().getAttribute("user");
-            newUser = buildUser(user, req);
+            newUser = userService.buildUser(user, req.getParameter("login"), req.getParameter("name"));
             updated = userService.updateUser(newUser);
         } catch (NullPointerException e) {
             log.error("No user logged in for update!");
@@ -47,15 +47,4 @@ public class AccountUpdatePostCommand implements ActionCommand {
         } else return new CommandResult(Pages.USER_UPDATE);
     }
 
-    private User buildUser(User user, HttpServletRequest req) throws NullPointerException{
-        return new User.Builder()
-                .setId(user.getId())
-                .setLogin(req.getParameter("login"))
-                .setName(req.getParameter("name"))
-                .setPassword(user.getPassword())
-                .setRoleId(user.getRoleId())
-                .setMoney((int) user.getMoney() * 100)
-                .setBlocked(user.isBlocked() ? 1 : 0)
-                .getUser();
-    }
 }

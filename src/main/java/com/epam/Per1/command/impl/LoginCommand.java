@@ -39,12 +39,17 @@ public class LoginCommand implements ActionCommand {
 
         try {
             Optional<User> userOptional = DaoFactory.getInstance().getUserDao().login(login, password);
-            if(userOptional.isEmpty()) {
-                String error = "User "+login+" not found";
+            if (userOptional.isEmpty()) {
+                String error = "User " + login + " not found";
                 log.info(error);
                 req.setAttribute("err", "Wrong login or password!");
                 return new CommandResult(Pages.LOGIN_PAGE);
             } else {
+                if (userOptional.get().isBlocked()) {
+                    log.info("User " + userOptional.get().getName() + " BANNED!");
+                    req.setAttribute("err", "Your account was BANned!");
+                    return new CommandResult(Pages.LOGIN_PAGE);
+                }
                 String page = userService.loginUser(userOptional.get(), req.getSession());
                 return new CommandResult(page, true);
             }

@@ -111,7 +111,7 @@ public class MySqlUserDao implements UserDao {
             ps.setInt(++k, (int)user.getMoney()*100);
             ps.setInt(++k, user.isBlocked()?1:0);
             ps.setLong(++k, user.getId());
-            System.out.println(ps);
+//            System.out.println(ps);
             if (ps.executeUpdate() != 0) {
                 updated = true;
             }
@@ -123,7 +123,7 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public List<User> getAllUsers() throws DbException {
-        return null;
+        return getLimitUsers("", "", "", 0, 0);
     }
 
     @Override
@@ -145,23 +145,29 @@ public class MySqlUserDao implements UserDao {
     public List<User> getLimitUsers(String where, String groupBy, String sort, int offset, int limit) throws DbException {
         List<User> users = new ArrayList<>();
         String limitStr = "";
+        String sql = SqlUtils.SELECT_LIMIT_USERS;
+        if(!where.equals("")) sql += where;
+        if(!groupBy.equals("")) sql += groupBy;
+        if(!sort.equals("")) sql += sort;
         if(offset >= 0 && limit > 0){
-            limitStr = "LIMIT " + offset + "," + limit;
+            limitStr = " LIMIT " + offset + "," + limit;
         }
+        if(!limitStr.equals("")) sql += limitStr;
         try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement ps = con.prepareStatement(SqlUtils.SELECT_LIMIT_USERS)) {
-            int k = 0;
-            ps.setString(++k, where);
-            ps.setString(++k, groupBy);
-            ps.setString(++k, sort);
-            ps.setString(++k, limitStr);
+             PreparedStatement ps = con.prepareStatement(sql)) {
+//            int k = 0;
+//            ps.set(++k, where);
+//            ps.setString(++k, groupBy);
+//            ps.setString(++k, sort);
+//            ps.setString(++k, limitStr);
+            System.out.println(ps);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()){
                     User user = buildUser(rs);
                     users.add(user);
                 }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            throw new DbException("Can't get limited list of users", e);
         }
         return users;
     }

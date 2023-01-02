@@ -34,7 +34,7 @@ public class AccountReplenishPostCommand implements ActionCommand {
                 newUser = (User) req.getSession().getAttribute("user");
                 log.info("User " + newUser.getName() + " try to replenish account by " + deposit);
                 log.info("Balance before: " + newUser.getMoney());
-                newUser = buildUser(newUser, deposit);
+                newUser = userService.buildUser(newUser, deposit);
                 updated = userService.updateUser(newUser);
             } catch (NullPointerException e) {
                 log.error("No user logged in for replenish!");
@@ -51,15 +51,4 @@ public class AccountReplenishPostCommand implements ActionCommand {
         }
     }
 
-    private User buildUser(User user, int deposit) throws NullPointerException{
-        return new User.Builder()
-                .setId(user.getId())
-                .setLogin(user.getLogin())
-                .setName(user.getName())
-                .setPassword(user.getPassword())
-                .setRoleId(user.getRoleId())
-                .setMoney((int) (user.getMoney() + deposit) * 100)
-                .setBlocked(user.isBlocked() ? 1 : 0)
-                .getUser();
-    }
 }
