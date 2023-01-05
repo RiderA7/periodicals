@@ -15,6 +15,11 @@ import java.util.List;
 public class MySqlUserRoleDao implements UserRoleDao {
 
     private static Logger log = LogManager.getLogger(MySqlUserRoleDao.class);
+    ConnectionPool connectionPool;
+
+    public MySqlUserRoleDao(String propertiesFile) {
+        connectionPool = ConnectionPool.getInstance(propertiesFile);
+    }
 
     private static UserRole buildUserRole(ResultSet rs) throws SQLException {
         return new UserRole.Builder()
@@ -26,7 +31,7 @@ public class MySqlUserRoleDao implements UserRoleDao {
     @Override
     public List<UserRole> getAllUserRoles() throws DbException {
         List<UserRole> userRoles = new ArrayList<>();
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              Statement st = con.createStatement()){
             ResultSet rs = st.executeQuery(SqlUtils.GET_ALL_USER_ROLES);
             while (rs.next()) {
@@ -40,7 +45,7 @@ public class MySqlUserRoleDao implements UserRoleDao {
 
     @Override
     public UserRole getUserRole(Long id) throws DbException {
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.GET_USER_ROLE_BY_ID)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()){

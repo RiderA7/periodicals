@@ -49,5 +49,8 @@
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy:1.12.19" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy-agent:1.12.19" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.objenesis:objenesis:3.3" level="project" />
+    <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:5.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.0-alpha1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:slf4j-simple:2.0.6" level="project" />
   </component>
 </module>

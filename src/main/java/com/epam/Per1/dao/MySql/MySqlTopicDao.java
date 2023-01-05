@@ -6,6 +6,8 @@ import com.epam.Per1.dao.TopicDao;
 import com.epam.Per1.entity.Topic;
 import com.epam.Per1.utils.SqlUtils;
 import com.epam.Per1.utils.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +18,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class MySqlTopicDao implements TopicDao {
+
+    private static Logger log = LogManager.getLogger(MySqlTopicDao.class);
+    ConnectionPool connectionPool;
+
+    public MySqlTopicDao(String propertiesFile) {
+        connectionPool = ConnectionPool.getInstance(propertiesFile);
+    }
 
     private static Topic buildTopic(ResultSet rs) throws SQLException {
         return new Topic.Builder()
@@ -28,7 +37,7 @@ public class MySqlTopicDao implements TopicDao {
     @Override
     public List<Topic> getAllTopics() throws DbException {
         List<Topic> topics = new ArrayList<>();
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.GET_ALL_TOPICS);
              ResultSet rs = ps.executeQuery()){
             while(rs.next()){
@@ -47,7 +56,7 @@ public class MySqlTopicDao implements TopicDao {
         String limitStr = "";
         String sql = SqlUtils.GET_ALL_TOPICS;
         sql = Utils.prepareSqlWhithPaging(where, groupBy, sort, offset, limit, limitStr, sql);
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
@@ -62,7 +71,7 @@ public class MySqlTopicDao implements TopicDao {
 
     @Override
     public boolean create(Topic topic) throws DbException {
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.CREATE_TOPIC)){
             int k = 0;
             ps.setString(++k, topic.getName());
@@ -77,7 +86,7 @@ public class MySqlTopicDao implements TopicDao {
 
     @Override
     public Optional<Topic> getTopicById(int id) throws DbException {
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.GET_TOPIC_BY_ID)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()){
@@ -90,7 +99,7 @@ public class MySqlTopicDao implements TopicDao {
     }
 
     public Optional<Topic> getTopicByName(String name) throws DbException {
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.GET_TOPIC_BY_NAME)) {
             ps.setString(1, name);
             try (ResultSet rs = ps.executeQuery()){
@@ -105,7 +114,7 @@ public class MySqlTopicDao implements TopicDao {
     @Override
     public boolean updateTopic(Topic topic) throws DbException {
         boolean updated = false;
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.UPDATE_TOPIC)){
             int k = 0;
             ps.setString(++k, topic.getName());
@@ -123,7 +132,7 @@ public class MySqlTopicDao implements TopicDao {
     @Override
     public int countAllTopics() throws DbException {
         int count = 0;
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.COUNT_ALL_TOPICS)){
             ResultSet rs = ps.executeQuery();
             while(rs.next()){

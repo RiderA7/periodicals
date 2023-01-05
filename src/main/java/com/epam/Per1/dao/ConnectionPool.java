@@ -1,8 +1,5 @@
 package com.epam.Per1.dao;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,26 +7,24 @@ import java.sql.SQLException;
 public class ConnectionPool {
 
     private static ConnectionPool instance = null;
+    private static DataSource dataSource = null;
 
-    private ConnectionPool(){}
+    private ConnectionPool(String properties){
+        dataSource = MyDataSourceHikari.getDataSource(properties);
+    }
 
-    public synchronized static ConnectionPool getInstance(){
+    public synchronized static ConnectionPool getInstance(String properties){
         if(instance == null)
-            instance = new ConnectionPool();
+            instance = new ConnectionPool(properties);
         return instance;
     }
 
     public Connection getConnection(){
-        Context context;
         Connection con = null;
         try {
-            context = new InitialContext();
-            DataSource ds =
-                    (DataSource) context.lookup("java:comp/env/jdbc/periodicals");
-            con = ds.getConnection();
-        } catch (NamingException | SQLException e) {
+            con = dataSource.getConnection();
+        } catch (SQLException e) {
             throw new IllegalStateException("Cannot init DBManager", e);
-//            e.printStackTrace();
         }
         return con;
     }

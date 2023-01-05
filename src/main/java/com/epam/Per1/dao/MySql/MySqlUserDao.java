@@ -6,6 +6,8 @@ import com.epam.Per1.dao.UserDao;
 import com.epam.Per1.entity.User;
 import com.epam.Per1.utils.SqlUtils;
 import com.epam.Per1.utils.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +18,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class MySqlUserDao implements UserDao {
+
+    private static Logger log = LogManager.getLogger(MySqlUserDao.class);
+    ConnectionPool connectionPool;
+
+    public MySqlUserDao(String propertiesFile) {
+        connectionPool = ConnectionPool.getInstance(propertiesFile);
+    }
+
 
     private static User buildUser(ResultSet rs) throws SQLException {
 //        StringBuilder out = new StringBuilder();
@@ -34,7 +44,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public Optional<User> login(String login, char[] password) throws DbException {
         String hashPassword = Utils.hash(password);
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
             PreparedStatement ps = con.prepareStatement(SqlUtils.LOGIN)) {
             ps.setString(1, login);
             ps.setString(2, hashPassword);
@@ -49,7 +59,7 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public boolean create(User user) throws DbException {
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.CREATE_USER)){
             int k = 0;
             ps.setString(++k, user.getLogin());
@@ -72,7 +82,7 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public Optional<User> getUserByLogin(String login) throws DbException {
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.FIND_USER_BY_LOGIN)) {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()){
@@ -86,7 +96,7 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public Optional<User> getUserById(Long id) throws DbException {
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.FIND_USER_BY_ID)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()){
@@ -101,7 +111,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public boolean updateUser(User user) throws DbException {
         boolean updated = false;
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.UPDATE_USER)){
             int k = 0;
             ps.setString(++k, user.getLogin());
@@ -129,7 +139,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public int countAllUsers() throws DbException {
         int count = 0;
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.COUNT_ALL_USERS)){
                 ResultSet rs = ps.executeQuery();
                 while(rs.next()){
@@ -147,7 +157,7 @@ public class MySqlUserDao implements UserDao {
         String limitStr = "";
         String sql = SqlUtils.SELECT_LIMIT_USERS;
         sql = Utils.prepareSqlWhithPaging(where, groupBy, sort, offset, limit, limitStr, sql);
-        try (Connection con = ConnectionPool.getInstance().getConnection();
+        try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 //            int k = 0;
 //            ps.set(++k, where);

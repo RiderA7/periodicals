@@ -5,10 +5,11 @@ import com.epam.Per1.dao.MySql.MySqlDao;
 public abstract class DaoFactory {
 
     private static DaoFactory instance;
+    private static final String PROPERTIES_FILE = "datasource.properties";
 
     public synchronized static DaoFactory getInstance(){
         if(instance == null) {
-            instance = new MySqlDao();
+            instance = new MySqlDao(PROPERTIES_FILE);
         }
         return instance;
     }

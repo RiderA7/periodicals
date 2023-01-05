@@ -2,6 +2,8 @@ package com.epam.Per1.service.impl;
 
 import com.epam.Per1.DbException;
 import com.epam.Per1.dao.DaoFactory;
+import com.epam.Per1.dao.UserDao;
+import com.epam.Per1.dao.UserRoleDao;
 import com.epam.Per1.entity.User;
 import com.epam.Per1.entity.UserRole;
 import com.epam.Per1.service.IUserService;
@@ -17,12 +19,14 @@ import java.util.Optional;
 public class UserService implements IUserService {
 
     private static Logger log = LogManager.getLogger(UserService.class);
+    UserDao userDao = DaoFactory.getInstance().getUserDao();
+    UserRoleDao userRoleDao = DaoFactory.getInstance().getUserRoleDao();
 
     @Override
     public Optional<User> getUserByLogin(String login) {
         Optional<User> user;
         try {
-            user = DaoFactory.getInstance().getUserDao().getUserByLogin(login);
+            user = userDao.getUserByLogin(login);
         } catch (DbException e) {
             log.error("Can't find user with login " + login, e);
             return Optional.empty();
@@ -34,7 +38,7 @@ public class UserService implements IUserService {
     public Optional<User> getUserById(Long id) {
         Optional<User> user;
         try {
-            user = DaoFactory.getInstance().getUserDao().getUserById(id);
+            user = userDao.getUserById(id);
         } catch (DbException e) {
             log.error("Can't find user with id = " + id, e);
             return Optional.empty();
@@ -46,7 +50,7 @@ public class UserService implements IUserService {
     public boolean createUser(User user) {
         boolean created = false;
         try {
-            if(DaoFactory.getInstance().getUserDao().create(user)) created = true;
+            if(userDao.create(user)) created = true;
         } catch (DbException e) {
             log.error("Can't create user", e);
         }
@@ -58,7 +62,7 @@ public class UserService implements IUserService {
         log.info("User "+user.getLogin()+" logged in");
         UserRole userRole;
         try {
-            userRole = DaoFactory.getInstance().getUserRoleDao().getUserRole(user.getRoleId());
+            userRole = userRoleDao.getUserRole(user.getRoleId());
         } catch (DbException e) {
             userRole = new UserRole.Builder().setId(1L).setUserRole("user").getUserRole();
         }
@@ -78,7 +82,7 @@ public class UserService implements IUserService {
     public boolean updateUser(User user) {
         boolean updated = false;
             try {
-                updated = DaoFactory.getInstance().getUserDao().updateUser(user);
+                updated = userDao.updateUser(user);
             } catch (DbException e) {
                 log.error("User not updated! (service)" + e.getMessage());
             }
@@ -88,7 +92,7 @@ public class UserService implements IUserService {
     @Override
     public List<User> getAllUsers() {
         try {
-            return DaoFactory.getInstance().getUserDao().getAllUsers();
+            return userDao.getAllUsers();
         } catch (DbException e) {
             log.error("Can't get list of all users from DB!!!");
             return null;
@@ -98,7 +102,7 @@ public class UserService implements IUserService {
     @Override
     public int countAllUsers() {
         try {
-            return DaoFactory.getInstance().getUserDao().countAllUsers();
+            return userDao.countAllUsers();
         } catch (DbException e) {
             log.error("Can't count users in DB!!!");
             return 0;
@@ -110,7 +114,7 @@ public class UserService implements IUserService {
         int offset = pagingParams.getOffset();
         int limit = pagingParams.getLimit();
         try {
-            return DaoFactory.getInstance().getUserDao().getLimitUsers(where, groupBy, sort, offset, limit);
+            return userDao.getLimitUsers(where, groupBy, sort, offset, limit);
         } catch (DbException e) {
             log.error("Can't get list of users from DB!!!");
             return null;
@@ -125,7 +129,7 @@ public class UserService implements IUserService {
     @Override
     public void banUser(int id, boolean ban) {
         try {
-            Optional<User> optionalUser = DaoFactory.getInstance().getUserDao().getUserById((long) id);
+            Optional<User> optionalUser = userDao.getUserById((long) id);
             optionalUser.ifPresent(user -> updateUser(buildUser(user, ban)));
         } catch (DbException e) {
             log.error("Can't ban/unban userId="+id);
