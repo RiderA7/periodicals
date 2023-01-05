@@ -58,4 +58,15 @@ public class PagingParams {
     public int getCurrentPage() {
         return currentPage;
     }
+
+    @Override
+    public String toString() {
+        return "PagingParams{" +
+                "offset=" + offset +
+                ", limit=" + limit +
+                ", total=" + total +
+                ", maxPageNum=" + maxPageNum +
+                ", currentPage=" + currentPage +
+                '}';
+    }
 }

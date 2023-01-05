@@ -146,13 +146,7 @@ public class MySqlUserDao implements UserDao {
         List<User> users = new ArrayList<>();
         String limitStr = "";
         String sql = SqlUtils.SELECT_LIMIT_USERS;
-        if(!where.equals("")) sql += where;
-        if(!groupBy.equals("")) sql += groupBy;
-        if(!sort.equals("")) sql += sort;
-        if(offset >= 0 && limit > 0){
-            limitStr = " LIMIT " + offset + "," + limit;
-        }
-        if(!limitStr.equals("")) sql += limitStr;
+        sql = Utils.prepareSqlWhithPaging(where, groupBy, sort, offset, limit, limitStr, sql);
         try (Connection con = ConnectionPool.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 //            int k = 0;

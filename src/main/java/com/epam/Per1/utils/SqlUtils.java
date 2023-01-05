@@ -2,7 +2,9 @@ package com.epam.Per1.utils;
 
 public class SqlUtils {
 
-    public static final String GET_ALL_TOPICS = "SELECT * FROM topic";
+    public static final String GET_ALL_TOPICS = "SELECT topic_id, topic_name, count(publication_id) as pubs " +
+            "FROM topic LEFT JOIN publication ON topic_id=publication_topic" +
+            " GROUP BY topic_name";
     public static final String FIND_USER_BY_LOGIN = "SELECT * FROM user WHERE user_login LIKE ?";
     public static final String LOGIN
             = "SELECT * FROM user WHERE user_login LIKE ? AND user_password_md5 LIKE ?";
@@ -23,4 +25,10 @@ public class SqlUtils {
     public static final String FIND_USER_BY_ID = "SELECT * FROM user WHERE user_id=?";
     public static final String COUNT_ALL_USERS = "SELECT COUNT(*) FROM user";
     public static final String SELECT_LIMIT_USERS = "SELECT * FROM user";
+    public static final String CREATE_TOPIC = "INSERT INTO topic (topic_name) VALUES (?)";
+    public static final String GET_TOPIC_BY_ID = "SELECT * FROM topic WHERE topic_id=?";
+    public static final String GET_TOPIC_BY_NAME = "SELECT * FROM topic WHERE topic_name=?";
+    public static final String UPDATE_TOPIC = "UPDATE topic SET" +
+            " topic_name=? WHERE topic_id=?";
+    public static final String COUNT_ALL_TOPICS = "SELECT COUNT(*) FROM topic";
 }

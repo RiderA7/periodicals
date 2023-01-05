@@ -12,4 +12,5 @@ public class Pages {
     public static final String USER_PROFILE = "/jsp/user/profile.jsp";
     public static final String USER_REPLENISH = "/jsp/user/replenish.jsp";
     public static final String ADMIN_USERS = "/jsp/admin/users.jsp";
+    public static final String TOPICS = "/jsp/general/topics.jsp";
 }

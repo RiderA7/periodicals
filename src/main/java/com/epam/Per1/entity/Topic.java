@@ -2,15 +2,29 @@ package com.epam.Per1.entity;
 
 public class Topic {
 
-    int topic_id;
-    String topic_name;
+    int id;
+    String name;
+    int pubs;
 
     public int getId() {
-        return topic_id;
+        return id;
     }
 
     public String getName() {
-        return topic_name;
+        return name;
+    }
+
+    public int getPubs() {
+        return pubs;
+    }
+
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pubs='" + pubs + '\'' +
+                '}';
     }
 
     public static class Builder{
@@ -21,12 +35,15 @@ public class Topic {
         }
 
         public Builder setId(int id){
-            topic.topic_id = id;
+            topic.id = id;
             return this;
         }
-
         public Builder setName(String name){
-            topic.topic_name = name;
+            topic.name = name;
+            return this;
+        }
+        public Builder setPubs(int pubs){
+            topic.pubs = pubs;
             return this;
         }
     }

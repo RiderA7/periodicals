@@ -29,10 +29,10 @@ ${users}
                     <input type="hidden" name="userId" value="${user.id}">
                     <input type="hidden" name="action" value="user">
                     <c:if test="${user.blocked == false}">
-                        <input type="submit" name="ban" value="BAN">
+                        <input class="btn" type="submit" name="ban" value="BAN">
                     </c:if>
                     <c:if test="${user.blocked == true}">
-                        <input type="submit" name="ban" value="UNBAN">
+                        <input class="btn" type="submit" name="ban" value="UNBAN">
                     </c:if>
                 </form>
             </td>
