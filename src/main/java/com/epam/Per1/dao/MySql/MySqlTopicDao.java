@@ -26,11 +26,17 @@ public class MySqlTopicDao implements TopicDao {
         connectionPool = ConnectionPool.getInstance(propertiesFile);
     }
 
-    private static Topic buildTopic(ResultSet rs) throws SQLException {
+    private static Topic buildTopicWithPubs(ResultSet rs) throws SQLException {
         return new Topic.Builder()
                 .setName(rs.getString("topic_name"))
                 .setId(rs.getInt("topic_id"))
                 .setPubs(rs.getInt("pubs"))
+                .getTopic();
+    }
+    private static Topic buildTopic(ResultSet rs) throws SQLException {
+        return new Topic.Builder()
+                .setName(rs.getString("topic_name"))
+                .setId(rs.getInt("topic_id"))
                 .getTopic();
     }
 
@@ -41,7 +47,7 @@ public class MySqlTopicDao implements TopicDao {
              PreparedStatement ps = con.prepareStatement(SqlUtils.GET_ALL_TOPICS);
              ResultSet rs = ps.executeQuery()){
             while(rs.next()){
-                topics.add(buildTopic(rs));
+                topics.add(buildTopicWithPubs(rs));
             }
             return topics;
         } catch (SQLException e) {
@@ -60,7 +66,7 @@ public class MySqlTopicDao implements TopicDao {
              PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                Topic topic = buildTopic(rs);
+                Topic topic = buildTopicWithPubs(rs);
                 topics.add(topic);
             }
         } catch (SQLException e) {

@@ -20,7 +20,8 @@ public enum CommandType {
     ACCOUNTREPLENISHPOST(new AccountReplenishPostCommand()),
     ACCOUNTUPDATEPASSGET(new AccountChangePassGetCommand()),
     ACCOUNTUPDATEPASSPOST(new AccountChangePassPostCommand()),
-    TOPICSGET(new TopicsGetCommand()); //,
+    TOPICSGET(new TopicsGetCommand()),
+    TOPICSPOST(new TopicsPostCommand()); //,
 
 //    INFOCONTACTGET(new ContactsPageCommand());
 

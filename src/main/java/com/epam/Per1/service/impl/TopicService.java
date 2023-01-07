@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TopicService implements ITopicService {
 
@@ -45,16 +46,35 @@ public class TopicService implements ITopicService {
 
     @Override
     public Topic getTopicById(int id) {
-        return null;
+        Optional<Topic> optionalTopic = Optional.empty();
+        try {
+            optionalTopic = topicDao.getTopicById(id);
+        } catch (DbException e) {
+            String error = "Can't get topic with id=" + id;
+            log.error(error);
+        }
+        if (optionalTopic.isPresent()) return optionalTopic.get();
+        else
+            return null;
     }
 
     @Override
     public boolean updateTopic(Topic topic) {
+        try {
+            return topicDao.updateTopic(topic);
+        } catch (DbException e) {
+            log.error("Can't update topic id=" + topic.getId(), e);
+        }
         return false;
     }
 
     @Override
     public boolean createTopic(Topic topic) {
+        try {
+            return topicDao.create(topic);
+        } catch (DbException e) {
+            log.error("Can't create topic id=" + topic.getId(), e);
+        }
         return false;
     }
 

@@ -4,7 +4,7 @@ public class Topic {
 
     int id;
     String name;
-    int pubs;
+    int pubs = 0;
 
     public int getId() {
         return id;

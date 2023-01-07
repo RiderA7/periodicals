@@ -6,7 +6,12 @@
 <body>
 <%@ include file="../inc/menu.jsp" %>
 <%@ include file="../inc/header.jsp" %>
-${topics}
+${topics}<br>
+<c:if test="${sessionScope.user.roleId == 2}">
+<form action="topics" method="post">
+    <input class="btn" type="submit" name="add" value="ADD NEW TOPIC">
+</form>
+</c:if>
 <table>
     <tr>
         <th>Topic</th>
@@ -20,7 +25,6 @@ ${topics}
             <td>
                 <form action="topics" method="post">
                     <input type="hidden" name="topicId" value="${topic.id}">
-                    <input type="hidden" name="action" value="topic">
                     <c:if test="${sessionScope.user.roleId == 2}">
                         <input class="btn" type="submit" name="edit" value="EDIT">
                     </c:if>

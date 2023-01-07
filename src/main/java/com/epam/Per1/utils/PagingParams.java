@@ -11,19 +11,19 @@ public class PagingParams {
     public PagingParams(int total, int limit) {
         this.total = total;
         this.limit = limit;
-        this.maxPageNum = total/limit;
+        this.maxPageNum = (total % limit == 0) ? total/limit-1 : total/limit ;
         this.currentPage = 0;
         this.offset = 0;
     }
 
     public void setTotal(int total){
         this.total = total;
-        this.maxPageNum = total/limit;
+        this.maxPageNum = (total % limit == 0) ? total/limit-1 : total/limit;
     }
 
     public void setPage(int page){
         currentPage = page;
-        if(currentPage<1){
+        if(currentPage<0){
             currentPage = 0;
         }
         if(currentPage > maxPageNum){
