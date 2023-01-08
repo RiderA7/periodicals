@@ -35,7 +35,7 @@ public class AccountReplenishPostCommand implements ActionCommand {
                 log.info("User " + newUser.getName() + " try to replenish account by " + deposit);
                 log.info("Balance before: " + newUser.getMoney());
                 newUser = userService.buildUser(newUser, deposit);
-                updated = userService.updateUser(newUser);
+                updated = userService.update(newUser);
             } catch (NullPointerException e) {
                 log.error("No user logged in for replenish!");
             }

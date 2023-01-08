@@ -6,7 +6,7 @@ public class UserRole extends Entity{
 
     UserRole(){}
 
-    UserRole(Long id, String role){
+    UserRole(int id, String role){
         super(id);
         this.role = role;
     }
@@ -26,7 +26,7 @@ public class UserRole extends Entity{
     public static class Builder{
         UserRole userRole = new UserRole();
 
-        public Builder setId(Long id){
+        public Builder setId(int id){
             userRole.setId(id);
             return this;
         }

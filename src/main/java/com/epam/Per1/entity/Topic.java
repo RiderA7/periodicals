@@ -1,14 +1,10 @@
 package com.epam.Per1.entity;
 
-public class Topic {
+public class Topic extends Entity{
 
-    int id;
     String name;
     int pubs = 0;
-
-    public int getId() {
-        return id;
-    }
+    boolean pubsUpdated = false;
 
     public String getName() {
         return name;
@@ -18,10 +14,14 @@ public class Topic {
         return pubs;
     }
 
+    public boolean isPubsUpdated(){
+        return pubsUpdated;
+    }
+
     @Override
     public String toString() {
         return "Topic{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", pubs='" + pubs + '\'' +
                 '}';
@@ -35,7 +35,7 @@ public class Topic {
         }
 
         public Builder setId(int id){
-            topic.id = id;
+            topic.setId(id);
             return this;
         }
         public Builder setName(String name){
@@ -44,6 +44,7 @@ public class Topic {
         }
         public Builder setPubs(int pubs){
             topic.pubs = pubs;
+            topic.pubsUpdated = true;
             return this;
         }
     }

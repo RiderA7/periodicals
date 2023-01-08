@@ -9,14 +9,12 @@ import org.mockito.Mockito;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class TopicsGetCommandTest {
 
     @Test
     public void TopicsGetCommandTest_return_good() throws ServletException, IOException {
         TopicService topicService = Mockito.mock(TopicService.class);
-        Mockito.when(topicService.countAllTopics()).thenReturn(3);
+        Mockito.when(topicService.countAll()).thenReturn(3);
 
         HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
         HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);

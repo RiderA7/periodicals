@@ -31,11 +31,11 @@ public class MySqlUserDao implements UserDao {
 //        StringBuilder out = new StringBuilder();
 //        System.out.println(rs.toString());
         return new User.Builder()
-                .setId(rs.getLong("user_id"))
+                .setId(rs.getInt("user_id"))
                 .setName(rs.getString("user_name"))
                 .setLogin(rs.getString("user_login"))
                 .setPassword(rs.getString("user_password_md5"))
-                .setRoleId(rs.getLong("user_role"))
+                .setRoleId(rs.getInt("user_role"))
                 .setMoney(rs.getInt("user_money"))
                 .setBlocked(rs.getInt("user_blocked"))
                 .getUser();
@@ -95,7 +95,7 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public Optional<User> getUserById(Long id) throws DbException {
+    public Optional<User> getUserById(int id) throws DbException {
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.FIND_USER_BY_ID)) {
             ps.setLong(1, id);

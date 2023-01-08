@@ -26,7 +26,7 @@ public class AdminUsersPostCommand implements ActionCommand {
                     int userId = Integer.parseInt(req.getParameter("userId"));
                     String ban = req.getParameter("ban");
                     log.info(ban + " UserId=" + userId);
-                    userService.banUser(userId, ban.equals("BAN"));
+                    userService.ban(userId, ban.equals("BAN"));
                 }
             }
         }

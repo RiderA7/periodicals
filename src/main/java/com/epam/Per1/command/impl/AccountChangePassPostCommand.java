@@ -39,7 +39,7 @@ public class AccountChangePassPostCommand implements ActionCommand {
         try {
             User user = (User) req.getSession().getAttribute("user");
             newUser = userService.buildUser(user, Utils.hash(req.getParameter("password").toCharArray()));
-            updated = userService.updateUser(newUser);
+            updated = userService.update(newUser);
         } catch (NullPointerException e) {
             log.error("No user logged in for update!");
         }

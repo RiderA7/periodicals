@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class TopicsPostCommand implements ActionCommand {
     private final TopicService topicService = new TopicService();
@@ -23,10 +24,13 @@ public class TopicsPostCommand implements ActionCommand {
         log.debug("Found session topic:" + req.getSession().getAttribute("topic"));
         if(req.getParameter("edit") != null && req.getParameter("topicId") != null){
             int topicId = Integer.parseInt(req.getParameter("topicId"));
-            Topic topic = topicService.getTopicById(topicId);
-            req.getSession().setAttribute("topic", topic);
-            log.debug("EDIT " + topicId + " " + topic);
-            return new CommandResult(Pages.ADMIN_TOPICS,true);
+            Optional<Topic> optionalTopic = topicService.getById(topicId);
+            if(optionalTopic.isPresent()){
+                Topic topic = optionalTopic.get();
+                req.getSession().setAttribute("topic", topic);
+                log.debug("EDIT " + topicId + " " + topic);
+                return new CommandResult(Pages.ADMIN_TOPICS, true);
+            }
         }
 
         if(req.getParameter("add") != null){
@@ -61,10 +65,10 @@ public class TopicsPostCommand implements ActionCommand {
     }
 
     private boolean createTopic(Topic topic){
-        return topicService.createTopic(topic);
+        return topicService.create(topic);
     }
 
     private boolean updateTopic(Topic topic){
-        return topicService.updateTopic(topic);
+        return topicService.update(topic);
     }
 }

@@ -4,20 +4,20 @@ import java.io.Serializable;
 
 public abstract class Entity implements Serializable, Cloneable {
 
-    private Long id;
+    private int id;
 
     public Entity() {
     }
 
-    public Entity(Long id) {
+    public Entity(int id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

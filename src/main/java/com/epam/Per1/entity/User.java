@@ -5,7 +5,7 @@ public class User extends Entity {
     private String login;
     private String name;
     private String password;
-    private Long roleId;
+    private int roleId;
     private double money;
     private boolean blocked;
 
@@ -24,8 +24,8 @@ public class User extends Entity {
                 .getUser();
     }
 
-    public User(Long id, String login, String name, String password,
-                Long roleId, double money, boolean blocked) {
+    public User(int id, String login, String name, String password,
+                int roleId, double money, boolean blocked) {
         super(id);
         this.login = login;
         this.name = name;
@@ -47,7 +47,7 @@ public class User extends Entity {
         return password;
     }
 
-    public Long getRoleId() {
+    public int getRoleId() {
         return roleId;
     }
 
@@ -74,7 +74,7 @@ public class User extends Entity {
     public static class Builder {
         User user = new User();
 
-        public Builder setId(Long id) {
+        public Builder setId(int id) {
             user.setId(id);
             return this;
         }
@@ -94,7 +94,7 @@ public class User extends Entity {
             return this;
         }
 
-        public Builder setRoleId(Long id) {
+        public Builder setRoleId(int id) {
             user.roleId = id;
             return this;
         }

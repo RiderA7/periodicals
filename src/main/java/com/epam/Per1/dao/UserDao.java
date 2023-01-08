@@ -15,7 +15,7 @@ public interface UserDao {
     boolean isLoginExist(String login) throws DbException;
     boolean create(User user) throws DbException;
     Optional<User> getUserByLogin(String login) throws DbException;
-    Optional<User> getUserById(Long id) throws DbException;
+    Optional<User> getUserById(int id) throws DbException;
     boolean updateUser(User user) throws DbException;
     void deleteUser(int userId) throws DbException;
     void changeRole(int userId, int roleId) throws DbException;

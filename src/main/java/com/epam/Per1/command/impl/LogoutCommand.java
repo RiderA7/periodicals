@@ -22,7 +22,7 @@ public class LogoutCommand implements ActionCommand {
 
         final HttpSession session = req.getSession();
         try {
-            Long userId = ((User) session.getAttribute("user")).getId();
+            int userId = ((User) session.getAttribute("user")).getId();
             log.info("user with id = " + userId + " logged out");
         } catch (NullPointerException e) {
             log.info("Session expired - no logout");

@@ -23,7 +23,7 @@ public class MySqlUserRoleDao implements UserRoleDao {
 
     private static UserRole buildUserRole(ResultSet rs) throws SQLException {
         return new UserRole.Builder()
-                .setId(rs.getLong("role_id"))
+                .setId(rs.getInt("role_id"))
                 .setUserRole(rs.getString("role_name"))
                 .getUserRole();
     }
@@ -44,7 +44,7 @@ public class MySqlUserRoleDao implements UserRoleDao {
     }
 
     @Override
-    public UserRole getUserRole(Long id) throws DbException {
+    public UserRole getUserRole(int id) throws DbException {
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.GET_USER_ROLE_BY_ID)) {
             ps.setLong(1, id);

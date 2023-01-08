@@ -13,6 +13,7 @@ The reader registers in the system and has a personal account,
   An unregistered user cannot subscribe.
 The reader has a personal account that he can replenish.
   Funds are withdrawn from the account when subscribing to the publication.
+
 The system administrator has the rights:
 - adding, deleting and editing publications;
 - blocking / unblocking the user.

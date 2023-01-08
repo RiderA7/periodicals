@@ -15,7 +15,7 @@ public abstract class AbstractDao<K, T extends Entity> {
 
     public abstract List<T> findAll() throws DbException;
 
-    public abstract Optional<T> findById(K id) throws DbException;
+    public abstract Optional<T> getById(K id) throws DbException;
 
     public abstract boolean create(T entity) throws DbException;
 

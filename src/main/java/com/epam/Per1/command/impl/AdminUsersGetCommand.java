@@ -23,7 +23,7 @@ public class AdminUsersGetCommand implements ActionCommand {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users;
-        int totalUsers = userService.countAllUsers();
+        int totalUsers = userService.countAll();
         HttpSession session = req.getSession();
         PagingParams pagingParams;
         if(session.getAttribute("paging_users") != null){
@@ -38,7 +38,7 @@ public class AdminUsersGetCommand implements ActionCommand {
             pagingParams.setPage(pageReq-1);
         }
         session.setAttribute("paging_users", pagingParams);
-        users = userService.getLimitUsers("","","",pagingParams);
+        users = userService.getLimit("","","",pagingParams);
         StringBuilder pageParamsGet = new StringBuilder(Pages.ADMIN_USERS);
         pageParamsGet.append("?").append("currentPage=").append(pagingParams.getCurrentPage())
                 .append("&").append("maxPageNum=").append(pagingParams.getMaxPageNum());

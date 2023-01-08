@@ -54,10 +54,10 @@ public class RegisterCommand implements ActionCommand {
         }
 
         User user = buildUser(req);
-        if (userService.createUser(user)) {
-            Optional<User> userOptional = userService.getUserByLogin(user.getLogin());
+        if (userService.create(user)) {
+            Optional<User> userOptional = userService.getByName(user.getLogin());
             if (userOptional.isPresent()) {
-                String page = userService.loginUser(userOptional.get(), req.getSession());
+                String page = userService.login(userOptional.get(), req.getSession());
                 return new CommandResult(page, true);
             }
         }
@@ -71,7 +71,7 @@ public class RegisterCommand implements ActionCommand {
                 .setLogin(req.getParameter("login"))
                 .setPassword(Utils.hash(req.getParameter("password").toCharArray()))
                 .setName(req.getParameter("name"))
-                .setRoleId(1L)
+                .setRoleId(1)
                 .getUser();
     }
 }

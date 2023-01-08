@@ -15,7 +15,7 @@ public class testDao {
 
         TopicService topicService = new TopicService();
 
-        Mockito.when(topicService.countAllTopics()).thenReturn(3);
+        Mockito.when(topicService.countAll()).thenReturn(3);
 
         int topicCount = spiedTopicDao.countAllTopics();
 

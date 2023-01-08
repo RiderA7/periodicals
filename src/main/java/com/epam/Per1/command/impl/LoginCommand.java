@@ -50,7 +50,7 @@ public class LoginCommand implements ActionCommand {
                     req.setAttribute("err", "Your account was BANned!");
                     return new CommandResult(Pages.LOGIN_PAGE);
                 }
-                String page = userService.loginUser(userOptional.get(), req.getSession());
+                String page = userService.login(userOptional.get(), req.getSession());
                 return new CommandResult(page, true);
             }
         } catch (DbException e) {

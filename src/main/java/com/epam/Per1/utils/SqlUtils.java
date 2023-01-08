@@ -31,4 +31,15 @@ public class SqlUtils {
     public static final String UPDATE_TOPIC = "UPDATE topic SET" +
             " topic_name=? WHERE topic_id=?";
     public static final String COUNT_ALL_TOPICS = "SELECT COUNT(*) FROM topic";
+    public static final String COUNT_ALL_PUBLICATIONS = "SELECT COUNT(*) FROM publication";
+    public static final String GET_ALL_PUBLICATIONS = "SELECT * " +
+            "FROM publication left join topic on publication_topic=topic_id";
+    public static final String GET_PUBLICATION_BY_ID = "SELECT * " +
+            "FROM publication left join topic on publication_topic=topic_id WHERE publication_id=?";
+    public static final String GET_PUBLICATION_BY_NAME = "SELECT * " +
+            "FROM publication left join topic on publication_topic=topic_id WHERE publication_title=?";
+    public static final String CREATE_PUBLICATION = "INSERT INTO publication " +
+            "(publication_title, publication_price, publication_topic) VALUES (?, ?, ?)";
+    public static final String UPDATE_PUBLICATION = "UPDATE publication SET" +
+            " publication_title=?, publication_price=?, publication_topic=? WHERE publication_id=?";
 }

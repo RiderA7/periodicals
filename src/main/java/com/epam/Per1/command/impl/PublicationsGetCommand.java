@@ -3,6 +3,7 @@ package com.epam.Per1.command.impl;
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
 import com.epam.Per1.entity.Topic;
+import com.epam.Per1.service.impl.PublicationService;
 import com.epam.Per1.service.impl.TopicService;
 import com.epam.Per1.utils.Pages;
 import com.epam.Per1.utils.PagingParams;
@@ -16,9 +17,10 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
-public class TopicsGetCommand implements ActionCommand {
+public class PublicationsGetCommand implements ActionCommand {
     private final TopicService topicService = new TopicService();
-    private static Logger log = LogManager.getLogger(TopicsGetCommand.class);
+    private final PublicationService publicationService = new PublicationService();
+    private static Logger log = LogManager.getLogger(PublicationsGetCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

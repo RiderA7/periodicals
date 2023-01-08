@@ -4,7 +4,7 @@ import com.epam.Per1.DbException;
 import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.dao.TopicDao;
 import com.epam.Per1.entity.Topic;
-import com.epam.Per1.service.ITopicService;
+import com.epam.Per1.service.IService;
 import com.epam.Per1.utils.PagingParams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,13 +12,13 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
-public class TopicService implements ITopicService {
+public class TopicService implements IService<Topic> {
 
     private static Logger log = LogManager.getLogger(TopicService.class);
     private final TopicDao topicDao = DaoFactory.getInstance().getTopicDao();
 
     @Override
-    public List<Topic> getAllTopics() {
+    public List<Topic> getAll() {
         try {
             return topicDao.getAllTopics();
         } catch (DbException e) {
@@ -28,7 +28,7 @@ public class TopicService implements ITopicService {
     }
 
     @Override
-    public List<Topic> getLimitTopics(String where, String groupBy, String sort, PagingParams pagingParams) {
+    public List<Topic> getLimit(String where, String groupBy, String sort, PagingParams pagingParams) {
         int offset = pagingParams.getOffset();
         int limit = pagingParams.getLimit();
         try {
@@ -40,12 +40,12 @@ public class TopicService implements ITopicService {
     }
 
     @Override
-    public Topic getTopicByName(String name) {
-        return null;
+    public Optional<Topic> getByName(String name) {
+        return Optional.empty();
     }
 
     @Override
-    public Topic getTopicById(int id) {
+    public Optional<Topic> getById(int id) {
         Optional<Topic> optionalTopic = Optional.empty();
         try {
             optionalTopic = topicDao.getTopicById(id);
@@ -53,13 +53,11 @@ public class TopicService implements ITopicService {
             String error = "Can't get topic with id=" + id;
             log.error(error);
         }
-        if (optionalTopic.isPresent()) return optionalTopic.get();
-        else
-            return null;
+        return optionalTopic;
     }
 
     @Override
-    public boolean updateTopic(Topic topic) {
+    public boolean update(Topic topic) {
         try {
             return topicDao.updateTopic(topic);
         } catch (DbException e) {
@@ -69,7 +67,12 @@ public class TopicService implements ITopicService {
     }
 
     @Override
-    public boolean createTopic(Topic topic) {
+    public boolean delete(Topic topic) {
+        return false;
+    }
+
+    @Override
+    public boolean create(Topic topic) {
         try {
             return topicDao.create(topic);
         } catch (DbException e) {
@@ -79,7 +82,7 @@ public class TopicService implements ITopicService {
     }
 
     @Override
-    public int countAllTopics() {
+    public int countAll() {
         try {
             return topicDao.countAllTopics();
         } catch (DbException e) {

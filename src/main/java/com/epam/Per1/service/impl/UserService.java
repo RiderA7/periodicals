@@ -6,7 +6,7 @@ import com.epam.Per1.dao.UserDao;
 import com.epam.Per1.dao.UserRoleDao;
 import com.epam.Per1.entity.User;
 import com.epam.Per1.entity.UserRole;
-import com.epam.Per1.service.IUserService;
+import com.epam.Per1.service.IService;
 import com.epam.Per1.utils.Pages;
 import com.epam.Per1.utils.PagingParams;
 import jakarta.servlet.http.HttpSession;
@@ -16,14 +16,14 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
-public class UserService implements IUserService {
+public class UserService implements IService<User> {
 
     private static Logger log = LogManager.getLogger(UserService.class);
     UserDao userDao = DaoFactory.getInstance().getUserDao();
     UserRoleDao userRoleDao = DaoFactory.getInstance().getUserRoleDao();
 
     @Override
-    public Optional<User> getUserByLogin(String login) {
+    public Optional<User> getByName(String login) {
         Optional<User> user;
         try {
             user = userDao.getUserByLogin(login);
@@ -35,7 +35,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<User> getUserById(Long id) {
+    public Optional<User> getById(int id) {
         Optional<User> user;
         try {
             user = userDao.getUserById(id);
@@ -47,7 +47,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean createUser(User user) {
+    public boolean create(User user) {
         boolean created = false;
         try {
             if(userDao.create(user)) created = true;
@@ -57,20 +57,19 @@ public class UserService implements IUserService {
         return created;
     }
 
-    @Override
-    public String loginUser(User user, HttpSession session) {
+    public String login(User user, HttpSession session) {
         log.info("User "+user.getLogin()+" logged in");
         UserRole userRole;
         try {
             userRole = userRoleDao.getUserRole(user.getRoleId());
         } catch (DbException e) {
-            userRole = new UserRole.Builder().setId(1L).setUserRole("user").getUserRole();
+            userRole = new UserRole.Builder().setId(1).setUserRole("user").getUserRole();
         }
         log.info("Got role " + userRole.getUserRole());
         session.setAttribute("user", user);
         session.setAttribute("role", userRole);
         String page;
-        switch (userRole.getId().intValue()) {
+        switch (userRole.getId()) {
             case 1: page = Pages.USER_ACCOUNT; break;
             case 2: page = Pages.ADMIN_ACCOUNT; break;
             default: page = Pages.LOGIN_PAGE;
@@ -79,7 +78,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean updateUser(User user) {
+    public boolean update(User user) {
         boolean updated = false;
             try {
                 updated = userDao.updateUser(user);
@@ -90,7 +89,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAll() {
         try {
             return userDao.getAllUsers();
         } catch (DbException e) {
@@ -100,7 +99,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int countAllUsers() {
+    public int countAll() {
         try {
             return userDao.countAllUsers();
         } catch (DbException e) {
@@ -110,7 +109,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> getLimitUsers(String where, String groupBy, String sort, PagingParams pagingParams) {
+    public List<User> getLimit(String where, String groupBy, String sort, PagingParams pagingParams) {
         int offset = pagingParams.getOffset();
         int limit = pagingParams.getLimit();
         try {
@@ -121,16 +120,14 @@ public class UserService implements IUserService {
         }
     }
 
-    @Override
-    public boolean deleteUser(User user) {
+    public boolean delete(User user) {
         return false;
     }
 
-    @Override
-    public void banUser(int id, boolean ban) {
+    public void ban(int id, boolean ban) {
         try {
-            Optional<User> optionalUser = userDao.getUserById((long) id);
-            optionalUser.ifPresent(user -> updateUser(buildUser(user, ban)));
+            Optional<User> optionalUser = userDao.getUserById(id);
+            optionalUser.ifPresent(user -> update(buildUser(user, ban)));
         } catch (DbException e) {
             log.error("Can't ban/unban userId="+id);
             e.printStackTrace();

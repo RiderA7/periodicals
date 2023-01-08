@@ -9,7 +9,7 @@ public interface UserRoleDao {
 
     List<UserRole> getAllUserRoles() throws DbException;
 
-    UserRole getUserRole(Long id) throws DbException;
+    UserRole getUserRole(int id) throws DbException;
 
 //    Long createUserRole(String role);
 
