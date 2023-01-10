@@ -2,7 +2,7 @@ package com.epam.Per1.entity;
 
 public class Topic extends Entity{
 
-    String name;
+    String name = "";
     int pubs = 0;
     boolean pubsUpdated = false;
 

@@ -14,4 +14,6 @@ public class Pages {
     public static final String ADMIN_USERS = "/jsp/admin/users.jsp";
     public static final String TOPICS = "/jsp/general/topics.jsp";
     public static final String ADMIN_TOPICS = "/jsp/admin/topics.jsp";
+    public static final String PUBLICATIONS = "/jsp/general/publications.jsp";
+    public static final String ADMIN_PUBLICATIONS = "/jsp/admin/publications.jsp";
 }

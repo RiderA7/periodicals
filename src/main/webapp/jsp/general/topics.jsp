@@ -28,7 +28,9 @@ ${topics}<br>
                     <c:if test="${sessionScope.user.roleId == 2}">
                         <input class="btn" type="submit" name="edit" value="EDIT">
                     </c:if>
+                    <c:if test="${topic.pubs!=0}">
                         <input class="btn" type="submit" name="open" value="OPEN">
+                    </c:if>
                 </form>
             </td>
         </tr>

@@ -99,13 +99,12 @@ public class PublicationService implements IService<Publication> {
             return 0;
         }
     }
+
     public int countAll(int topicId) {
-        if(topicId != 0) {
-            try {
-                return publicationDao.countAll(topicId);
-            } catch (DbException e) {
-                log.error("Can't count publications with topicId=" + topicId + " in DB!!!");
-            }
+        try {
+            return publicationDao.countAll(topicId);
+        } catch (DbException e) {
+            log.error("Can't count publications with topicId=" + topicId + " in DB!!!");
         }
         return 0;
     }

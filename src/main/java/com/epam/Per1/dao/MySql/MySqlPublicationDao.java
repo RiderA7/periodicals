@@ -83,8 +83,9 @@ public class MySqlPublicationDao implements PublicationDao {
     public List<Publication> getLimit(String where, String groupBy, String sort, int offset, int limit) throws DbException {
         List<Publication> publications = new ArrayList<>();
         String limitStr = "";
-        String sql = SqlUtils.GET_ALL_TOPICS;
+        String sql = SqlUtils.GET_ALL_PUBLICATIONS;
         sql = Utils.prepareSqlWhithPaging(where, groupBy, sort, offset, limit, limitStr, sql);
+        System.out.println(sql);
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();

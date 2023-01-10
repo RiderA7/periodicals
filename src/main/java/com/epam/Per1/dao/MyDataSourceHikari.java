@@ -16,7 +16,7 @@ public class MyDataSourceHikari {
 
     private final static String URL_PROPERTY = "jdbcUrl";
     private final static String DRIVER = "dataSource.driver";
-    private final static String DB_USER = "dataSource.user";
+    private final static String DB_USER = "dataSource.username";
     private final static String DB_PASSWORD = "dataSource.password";
 
     public static synchronized DataSource getDataSource(String propertiesFile) {

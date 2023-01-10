@@ -43,7 +43,9 @@ public class TopicsPostCommand implements ActionCommand {
 
         if(req.getParameter("open") != null && req.getParameter("topicId") != null){
             int topicId = Integer.parseInt(req.getParameter("topicId"));
-
+            Optional<Topic> optionalTopic = topicService.getById(topicId);
+            req.getSession().setAttribute("activeTopic", optionalTopic.orElse(null));
+            return new CommandResult(Commands.PUBLICATIONS);
         }
 
         if(req.getParameter("action") != null){

@@ -1,5 +1,6 @@
 package com.epam.Per1.controller;
 
+import com.epam.Per1.DbException;
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.ActionFactory;
 import com.epam.Per1.command.CommandResult;
@@ -35,7 +36,12 @@ public class Controller extends HttpServlet {
         log.info("enter controller");
         ActionFactory actionFactory = new ActionFactory();
         ActionCommand command = actionFactory.defineCommand(req);
-        CommandResult commandResult = command.execute(req, resp);
+        CommandResult commandResult = null;
+        try {
+            commandResult = command.execute(req, resp);
+        } catch (DbException e) {
+            log.error(e.getMessage());
+        }
         String page;
         if (commandResult.getPage() != null) {
             page = commandResult.getPage();
