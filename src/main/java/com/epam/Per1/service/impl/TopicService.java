@@ -1,11 +1,10 @@
 package com.epam.Per1.service.impl;
 
 import com.epam.Per1.DbException;
-import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.dao.TopicDao;
 import com.epam.Per1.entity.Topic;
 import com.epam.Per1.service.IService;
-import com.epam.Per1.utils.PagingParams;
+import com.epam.Per1.utils.SqlParams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +14,11 @@ import java.util.Optional;
 public class TopicService implements IService<Topic> {
 
     private static Logger log = LogManager.getLogger(TopicService.class);
-    private final TopicDao topicDao = DaoFactory.getInstance().getTopicDao();
+    private TopicDao topicDao;
+
+    public TopicService(TopicDao topicDao) {
+        this.topicDao = topicDao;
+    }
 
     @Override
     public List<Topic> getAll() {
@@ -28,11 +31,9 @@ public class TopicService implements IService<Topic> {
     }
 
     @Override
-    public List<Topic> getLimit(String where, String groupBy, String sort, PagingParams pagingParams) {
-        int offset = pagingParams.getOffset();
-        int limit = pagingParams.getLimit();
+    public List<Topic> getLimit(SqlParams sqlParams) {
         try {
-            return topicDao.getLimitTopics(where, groupBy, sort, offset, limit);
+            return topicDao.getLimitTopics(sqlParams);
         } catch (DbException e) {
             log.error("Can't get list of topics from DB!!!");
             return null;

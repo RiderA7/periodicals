@@ -4,6 +4,7 @@ import com.epam.Per1.DbException;
 import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.UserDao;
 import com.epam.Per1.entity.User;
+import com.epam.Per1.utils.SqlParams;
 import com.epam.Per1.utils.SqlUtils;
 import com.epam.Per1.utils.Utils;
 import org.apache.logging.log4j.LogManager;
@@ -133,7 +134,9 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public List<User> getAllUsers() throws DbException {
-        return getLimitUsers("", "", "", 0, 0);
+        SqlParams sqlParams = new SqlParams.Builder()
+                .getSqlParams();
+        return getLimitUsers(sqlParams);
     }
 
     @Override
@@ -152,18 +155,12 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public List<User> getLimitUsers(String where, String groupBy, String sort, int offset, int limit) throws DbException {
+    public List<User> getLimitUsers(SqlParams sqlParams) throws DbException {
         List<User> users = new ArrayList<>();
-        String limitStr = "";
         String sql = SqlUtils.SELECT_LIMIT_USERS;
-        sql = Utils.prepareSqlWhithPaging(where, groupBy, sort, offset, limit, limitStr, sql);
+        sql = Utils.prepareSqlWithPaging(sqlParams, sql);
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-//            int k = 0;
-//            ps.set(++k, where);
-//            ps.setString(++k, groupBy);
-//            ps.setString(++k, sort);
-//            ps.setString(++k, limitStr);
             System.out.println(ps);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()){

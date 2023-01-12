@@ -13,7 +13,7 @@ public class testDao {
 
         TopicDao spiedTopicDao = Mockito.spy(topicDao);
 
-        TopicService topicService = new TopicService();
+        TopicService topicService = new TopicService(topicDao);
 
         Mockito.when(topicService.countAll()).thenReturn(3);
 

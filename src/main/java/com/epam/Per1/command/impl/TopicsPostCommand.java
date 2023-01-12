@@ -2,6 +2,7 @@ package com.epam.Per1.command.impl;
 
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
+import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.entity.Topic;
 import com.epam.Per1.service.impl.TopicService;
 import com.epam.Per1.utils.Commands;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class TopicsPostCommand implements ActionCommand {
-    private final TopicService topicService = new TopicService();
+    private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
     private static Logger log = LogManager.getLogger(TopicsPostCommand.class);
 
     @Override

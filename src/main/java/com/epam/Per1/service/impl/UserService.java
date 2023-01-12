@@ -8,7 +8,7 @@ import com.epam.Per1.entity.User;
 import com.epam.Per1.entity.UserRole;
 import com.epam.Per1.service.IService;
 import com.epam.Per1.utils.Pages;
-import com.epam.Per1.utils.PagingParams;
+import com.epam.Per1.utils.SqlParams;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,8 +19,12 @@ import java.util.Optional;
 public class UserService implements IService<User> {
 
     private static Logger log = LogManager.getLogger(UserService.class);
-    UserDao userDao = DaoFactory.getInstance().getUserDao();
-    UserRoleDao userRoleDao = DaoFactory.getInstance().getUserRoleDao();
+    private UserDao userDao;
+    private UserRoleDao userRoleDao = DaoFactory.getInstance().getUserRoleDao();
+
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public Optional<User> getByName(String login) {
@@ -109,11 +113,9 @@ public class UserService implements IService<User> {
     }
 
     @Override
-    public List<User> getLimit(String where, String groupBy, String sort, PagingParams pagingParams) {
-        int offset = pagingParams.getOffset();
-        int limit = pagingParams.getLimit();
+    public List<User> getLimit(SqlParams sqlParams) {
         try {
-            return userDao.getLimitUsers(where, groupBy, sort, offset, limit);
+            return userDao.getLimitUsers(sqlParams);
         } catch (DbException e) {
             log.error("Can't get list of users from DB!!!");
             return null;

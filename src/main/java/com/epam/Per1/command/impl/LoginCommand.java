@@ -21,7 +21,7 @@ import java.util.Optional;
 public class LoginCommand implements ActionCommand {
 
     private static Logger log = LogManager.getLogger(LoginCommand.class);
-    UserService userService = new UserService();
+    UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

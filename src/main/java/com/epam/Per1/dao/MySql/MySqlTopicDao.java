@@ -4,6 +4,7 @@ import com.epam.Per1.DbException;
 import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.TopicDao;
 import com.epam.Per1.entity.Topic;
+import com.epam.Per1.utils.SqlParams;
 import com.epam.Per1.utils.SqlUtils;
 import com.epam.Per1.utils.Utils;
 import org.apache.logging.log4j.LogManager;
@@ -57,11 +58,10 @@ public class MySqlTopicDao implements TopicDao {
     }
 
     @Override
-    public List<Topic> getLimitTopics(String where, String groupBy, String sort, int offset, int limit) throws DbException {
+    public List<Topic> getLimitTopics(SqlParams sqlParams) throws DbException {
         List<Topic> topics = new ArrayList<>();
-        String limitStr = "";
         String sql = SqlUtils.GET_ALL_TOPICS;
-        sql = Utils.prepareSqlWhithPaging(where, groupBy, sort, offset, limit, limitStr, sql);
+        sql = Utils.prepareSqlWithPaging(sqlParams, sql);
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();

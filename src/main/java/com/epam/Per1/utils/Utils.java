@@ -24,14 +24,11 @@ public class Utils {
         return e + "; Caused by: " + e.getCause().toString();
     }
 
-    public static String prepareSqlWhithPaging(String where, String groupBy, String sort, int offset, int limit, String limitStr, String sql) {
-        if(!where.equals("")) sql += where;
-        if(!groupBy.equals("")) sql += groupBy;
-        if(!sort.equals("")) sql += sort;
-        if(offset >= 0 && limit > 0){
-            limitStr = " LIMIT " + offset + "," + limit;
-        }
-        if(!limitStr.equals("")) sql += limitStr;
+    public static String prepareSqlWithPaging(SqlParams sqlParams, String sql) {
+        if(!sqlParams.getWhere().equals("")) sql += sqlParams.getWhere();
+        if(!sqlParams.getGroupBy().equals("")) sql += sqlParams.getGroupBy();
+        if(!sqlParams.getSort().equals("")) sql += sqlParams.getSort();
+        if(!sqlParams.getLimits().equals("")) sql += sqlParams.getLimits();
         return sql;
     }
 

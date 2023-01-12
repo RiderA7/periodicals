@@ -1,6 +1,6 @@
 package com.epam.Per1.service;
 
-import com.epam.Per1.utils.PagingParams;
+import com.epam.Per1.utils.SqlParams;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface IService<T> {
 
     List<T> getAll();
-    List<T> getLimit(String where, String groupBy, String sort, PagingParams pagingParams);
+    List<T> getLimit(SqlParams sqlParams);
 // C
     boolean create(T t);
 // R

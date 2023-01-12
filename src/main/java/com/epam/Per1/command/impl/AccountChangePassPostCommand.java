@@ -2,6 +2,7 @@ package com.epam.Per1.command.impl;
 
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
+import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.entity.User;
 import com.epam.Per1.service.impl.UserService;
 import com.epam.Per1.utils.Pages;
@@ -16,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 public class AccountChangePassPostCommand implements ActionCommand {
-    private final UserService userService = new UserService();
+    private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
     private static Logger log = LogManager.getLogger(AccountChangePassPostCommand.class);
 
     @Override

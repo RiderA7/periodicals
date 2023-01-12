@@ -1,11 +1,10 @@
 package com.epam.Per1.service.impl;
 
 import com.epam.Per1.DbException;
-import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.dao.PublicationDao;
 import com.epam.Per1.entity.Publication;
 import com.epam.Per1.service.IService;
-import com.epam.Per1.utils.PagingParams;
+import com.epam.Per1.utils.SqlParams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +14,11 @@ import java.util.Optional;
 public class PublicationService implements IService<Publication> {
 
     private static Logger log = LogManager.getLogger(PublicationService.class);
-    private final PublicationDao publicationDao = DaoFactory.getInstance().getPublicationDao();
+    private PublicationDao publicationDao;
+
+    public PublicationService(PublicationDao publicationDao) {
+        this.publicationDao = publicationDao;
+    }
 
     public List<Publication> getAll(int topicId) {
         try {
@@ -37,11 +40,9 @@ public class PublicationService implements IService<Publication> {
     }
 
     @Override
-    public List<Publication> getLimit(String where, String groupBy, String sort, PagingParams pagingParams) {
-        int offset = pagingParams.getOffset();
-        int limit = pagingParams.getLimit();
+    public List<Publication> getLimit(SqlParams sqlParams) {
         try {
-            return publicationDao.getLimit(where, groupBy, sort, offset, limit);
+            return publicationDao.getLimit(sqlParams);
         } catch (DbException e) {
             log.error("Can't get list of publications from DB!!!");
             return null;

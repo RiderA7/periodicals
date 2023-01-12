@@ -2,10 +2,12 @@ package com.epam.Per1.command.impl;
 
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
+import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.entity.User;
 import com.epam.Per1.service.impl.UserService;
 import com.epam.Per1.utils.Pages;
 import com.epam.Per1.utils.PagingParams;
+import com.epam.Per1.utils.SqlParams;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class AdminUsersGetCommand implements ActionCommand {
-    private final UserService userService = new UserService();
+    private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
     private static Logger log = LogManager.getLogger(AdminUsersGetCommand.class);
 
     @Override
@@ -38,11 +40,12 @@ public class AdminUsersGetCommand implements ActionCommand {
             pagingParams.setPage(pageReq-1);
         }
         session.setAttribute("paging_users", pagingParams);
-        users = userService.getLimit("","","",pagingParams);
-        StringBuilder pageParamsGet = new StringBuilder(Pages.ADMIN_USERS);
-        pageParamsGet.append("?").append("currentPage=").append(pagingParams.getCurrentPage())
-                .append("&").append("maxPageNum=").append(pagingParams.getMaxPageNum());
+        SqlParams sqlParams = new SqlParams(pagingParams);
+        users = userService.getLimit(sqlParams);
         req.setAttribute("users", users);
-        return new CommandResult(pageParamsGet.toString());
+        String pageParamsGet = Pages.ADMIN_USERS +
+                "?" + "currentPage=" + pagingParams.getCurrentPage() +
+                "&" + "maxPageNum=" + pagingParams.getMaxPageNum();
+        return new CommandResult(pageParamsGet);
     }
 }

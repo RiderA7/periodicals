@@ -3,6 +3,7 @@ package com.epam.Per1.command.impl;
 import com.epam.Per1.DbException;
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
+import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.entity.Publication;
 import com.epam.Per1.entity.Topic;
 import com.epam.Per1.service.impl.PublicationService;
@@ -20,8 +21,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class PublicationsPostCommand implements ActionCommand {
-    private final TopicService topicService = new TopicService();
-    private final PublicationService publicationService = new PublicationService();
+    private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
+    private final PublicationService publicationService = new PublicationService(DaoFactory.getInstance().getPublicationDao());
     private static Logger log = LogManager.getLogger(PublicationsPostCommand.class);
 
     @Override

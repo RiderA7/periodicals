@@ -2,10 +2,12 @@ package com.epam.Per1.command.impl;
 
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
+import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.entity.Topic;
 import com.epam.Per1.service.impl.TopicService;
 import com.epam.Per1.utils.Pages;
 import com.epam.Per1.utils.PagingParams;
+import com.epam.Per1.utils.SqlParams;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class TopicsGetCommand implements ActionCommand {
-    private final TopicService topicService = new TopicService();
+    private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
     private static Logger log = LogManager.getLogger(TopicsGetCommand.class);
 
     @Override
@@ -38,11 +40,11 @@ public class TopicsGetCommand implements ActionCommand {
             pagingParams.setPage(pageReq-1);
         }
         session.setAttribute("paging_topics", pagingParams);
-        topics = topicService.getLimit("","","",pagingParams);
-        StringBuilder pageParamsGet = new StringBuilder(Pages.TOPICS);
-        pageParamsGet.append("?").append("currentPage=").append(pagingParams.getCurrentPage())
-                .append("&").append("maxPageNum=").append(pagingParams.getMaxPageNum());
+        topics = topicService.getLimit(new SqlParams(pagingParams));
         req.setAttribute("topics", topics);
-        return new CommandResult(pageParamsGet.toString());
+        String pageParamsGet = Pages.TOPICS +
+                "?" + "currentPage=" + pagingParams.getCurrentPage() +
+                "&" + "maxPageNum=" + pagingParams.getMaxPageNum();
+        return new CommandResult(pageParamsGet);
     }
 }

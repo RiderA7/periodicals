@@ -42,4 +42,14 @@ public class SqlUtils {
             "(publication_title, publication_price, publication_topic) VALUES (?, ?, ?)";
     public static final String UPDATE_PUBLICATION = "UPDATE publication SET" +
             " publication_title=?, publication_price=?, publication_topic=? WHERE publication_id=?";
+    public static final String GET_ALL_SUBSCRIPTIONS = "SELECT " +
+            "subscription_id, user_id, user_login, user_name, publication_id, publication_title, publication_price, topic_id, topic_name " +
+            "FROM subscription " +
+            "JOIN user ON user = user_id " +
+            "JOIN publication ON publication = publication_id " +
+            "JOIN topic ON publication_topic = topic_id";
+    public static final String COUNT_ALL_SUBSCRIPTIONS = "SELECT COUNT(*) FROM subscription";
+
+    public static final String CREATE_SUBSCRIPTION = "INSERT INTO subscription " +
+            "(user, publication, status) VALUES (?, ?, ?)";
 }

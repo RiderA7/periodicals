@@ -5,6 +5,7 @@ import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.PublicationDao;
 import com.epam.Per1.entity.Publication;
 import com.epam.Per1.entity.Topic;
+import com.epam.Per1.utils.SqlParams;
 import com.epam.Per1.utils.SqlUtils;
 import com.epam.Per1.utils.Utils;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +21,7 @@ import java.util.Optional;
 
 public class MySqlPublicationDao implements PublicationDao {
 
-    private static Logger log = LogManager.getLogger(MySqlTopicDao.class);
+    private static Logger log = LogManager.getLogger(MySqlPublicationDao.class);
     ConnectionPool connectionPool;
 
     public MySqlPublicationDao(String propertiesFile) {
@@ -64,8 +65,11 @@ public class MySqlPublicationDao implements PublicationDao {
         List<Publication> publications = new ArrayList<>();
         String byTopic = "";
         if(topicId != 0){
-            byTopic = " WHERE publication_topic=" + topicId;
+            byTopic = "publication_topic=" + topicId;
         }
+        SqlParams sqlParams = new SqlParams.Builder()
+                .setWhere(byTopic)
+                .getSqlParams();
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(SqlUtils.GET_ALL_PUBLICATIONS+byTopic);
              ResultSet rs = ps.executeQuery()){
@@ -80,11 +84,10 @@ public class MySqlPublicationDao implements PublicationDao {
     }
 
     @Override
-    public List<Publication> getLimit(String where, String groupBy, String sort, int offset, int limit) throws DbException {
+    public List<Publication> getLimit(SqlParams sqlParams) throws DbException {
         List<Publication> publications = new ArrayList<>();
-        String limitStr = "";
         String sql = SqlUtils.GET_ALL_PUBLICATIONS;
-        sql = Utils.prepareSqlWhithPaging(where, groupBy, sort, offset, limit, limitStr, sql);
+        sql = Utils.prepareSqlWithPaging(sqlParams, sql);
         System.out.println(sql);
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {

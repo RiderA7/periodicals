@@ -1,11 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<c:set var="title" value="Publications <i class='las la-battery-three-quarters'></i>" scope="page"/>
+<c:set var="title" value="Subscriptions <i class='las la-battery-one-quarters'></i>" scope="page"/>
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/menu.jsp" %>
 <%@ include file="../inc/header.jsp" %>
+${publications}<br>
 <c:if test="${sessionScope.user.roleId == 2}">
     <form action="publications" method="post">
         <input class="btn" type="submit" name="add" value="ADD NEW PUBLICATION">

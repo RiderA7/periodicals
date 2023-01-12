@@ -2,12 +2,14 @@ package com.epam.Per1.command.impl;
 
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
+import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.entity.Publication;
 import com.epam.Per1.entity.Topic;
 import com.epam.Per1.service.impl.PublicationService;
 import com.epam.Per1.service.impl.TopicService;
 import com.epam.Per1.utils.Pages;
 import com.epam.Per1.utils.PagingParams;
+import com.epam.Per1.utils.SqlParams;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,8 +21,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class PublicationsGetCommand implements ActionCommand {
-    private final TopicService topicService = new TopicService();
-    private final PublicationService publicationService = new PublicationService();
+    private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
+    private final PublicationService publicationService = new PublicationService(DaoFactory.getInstance().getPublicationDao());
     private static Logger log = LogManager.getLogger(PublicationsGetCommand.class);
 
     @Override
@@ -46,14 +48,17 @@ public class PublicationsGetCommand implements ActionCommand {
             pagingParams.setPage(pageReq-1);
         }
         session.setAttribute("paging_publications", pagingParams);
-        String where = (activeTopic.getId() == 0) ? "" : " WHERE topic_id="+activeTopic.getId();
-        publications = publicationService
-                .getLimit(where ,"","",pagingParams);
-        StringBuilder pageParamsGet = new StringBuilder(Pages.PUBLICATIONS);
-        pageParamsGet.append("?").append("currentPage=").append(pagingParams.getCurrentPage())
-                .append("&").append("maxPageNum=").append(pagingParams.getMaxPageNum());
+        String where = (activeTopic.getId() == 0) ? "" : "topic_id="+activeTopic.getId();
+        SqlParams sqlParams = new SqlParams.Builder()
+                .setWhere(where)
+                .setOffsetAndLimit(pagingParams)
+                .getSqlParams();
+        publications = publicationService.getLimit(sqlParams);
         req.setAttribute("publications", publications);
-        log.debug(pageParamsGet.toString());
+        StringBuilder pageParamsGet;
+        pageParamsGet = new StringBuilder(Pages.PUBLICATIONS)
+                .append("?").append("currentPage=").append(pagingParams.getCurrentPage())
+                .append("&").append("maxPageNum=").append(pagingParams.getMaxPageNum());
         return new CommandResult(pageParamsGet.toString());
     }
 }
