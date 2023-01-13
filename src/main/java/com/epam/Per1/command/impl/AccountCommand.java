@@ -17,6 +17,7 @@ public class AccountCommand implements ActionCommand {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         User user = (User) req.getSession().getAttribute("user");
         log.info("User in session found:" + user);
         if(user != null) {

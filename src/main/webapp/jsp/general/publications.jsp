@@ -1,3 +1,4 @@
+<
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -12,13 +13,15 @@
     </form>
 </c:if>
 <c:if test="${sessionScope.activeTopic ne null}">
-<form action="publications" method="post">
-    <div class="bar info">Current topic: ${sessionScope.activeTopic.name}
-        <button class="btn" name="removeTopic" value="removeTopic" title="remove">
-            <i class="las la-times"></i>
-        </button>
-    </div>
-    </c:if>
+    <form action="publications" method="post">
+        <div class="bar info">Current topic: ${sessionScope.activeTopic.name}
+            <button class="btn" name="removeTopic" value="removeTopic" title="remove">
+                <i class="las la-times"></i>
+            </button>
+        </div>
+    </form>
+</c:if>
+<c:if test="${publications.size() > 0}">
     <table>
         <tr>
             <th>Title</th>
@@ -53,5 +56,9 @@
         </c:forEach>
     </table>
     <%@ include file="../inc/paging.jsp" %>
+</c:if>
+<c:if test="${publications.size() == 0}">
+    <div class="bar info"><a href="?page=1">No data. Click here to clear request parameters.</a></div>
+</c:if>
 </body>
 </html>
