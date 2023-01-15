@@ -253,10 +253,18 @@
 <main id="main" class="main">
     <h1>${title}</h1>
     <c:if test="${sessionScope.err ne null}">
-    <div class="bar error">${sessionScope.err}</div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        <fmt:message key="${sessionScope.err}"/>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
         <c:remove var="err" scope="session"/>
     </c:if>
     <c:if test="${sessionScope.suc ne null}">
-    <div class="bar success">${sessionScope.suc}</div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        <fmt:message key="${sessionScope.suc}"/>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
         <c:remove var="suc" scope="session"/>
     </c:if>

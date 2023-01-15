@@ -23,48 +23,53 @@ public class TopicsPostCommand implements ActionCommand {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("Found session topic:" + req.getSession().getAttribute("topic"));
-        if(req.getParameter("edit") != null && req.getParameter("topicId") != null){
-            int topicId = Integer.parseInt(req.getParameter("topicId"));
-            Optional<Topic> optionalTopic = topicService.getById(topicId);
-            if(optionalTopic.isPresent()){
-                Topic topic = optionalTopic.get();
-                req.getSession().setAttribute("topic", topic);
-                log.debug("EDIT " + topicId + " " + topic);
-                return new CommandResult(Pages.ADMIN_TOPICS, true);
+        if(isActionAddTopic(req) || isActionEditTopic(req)){
+            Topic topic = new Topic();
+            String action = "add";
+            if(isActionEditTopic(req)) {
+                Optional<Topic> optionalTopic = getTopicByIdFromRequest(req);
+                if (optionalTopic.isPresent()) {
+                    topic = optionalTopic.get();
+                    action = "edit";
+                }
             }
-        }
-
-        if(req.getParameter("add") != null){
-            if(req.getSession().getAttribute("topic") != null){
-                req.getSession().removeAttribute("topic");
-            }
-            log.debug("ADD new topic");
+            req.getSession().setAttribute("topic", topic);
+            req.getSession().setAttribute("action", action);
             return new CommandResult(Pages.ADMIN_TOPICS,true);
         }
 
-        if(req.getParameter("open") != null && req.getParameter("topicId") != null){
+        if(isOpenTopic(req)){
             int topicId = Integer.parseInt(req.getParameter("topicId"));
             Optional<Topic> optionalTopic = topicService.getById(topicId);
             req.getSession().setAttribute("activeTopic", optionalTopic.orElse(null));
             return new CommandResult(Commands.PUBLICATIONS);
         }
 
-        if(req.getParameter("action") != null){
-            String action = req.getParameter("action");
-            String topicName = (req.getParameter("topicName") != null)?
-                    req.getParameter("topicName") : "New Topic";
-            int topicId =  (req.getParameter("id") != null)?
-                    Integer.parseInt(req.getParameter("id")) : 0;
-            Topic topic = new Topic.Builder().setName(topicName).setId(topicId).getTopic();
-            boolean done = false;
-            switch (action) {
-                case "add": done = createTopic(topic); break;
-                case "edit": if(topic.getId() != 0) done = updateTopic(topic);
-                break;
+            if (req.getParameter("action") != null) {
+                log.debug("action");
+                String action = req.getParameter("action");
+                Topic topic = getTopicFromRequest(req);
+                String success = "admin.topic.";
+                boolean done = false;
+                switch (action) {
+                    case "add":
+                        log.debug("adding");
+                        done = createTopic(topic);
+                        success += "added";
+                        break;
+                    case "edit":
+                        log.debug("editing");
+                        if (topic.getId() != 0) done = updateTopic(topic);
+                        success += "updated";
+                        break;
+                }
+                req.getSession().setAttribute("suc", success);
             }
-        }
-
         return new CommandResult(Commands.TOPICS, true);
+    }
+
+    private boolean isOpenTopic(HttpServletRequest req) {
+        return req.getParameter("open") != null && req.getParameter("topicId") != null;
     }
 
     private boolean createTopic(Topic topic){
@@ -74,4 +79,23 @@ public class TopicsPostCommand implements ActionCommand {
     private boolean updateTopic(Topic topic){
         return topicService.update(topic);
     }
+
+    private boolean isActionAddTopic(HttpServletRequest req) {
+        return req.getParameter("add") != null;
+    }
+
+    private boolean isActionEditTopic(HttpServletRequest req) {
+        return req.getParameter("edit") != null && req.getParameter("topicId") != null;
+    }
+    private Optional<Topic> getTopicByIdFromRequest(HttpServletRequest req) {
+        int topicId = Integer.parseInt(req.getParameter("topicId"));
+        return topicService.getById(topicId);
+    }
+    private Topic getTopicFromRequest(HttpServletRequest req) {
+        return new Topic.Builder()
+                .setId(Integer.parseInt(req.getParameter("id")))
+                .setName(req.getParameter("topicName"))
+                .getTopic();
+    }
+
 }

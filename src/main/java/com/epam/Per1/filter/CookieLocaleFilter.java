@@ -23,6 +23,7 @@ public class CookieLocaleFilter implements Filter {
         if (req.getParameter("locale") != null) {
             String locale = req.getParameter("locale");
             Cookie cookie = new Cookie("lang", locale);
+            cookie.setPath("/");
             res.addCookie(cookie);
             log.info("Set lang to " + locale);
             res.sendRedirect(req.getHeader("referer"));

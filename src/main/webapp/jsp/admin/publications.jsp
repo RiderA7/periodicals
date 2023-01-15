@@ -53,6 +53,8 @@
     </c:if>
     <input type="submit" class="btn btn-primary" value="${button}">
 </form>
+<c:remove var="publication" scope="session" />
+<c:remove var="action" scope="session" />
 <%@ include file="../inc/footer.jsp" %>
 </body>
 </html>

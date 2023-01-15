@@ -29,12 +29,15 @@ public class PublicationsPostCommand implements ActionCommand {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, DbException {
         log.debug("Found session publication:" + req.getSession().getAttribute("publication"));
         if(isActionAddPublication(req) || isActionEditPublication(req)){
+            log.debug("edit or add");
             LoadListOfTopicsToSession(req);
             Publication publication = new Publication();
             String action = "add";
             if(isActionEditPublication(req)) {
+                log.debug("edit");
                 Optional<Publication> optionalPublication = getPublicationByIdFromRequest(req);
                 if (optionalPublication.isPresent()) {
+                    log.debug("edit approve");
                     publication = optionalPublication.get();
                     action = "edit";
                 }
@@ -51,22 +54,26 @@ public class PublicationsPostCommand implements ActionCommand {
         }
 
         if(req.getParameter("view") != null && req.getParameter("pubId") != null){
+            log.debug("view publication");
             int pubId = Integer.parseInt(req.getParameter("pubId"));
 log.error("NOT IMPLEMENTED YET");
         }
 
         try {
             if (req.getParameter("action") != null) {
+                log.debug("action");
                 String action = req.getParameter("action");
                 Publication publication = getPublicationFromRequest(req);
-                String success = "Publication ";
+                String success = "admin.publication.";
                 boolean done = false;
                 switch (action) {
                     case "add":
+                        log.debug("adding");
                         done = createPublication(publication);
                         success += "added";
                         break;
                     case "edit":
+                        log.debug("editing");
                         if (publication.getId() != 0) done = updatePublication(publication);
                         success += "updated";
                         break;
@@ -74,6 +81,7 @@ log.error("NOT IMPLEMENTED YET");
                 req.getSession().setAttribute("suc", success);
             }
         } catch (DbException e) {
+            log.debug("error action");
             req.getSession().setAttribute("err", e.getMessage());
         }
         return new CommandResult(Commands.PUBLICATIONS, true);
@@ -113,7 +121,7 @@ log.error("NOT IMPLEMENTED YET");
         try {
             price = Double.parseDouble(req.getParameter("publicationPrice"));
         } catch (NumberFormatException e) {
-            String error = "Invalid price: " + e.getMessage();
+            String error = "invalid.price";
             log.error(error);
             throw new DbException(error);
         }
