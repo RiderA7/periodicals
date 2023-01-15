@@ -1,17 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="messages"/>
 <html>
 <c:set var="title" value="Topics <i class='las la-battery-half'></i>" scope="page"/>
 <%@ include file="../inc/head.jsp" %>
 <body>
-<%@ include file="../inc/menu.jsp" %>
 <%@ include file="../inc/header.jsp" %>
 <c:if test="${sessionScope.user.roleId == 2}">
 <form action="topics" method="post">
     <input class="btn" type="submit" name="add" value="ADD NEW TOPIC">
 </form>
 </c:if>
-<table>
+<table class="table">
     <tr>
         <th>Topic</th>
         <th>Publications</th>
@@ -36,5 +39,6 @@
     </c:forEach>
 </table>
 <%@ include file="../inc/paging.jsp" %>
+<%@ include file="../inc/footer.jsp" %>
 </body>
 </html>
