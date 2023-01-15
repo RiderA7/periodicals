@@ -5,7 +5,7 @@
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-<fmt:message key="title.topic" var="title"/>
+<fmt:message key="title.admin.topic" var="title"/>
 <%--<c:set var="title" value="Topics Admin Page <i class='las la-battery-three-quarters'></i>" scope="page"/>--%>
 <%@ include file="../inc/head.jsp" %>
 <body>

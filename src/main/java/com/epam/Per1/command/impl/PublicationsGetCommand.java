@@ -28,11 +28,23 @@ public class PublicationsGetCommand implements ActionCommand {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Topic activeTopic = new Topic();
-        if(session.getAttribute("activeTopic") != null){
-            activeTopic = (Topic) session.getAttribute("activeTopic");
-        }
-        List<Publication> publications;
+        Topic activeTopic = LoadActiveTopicFromSession(session);
+        PagingParams pagingParams = PreparePagingParams(req, session, activeTopic);
+        SqlParams sqlParams = PrepareSqlParams(activeTopic, pagingParams);
+        LoadPublicationListToRequest(req, sqlParams);
+        StringBuilder pageParamsGet = PreparePageParamsGet(pagingParams);
+        return new CommandResult(pageParamsGet.toString());
+    }
+
+    private StringBuilder PreparePageParamsGet(PagingParams pagingParams) {
+        StringBuilder pageParamsGet;
+        pageParamsGet = new StringBuilder(Pages.PUBLICATIONS)
+                .append("?").append("currentPage=").append(pagingParams.getCurrentPage())
+                .append("&").append("maxPageNum=").append(pagingParams.getMaxPageNum());
+        return pageParamsGet;
+    }
+
+    private PagingParams PreparePagingParams(HttpServletRequest req, HttpSession session, Topic activeTopic) {
         int totalPublications = publicationService.countAll(activeTopic.getId());
         log.debug("Total pubs:" + totalPublications);
         PagingParams pagingParams;
@@ -48,17 +60,28 @@ public class PublicationsGetCommand implements ActionCommand {
             pagingParams.setPage(pageReq-1);
         }
         session.setAttribute("paging_publications", pagingParams);
-        String where = (activeTopic.getId() == 0) ? "" : "topic_id="+activeTopic.getId();
+        return pagingParams;
+    }
+
+    private void LoadPublicationListToRequest(HttpServletRequest req, SqlParams sqlParams) {
+        List<Publication> publications = publicationService.getLimit(sqlParams);
+        req.setAttribute("publications", publications);
+    }
+
+    private SqlParams PrepareSqlParams(Topic activeTopic, PagingParams pagingParams) {
+        String where = (activeTopic.getId() == 0) ? "" : "topic_id="+ activeTopic.getId();
         SqlParams sqlParams = new SqlParams.Builder()
                 .setWhere(where)
                 .setOffsetAndLimit(pagingParams)
                 .getSqlParams();
-        publications = publicationService.getLimit(sqlParams);
-        req.setAttribute("publications", publications);
-        StringBuilder pageParamsGet;
-        pageParamsGet = new StringBuilder(Pages.PUBLICATIONS)
-                .append("?").append("currentPage=").append(pagingParams.getCurrentPage())
-                .append("&").append("maxPageNum=").append(pagingParams.getMaxPageNum());
-        return new CommandResult(pageParamsGet.toString());
+        return sqlParams;
+    }
+
+    private Topic LoadActiveTopicFromSession(HttpSession session) {
+        Topic activeTopic = new Topic();
+        if(session.getAttribute("activeTopic") != null){
+            activeTopic = (Topic) session.getAttribute("activeTopic");
+        }
+        return activeTopic;
     }
 }

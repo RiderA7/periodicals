@@ -16,7 +16,9 @@
 </c:if>
 <c:if test="${sessionScope.activeTopic ne null}">
     <form action="publications" method="post">
-        <div class="bar info">Current topic: ${sessionScope.activeTopic.name}
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <i class="bi bi-star me-1"></i>
+            Current topic: ${sessionScope.activeTopic.name}
             <button class="btn" name="removeTopic" value="removeTopic" title="remove">
                 <i class="las la-times"></i>
             </button>
