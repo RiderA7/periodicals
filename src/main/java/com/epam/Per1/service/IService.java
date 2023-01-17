@@ -12,7 +12,7 @@ public interface IService<T> {
 // C
     boolean create(T t);
 // R
-    Optional<T> getByName(String name);
+    Optional<T> getByLogin(String name);
     Optional<T> getById(int id);
 // U
     boolean update(T t);

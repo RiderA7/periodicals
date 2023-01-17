@@ -5,12 +5,13 @@
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-<c:set var="title" value="User Account" scope="page"/>
+<fmt:message key="user.account.title" var="title"/>
+<%--<c:set var="title" value="User Account" scope="page"/>--%>
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/header.jsp" %>
 <c:if test="${sessionScope.user ne null}">
-    <div class="greetings">Hello ${sessionScope.user.name}</div>
+    <div class="greetings"><fmt:message key="user.account.hello"/>, ${sessionScope.user.name}</div>
 </c:if>
 <%@ include file="../inc/footer.jsp" %>
 </body>

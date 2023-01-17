@@ -54,10 +54,8 @@ public class PublicationsGetCommand implements ActionCommand {
         } else {
             pagingParams = new PagingParams(totalPublications, 2);
         }
-        int pageReq = 0;
         if(req.getParameter("page") != null){
-            pageReq = Integer.parseInt(req.getParameter("page"));
-            pagingParams.setPage(pageReq-1);
+            pagingParams.setPage(Integer.parseInt(req.getParameter("page"))-1);
         }
         session.setAttribute("paging_publications", pagingParams);
         return pagingParams;

@@ -41,7 +41,7 @@ public class TopicService implements IService<Topic> {
     }
 
     @Override
-    public Optional<Topic> getByName(String name) {
+    public Optional<Topic> getByLogin(String name) {
         return Optional.empty();
     }
 

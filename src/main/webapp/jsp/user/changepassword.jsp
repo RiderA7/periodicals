@@ -5,23 +5,32 @@
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-<c:set var="title" value="Change password" scope="page"/>
+<fmt:message key="title.user.change.password" var="title"/>
+<%--<c:set var="title" value="Change password" scope="page"/>--%>
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/header.jsp" %>
 <c:if test="${user ne null}">
-    <div>${user}</div>
+<%--    <div>${user}</div>--%>
     <div>
-        <form class="loginform"
+        <form class="row g-2"
               action="${pageContext.request.contextPath}/account/updatepass"
               method="post">
-            <label for="password">New password:</label>
-            <input name="password" id="password" class="loginlogin" placeholder="Enter new password" type="password">
-            <br>
-            <label for="password2">Confirm password:</label>
-            <input name="password2" id="password2" class="loginlogin" placeholder="Confirm password" type="password">
-            <br>
-            <input type="submit" class="loginbutton" value="Change password">
+            <div class="col-md-12">
+                <div class="form-floating">
+                    <input name="password" id="password"
+                           class="form-control" placeholder="<fmt:message key="user.change.password"/>" type="password">
+                    <label for="password"><fmt:message key="user.change.password.label"/>:</label>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-floating">
+                    <input name="password2" id="password2"
+                           class="form-control" placeholder="<fmt:message key="user.change.password"/>" type="password">
+                    <label for="password2"><fmt:message key="user.change.password2.label"/>:</label>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="<fmt:message key="user.change.password.button"/>">
         </form>
     </div>
 </c:if>

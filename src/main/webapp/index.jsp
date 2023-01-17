@@ -9,7 +9,7 @@
 <%@ include file="jsp/inc/head.jsp" %>
 <body>
 <%@ include file="jsp/inc/header.jsp" %>
-${sessionScope.user}
+<%--${sessionScope.user}--%>
 <br/>
 ${sessionScope.user.login}
 Hellllllllloooooooooo!!!!

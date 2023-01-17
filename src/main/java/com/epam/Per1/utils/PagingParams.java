@@ -19,7 +19,7 @@ public class PagingParams {
     public void setTotal(int total){
         this.total = total;
         this.maxPageNum = (total % limit == 0) ? total/limit-1 : total/limit;
-        if(this.currentPage>=this.maxPageNum) this.currentPage = 0;
+        if(this.currentPage>this.maxPageNum) this.currentPage = 0;
     }
 
     public void setPage(int page){

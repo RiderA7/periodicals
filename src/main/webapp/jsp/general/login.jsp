@@ -5,23 +5,35 @@
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-<c:set var="title" value="Login" scope="page"/>
+<fmt:message key="title.general.login" var="title"/>
+<%--<c:set var="title" value="Login" scope="page"/>--%>
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/header.jsp" %>
 <div>
-    <form class="loginform"
+    <form class="row g-3"
           action="${pageContext.request.contextPath}/account/login"
           method="post">
-        <label for="login">Input your login:</label>
-        <input name="login" id="login" class="loginlogin" placeholder="Your Login">
-        <br>
-        <label for="password">Enter your password:</label>
-        <input name="password" id="password" class="loginpassword" type="password" placeholder="Your Password">
-        <input type="submit" class="loginbutton" value="Login">
+        <div class="col-md-12">
+            <div class="form-floating">
+                <input name="login" id="login"
+                       class="form-control" placeholder="<fmt:message key="general.login.login.placeholder"/>">
+                <label for="login"><fmt:message key="general.login.login.label"/>:</label>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-floating">
+                <input name="password" id="password"
+                       class="form-control" type="password" placeholder="<fmt:message key="general.login.password.placeholder"/>">
+                <label for="password"><fmt:message key="general.login.password.label"/>:</label>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Login">
     </form>
-    <p class="login_remainder">Don't have an account? <a href="${pageContext.request.contextPath}/account/register">Sign
-        Up</a></p>
+    <div class="alert alert-light border-light alert-dismissible fade show" role="alert">
+        <i class="bi bi-collection me-1"></i><fmt:message key="general.login.register1"/>
+        <a href="${pageContext.request.contextPath}/account/register"><fmt:message key="general.login.register2"/></a>
+    </div>
 </div>
 <%@ include file="../inc/footer.jsp" %>
 </body>

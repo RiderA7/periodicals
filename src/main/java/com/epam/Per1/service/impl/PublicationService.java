@@ -50,7 +50,7 @@ public class PublicationService implements IService<Publication> {
     }
 
     @Override
-    public Optional<Publication> getByName(String name) {
+    public Optional<Publication> getByLogin(String name) {
         return Optional.empty();
     }
 

@@ -29,7 +29,7 @@ public class LogoutCommand implements ActionCommand {
         }
         session.removeAttribute("user");
         session.removeAttribute("role");
-        session.setAttribute("suc", "Logged out");
+        session.setAttribute("suc", "logged.out");
         return new CommandResult(Pages.WELCOME_PAGE, true);
     }
 }

@@ -5,24 +5,31 @@
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-<c:set var="title" value="Update User" scope="page"/>
+<fmt:message key="user.update.title" var="title"/>
+<%--<c:set var="title" value="Update User" scope="page"/>--%>
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/header.jsp" %>
 <c:if test="${user ne null}">
-    <div>${user}</div>
+    <%--    <div>${user}</div>--%>
     <div>
-        <form class="loginform"
+        <form class="row g-2"
               action="${pageContext.request.contextPath}/account/update"
               method="post">
-<%--            <input type="hidden" name="id" value="${user.id}">--%>
-            <label for="login">New User login:</label>
-            <input name="login" id="login" class="loginlogin" value="${user.login}">
-            <br>
-            <label for="name">New User name:</label>
-            <input name="name" id="name" class="loginlogin" value="${user.name}">
-            <br>
-            <input type="submit" class="loginbutton" value="Update User">
+                <%--            <input type="hidden" name="id" value="${user.id}">--%>
+            <div class="col-md-12">
+                <div class="form-floating">
+                    <input name="login" id="login" class="form-control" value="${user.login}">
+                    <label for="login"><fmt:message key="user.update.login"/>:</label>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-floating">
+                    <input name="name" id="name" class="form-control" value="${user.name}">
+                    <label for="name"><fmt:message key="user.update.name"/>:</label>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-outline-primary" value="<fmt:message key="user.update.button"/>">
         </form>
     </div>
 </c:if>

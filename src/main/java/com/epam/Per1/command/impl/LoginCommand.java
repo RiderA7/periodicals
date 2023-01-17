@@ -31,7 +31,7 @@ public class LoginCommand implements ActionCommand {
         if (login.isEmpty() || password.length == 0) {
             String error = "empty login or password";
             log.info(error);
-            req.setAttribute("err", "You must enter login and password");
+            req.getSession().setAttribute("err", "login.must.be.not.empty");
 //            resp.sendRedirect(req.getContextPath() + "/account/login");
 //            req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
             return new CommandResult(Pages.LOGIN_PAGE);
@@ -42,12 +42,12 @@ public class LoginCommand implements ActionCommand {
             if (userOptional.isEmpty()) {
                 String error = "User " + login + " not found";
                 log.info(error);
-                req.setAttribute("err", "Wrong login or password!");
+                req.getSession().setAttribute("err", "login.must.be.valid");
                 return new CommandResult(Pages.LOGIN_PAGE);
             } else {
                 if (userOptional.get().isBlocked()) {
                     log.info("User " + userOptional.get().getName() + " BANNED!");
-                    req.setAttribute("err", "Your account was BANned!");
+                    req.getSession().setAttribute("err", "login.account.banned");
                     return new CommandResult(Pages.LOGIN_PAGE);
                 }
                 String page = userService.login(userOptional.get(), req.getSession());

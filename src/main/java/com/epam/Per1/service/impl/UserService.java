@@ -27,7 +27,7 @@ public class UserService implements IService<User> {
     }
 
     @Override
-    public Optional<User> getByName(String login) {
+    public Optional<User> getByLogin(String login) {
         Optional<User> user;
         try {
             user = userDao.getUserByLogin(login);

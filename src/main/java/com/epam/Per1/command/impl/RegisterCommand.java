@@ -56,7 +56,7 @@ public class RegisterCommand implements ActionCommand {
 
         User user = buildUser(req);
         if (userService.create(user)) {
-            Optional<User> userOptional = userService.getByName(user.getLogin());
+            Optional<User> userOptional = userService.getByLogin(user.getLogin());
             if (userOptional.isPresent()) {
                 String page = userService.login(userOptional.get(), req.getSession());
                 return new CommandResult(page, true);

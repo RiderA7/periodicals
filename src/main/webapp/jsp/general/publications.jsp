@@ -5,21 +5,22 @@
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-<c:set var="title" value="Publications <i class='las la-battery-three-quarters'></i>" scope="page"/>
+<fmt:message key="title.general.publications" var="title"/>
+<%--<c:set var="title" value="Publications <i class='las la-battery-three-quarters'></i>" scope="page"/>--%>
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/header.jsp" %>
 <c:if test="${sessionScope.user.roleId == 2}">
     <form action="publications" method="post">
-        <input class="btn" type="submit" name="add" value="ADD NEW PUBLICATION">
+        <input class="btn btn-secondary" type="submit" name="add" value="<fmt:message key="general.publication.add"/>">
     </form>
 </c:if>
 <c:if test="${sessionScope.activeTopic ne null}">
     <form action="publications" method="post">
         <div class="alert alert-primary alert-dismissible fade show" role="alert">
             <i class="bi bi-star me-1"></i>
-            Current topic: ${sessionScope.activeTopic.name}
-            <button class="btn" name="removeTopic" value="removeTopic" title="remove">
+            <fmt:message key="general.publication.current.topic"/>: ${sessionScope.activeTopic.name}
+            <button class="btn-close" name="removeTopic" value="removeTopic" title="<fmt:message key="general.publication.remove.topic"/>">
                 <i class="las la-times"></i>
             </button>
         </div>
@@ -28,10 +29,10 @@
 <c:if test="${publications.size() > 0}">
     <table class="table">
         <tr>
-            <th>Title</th>
-            <th>Topic</th>
-            <th>Price</th>
-            <th>Misc</th>
+            <th><fmt:message key="general.publication.table.title"/></th>
+            <th><fmt:message key="general.publication.table.topic"/></th>
+            <th><fmt:message key="general.publication.table.price"/></th>
+            <th><fmt:message key="general.publication.table.misc"/></th>
         </tr>
         <c:forEach var="pub" items="${publications}">
             <tr>
@@ -42,18 +43,21 @@
                     <c:if test="${sessionScope.user.roleId == 2}">
                         <form action="publications" method="post">
                             <input type="hidden" name="pubId" value="${pub.id}">
-                            <input class="btn" type="submit" name="edit" value="EDIT">
+                            <input class="btn btn-success" type="submit"
+                                   name="edit" value="<fmt:message key="general.publication.table.edit"/>">
                         </form>
                     </c:if>
                     <c:if test="${sessionScope.user.roleId == 1}">
                         <form action="account/subscribe" method="post">
                             <input type="hidden" name="pubId" value="${pub.id}">
-                            <input class="btn" type="submit" name="subscribe" value="SUBSCRIBE">
+                            <input class="btn btn-primary" type="submit"
+                                   name="subscribe" value="<fmt:message key="general.publication.table.subscribe"/>">
                         </form>
                     </c:if>
                     <form action="publications" method="post">
                         <input type="hidden" name="pubId" value="${pub.id}">
-                        <input class="btn" type="submit" name="view" value="VIEW">
+                        <input class="btn btn-info" type="submit"
+                               name="view" value="<fmt:message key="general.publication.table.view"/>">
                     </form>
                 </td>
             </tr>
@@ -62,7 +66,9 @@
     <%@ include file="../inc/paging.jsp" %>
 </c:if>
 <c:if test="${publications.size() == 0}">
-    <div class="bar info"><a href="?page=1">No data. Click here to clear request parameters.</a></div>
+    <div class="bar info">
+        <a href="?page=1"><fmt:message key="general.publication.table.nodata"/></a>
+    </div>
 </c:if>
 <%@ include file="../inc/footer.jsp" %>
 </body>

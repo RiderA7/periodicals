@@ -23,7 +23,6 @@
             <label for="publicationName"><fmt:message key="admin.publication.new.title"/>:</label>
         </div>
     </div>
-    <%--        <br>--%>
     <div class="col-md-12">
         <div class="form-floating">
             <input name="publicationPrice" id="publicationPrice" class="form-control"
