@@ -1,6 +1,6 @@
 package com.epam.Per1.command.impl;
 
-import com.epam.Per1.DbException;
+import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.MySql.MySqlTopicDao;
 import com.epam.Per1.dao.TopicDao;
 import com.epam.Per1.service.impl.TopicService;

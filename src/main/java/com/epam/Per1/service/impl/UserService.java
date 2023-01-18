@@ -1,6 +1,6 @@
 package com.epam.Per1.service.impl;
 
-import com.epam.Per1.DbException;
+import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.dao.UserDao;
 import com.epam.Per1.dao.UserRoleDao;
@@ -67,7 +67,7 @@ public class UserService implements IService<User> {
         try {
             userRole = userRoleDao.getUserRole(user.getRoleId());
         } catch (DbException e) {
-            userRole = new UserRole.Builder().setId(1).setUserRole("user").getUserRole();
+            userRole = new UserRole.Builder().setId(1).setUserRole("USER").getUserRole();
         }
         log.info("Got role " + userRole.getUserRole());
         session.setAttribute("user", user);
@@ -144,7 +144,7 @@ public class UserService implements IService<User> {
                 .setPassword(user.getPassword())
                 .setRoleId(user.getRoleId())
                 .setMoney((int) user.getMoney() * 100)
-                .setBlocked(user.isBlocked() ? 1 : 0)
+                .setIsBlocked(user.isBlocked() ? 1 : 0)
                 .getUser();
     }
     public User buildUser(User user, String password){
@@ -155,7 +155,7 @@ public class UserService implements IService<User> {
                 .setPassword(password)
                 .setRoleId(user.getRoleId())
                 .setMoney((int) user.getMoney() * 100)
-                .setBlocked(user.isBlocked() ? 1 : 0)
+                .setIsBlocked(user.isBlocked() ? 1 : 0)
                 .getUser();
     }
     public User buildUser(User user, int deposit){
@@ -166,7 +166,7 @@ public class UserService implements IService<User> {
                 .setPassword(user.getPassword())
                 .setRoleId(user.getRoleId())
                 .setMoney((int) (user.getMoney() + deposit) * 100)
-                .setBlocked(user.isBlocked() ? 1 : 0)
+                .setIsBlocked(user.isBlocked() ? 1 : 0)
                 .getUser();
     }
     public User buildUser(User user, boolean ban){
@@ -177,7 +177,7 @@ public class UserService implements IService<User> {
                 .setPassword(user.getPassword())
                 .setRoleId(user.getRoleId())
                 .setMoney((int) user.getMoney() * 100)
-                .setBlocked(ban ? 1 : 0)
+                .setIsBlocked(ban ? 1 : 0)
                 .getUser();
     }
 

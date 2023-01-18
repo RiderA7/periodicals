@@ -1,9 +1,9 @@
-package com.epam.Per1;
+package com.epam.Per1.exception;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class DbException extends Exception {
+public class DbException extends AppException {
 
     private static Logger log = LogManager.getLogger(DbException.class);
 

@@ -1,6 +1,6 @@
 package com.epam.Per1.dao.MySql;
 
-import com.epam.Per1.DbException;
+import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.UserDao;
 import com.epam.Per1.entity.User;
@@ -38,7 +38,7 @@ public class MySqlUserDao implements UserDao {
                 .setPassword(rs.getString("user_password_md5"))
                 .setRoleId(rs.getInt("user_role"))
                 .setMoney(rs.getInt("user_money"))
-                .setBlocked(rs.getInt("user_blocked"))
+                .setIsBlocked(rs.getInt("user_blocked"))
                 .getUser();
     }
 

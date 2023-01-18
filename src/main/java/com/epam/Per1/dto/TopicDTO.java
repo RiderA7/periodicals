@@ -17,5 +17,4 @@ public class TopicDTO implements Serializable {
     private String name;
     private int pubs;
 
-    public TopicDTO(){}
 }

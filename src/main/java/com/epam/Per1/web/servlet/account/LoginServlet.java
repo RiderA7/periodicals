@@ -1,7 +1,7 @@
 package com.epam.Per1.web.servlet.account;
 
-import com.epam.Per1.AppException;
-import com.epam.Per1.DbException;
+import com.epam.Per1.exception.AppException;
+import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.entity.User;
 import com.epam.Per1.utils.Utils;

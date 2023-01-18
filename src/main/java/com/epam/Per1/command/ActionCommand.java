@@ -1,6 +1,6 @@
 package com.epam.Per1.command;
 
-import com.epam.Per1.DbException;
+import com.epam.Per1.exception.DbException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

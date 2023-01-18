@@ -1,6 +1,6 @@
 package com.epam.Per1.dao.MySql;
 
-import com.epam.Per1.DbException;
+import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.SubscriptionDao;
 import com.epam.Per1.entity.Publication;

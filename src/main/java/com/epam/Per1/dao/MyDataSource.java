@@ -1,6 +1,6 @@
 package com.epam.Per1.dao;
 
-import com.epam.Per1.DbException;
+import com.epam.Per1.exception.DbException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

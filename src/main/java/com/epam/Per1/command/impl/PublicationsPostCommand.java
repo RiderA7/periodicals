@@ -1,6 +1,6 @@
 package com.epam.Per1.command.impl;
 
-import com.epam.Per1.DbException;
+import com.epam.Per1.exception.DbException;
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
 import com.epam.Per1.dao.DaoFactory;

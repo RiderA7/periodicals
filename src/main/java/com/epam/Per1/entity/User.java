@@ -7,7 +7,7 @@ public class User extends Entity {
     private String password;
     private int roleId;
     private double money;
-    private boolean blocked;
+    private boolean isBlocked;
 
     public User() {
     }
@@ -20,19 +20,19 @@ public class User extends Entity {
                 .setPassword(user.getPassword())
                 .setRoleId(user.getRoleId())
                 .setMoney((int)user.getMoney()*100)
-                .setBlocked(user.isBlocked()?1:0)
+                .setIsBlocked(user.isBlocked()?1:0)
                 .getUser();
     }
 
     public User(int id, String login, String name, String password,
-                int roleId, double money, boolean blocked) {
+                int roleId, double money, boolean isBlocked) {
         super(id);
         this.login = login;
         this.name = name;
         this.password = password;
         this.roleId = roleId;
         this.money = money;
-        this.blocked = blocked;
+        this.isBlocked = isBlocked;
     }
 
     public String getLogin() {
@@ -56,7 +56,7 @@ public class User extends Entity {
     }
 
     public boolean isBlocked() {
-        return blocked;
+        return isBlocked;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class User extends Entity {
                 ", name='" + name + '\'' +
                 ", roleId=" + roleId +
                 ", money=" + money +
-                ", blocked=" + blocked +
+                ", isBlocked=" + isBlocked +
                 '}';
     }
 
@@ -104,8 +104,8 @@ public class User extends Entity {
             return this;
         }
 
-        public Builder setBlocked(int blocked) {
-            user.blocked = blocked != 0;
+        public Builder setIsBlocked(int isBlocked) {
+            user.isBlocked = isBlocked != 0;
             return this;
         }
 

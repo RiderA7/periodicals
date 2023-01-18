@@ -19,5 +19,4 @@ public class PublicationDTO implements Serializable {
     private BigDecimal price;
     private String topic;
 
-    public PublicationDTO(){}
 }

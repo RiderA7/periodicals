@@ -1,4 +1,4 @@
-package com.epam.Per1;
+package com.epam.Per1.exception;
 
 public class AppException extends RuntimeException {
     public AppException() {

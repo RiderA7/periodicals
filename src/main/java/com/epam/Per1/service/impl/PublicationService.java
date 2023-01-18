@@ -1,6 +1,6 @@
 package com.epam.Per1.service.impl;
 
-import com.epam.Per1.DbException;
+import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.PublicationDao;
 import com.epam.Per1.entity.Publication;
 import com.epam.Per1.service.IService;

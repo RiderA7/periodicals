@@ -17,5 +17,4 @@ public class SubscriptionDTO implements Serializable {
     private PublicationDTO publication;
     private String status;
 
-    public SubscriptionDTO(){}
 }
