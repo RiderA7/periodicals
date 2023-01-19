@@ -1,11 +1,11 @@
 package com.epam.Per1.command.impl;
 
-import com.epam.Per1.exception.DbException;
 import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
 import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.entity.Publication;
 import com.epam.Per1.entity.Topic;
+import com.epam.Per1.exception.DbException;
 import com.epam.Per1.service.impl.PublicationService;
 import com.epam.Per1.service.impl.TopicService;
 import com.epam.Per1.utils.Commands;
@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public class PublicationsPostCommand implements ActionCommand {
     private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
@@ -35,10 +34,9 @@ public class PublicationsPostCommand implements ActionCommand {
             String action = "add";
             if(isActionEditPublication(req)) {
                 log.debug("edit");
-                Optional<Publication> optionalPublication = getPublicationByIdFromRequest(req);
-                if (optionalPublication.isPresent()) {
+                publication = getPublicationByIdFromRequest(req);
+                if (publication != null) {
                     log.debug("edit approve");
-                    publication = optionalPublication.get();
                     action = "edit";
                 }
             }
@@ -87,7 +85,7 @@ log.error("NOT IMPLEMENTED YET");
         return new CommandResult(Commands.PUBLICATIONS, true);
     }
 
-    private Optional<Publication> getPublicationByIdFromRequest(HttpServletRequest req) {
+    private Publication getPublicationByIdFromRequest(HttpServletRequest req) {
         int pubId = Integer.parseInt(req.getParameter("pubId"));
         return publicationService.getById(pubId);
     }
@@ -114,9 +112,7 @@ log.error("NOT IMPLEMENTED YET");
     }
 
     private Publication getPublicationFromRequest(HttpServletRequest req) throws DbException {
-        Optional<Topic> optionalTopic =
-                topicService.getById(Integer.parseInt(req.getParameter("topicId")));
-        Topic topic = optionalTopic.orElseThrow();
+        Topic topic = topicService.getById(Integer.parseInt(req.getParameter("topicId")));
         double price;
         try {
             price = Double.parseDouble(req.getParameter("publicationPrice"));

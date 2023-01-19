@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class RegisterCommand implements ActionCommand {
 
@@ -56,9 +55,9 @@ public class RegisterCommand implements ActionCommand {
 
         User user = buildUser(req);
         if (userService.create(user)) {
-            Optional<User> userOptional = userService.getByLogin(user.getLogin());
-            if (userOptional.isPresent()) {
-                String page = userService.login(userOptional.get(), req.getSession());
+            user = userService.getByLogin(user.getLogin());
+            if (user != null) {
+                String page = userService.login(user, req.getSession());
                 return new CommandResult(page, true);
             }
         }

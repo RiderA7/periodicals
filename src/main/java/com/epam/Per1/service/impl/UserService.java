@@ -1,12 +1,15 @@
 package com.epam.Per1.service.impl;
 
+import com.epam.Per1.dto.UserDTO;
 import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.dao.UserDao;
 import com.epam.Per1.dao.UserRoleDao;
 import com.epam.Per1.entity.User;
 import com.epam.Per1.entity.UserRole;
-import com.epam.Per1.service.IService;
+import com.epam.Per1.exception.NoSuchElementException;
+import com.epam.Per1.service.Service;
+import com.epam.Per1.utils.Mapper;
 import com.epam.Per1.utils.Pages;
 import com.epam.Per1.utils.SqlParams;
 import jakarta.servlet.http.HttpSession;
@@ -16,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
-public class UserService implements IService<User> {
+public class UserService implements Service<User> {
 
     private static Logger log = LogManager.getLogger(UserService.class);
     private UserDao userDao;
@@ -27,27 +30,29 @@ public class UserService implements IService<User> {
     }
 
     @Override
-    public Optional<User> getByLogin(String login) {
+    public User getByLogin(String login) throws NoSuchElementException {
         Optional<User> user;
         try {
             user = userDao.getUserByLogin(login);
         } catch (DbException e) {
-            log.error("Can't find user with login " + login, e);
-            return Optional.empty();
+            String error = "Can't find user with login " + login;
+            log.error(error, e);
+            throw new NoSuchElementException(error);
         }
-        return user;
+        return user.get();
     }
 
     @Override
-    public Optional<User> getById(int id) {
+    public User getById(int id) throws NoSuchElementException {
         Optional<User> user;
         try {
             user = userDao.getUserById(id);
         } catch (DbException e) {
-            log.error("Can't find user with id = " + id, e);
-            return Optional.empty();
+            String error = "Can't find user with id " + id;
+            log.error(error, e);
+            throw new NoSuchElementException(error);
         }
-        return user;
+        return user.get();
     }
 
     @Override
@@ -70,6 +75,8 @@ public class UserService implements IService<User> {
             userRole = new UserRole.Builder().setId(1).setUserRole("USER").getUserRole();
         }
         log.info("Got role " + userRole.getUserRole());
+        UserDTO userDTO = Mapper.toUserDTO(user);
+        session.setAttribute("userDTO", userDTO);
         session.setAttribute("user", user);
         session.setAttribute("role", userRole);
         String page;

@@ -18,7 +18,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class AccountSubscribePostCommand implements ActionCommand {
     private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
@@ -38,15 +37,15 @@ public class AccountSubscribePostCommand implements ActionCommand {
             session.setAttribute("err", message);
             return new CommandResult(Commands.PUBLICATIONS,true);
         }
-        Optional<Publication> optionalPublication =
+        Publication publication =
                 publicationService.getById(Integer.parseInt(req.getParameter("pubId")));
-        if(optionalPublication.isEmpty()) {
+        if(publication == null) {
             message = "Publication not found";
             log.info(message);
             session.setAttribute("err", message);
             return new CommandResult(Commands.PUBLICATIONS,true);
         }
-        Publication publication = optionalPublication.get();
+//        Publication publication = optionalPublication.get();
         if(userMoney < publication.getPrice()){
             message = "You have not enough money";
             log.info(message);

@@ -4,6 +4,7 @@ import com.epam.Per1.command.ActionCommand;
 import com.epam.Per1.command.CommandResult;
 import com.epam.Per1.dao.DaoFactory;
 import com.epam.Per1.entity.Topic;
+import com.epam.Per1.exception.NoSuchElementException;
 import com.epam.Per1.service.impl.TopicService;
 import com.epam.Per1.utils.Commands;
 import com.epam.Per1.utils.Pages;
@@ -14,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class TopicsPostCommand implements ActionCommand {
     private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
@@ -27,9 +27,9 @@ public class TopicsPostCommand implements ActionCommand {
             Topic topic = new Topic();
             String action = "add";
             if(isActionEditTopic(req)) {
-                Optional<Topic> optionalTopic = getTopicByIdFromRequest(req);
-                if (optionalTopic.isPresent()) {
-                    topic = optionalTopic.get();
+                Topic optionalTopic = getTopicByIdFromRequest(req);
+                if (optionalTopic != null) {
+                    topic = optionalTopic;
                     action = "edit";
                 }
             }
@@ -40,8 +40,14 @@ public class TopicsPostCommand implements ActionCommand {
 
         if(isOpenTopic(req)){
             int topicId = Integer.parseInt(req.getParameter("topicId"));
-            Optional<Topic> optionalTopic = topicService.getById(topicId);
-            req.getSession().setAttribute("activeTopic", optionalTopic.orElse(null));
+//            Optional<Topic> optionalTopic = topicService.getById(topicId);
+            Topic optionalTopic = null;
+            try {
+                optionalTopic = topicService.getById(topicId);
+            } catch (NoSuchElementException e) {
+                log.info("activeTopic is not set");
+            }
+            req.getSession().setAttribute("activeTopic", optionalTopic);
             return new CommandResult(Commands.PUBLICATIONS);
         }
 
@@ -87,7 +93,7 @@ public class TopicsPostCommand implements ActionCommand {
     private boolean isActionEditTopic(HttpServletRequest req) {
         return req.getParameter("edit") != null && req.getParameter("topicId") != null;
     }
-    private Optional<Topic> getTopicByIdFromRequest(HttpServletRequest req) {
+    private Topic getTopicByIdFromRequest(HttpServletRequest req) {
         int topicId = Integer.parseInt(req.getParameter("topicId"));
         return topicService.getById(topicId);
     }

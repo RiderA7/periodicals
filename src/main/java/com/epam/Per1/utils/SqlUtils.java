@@ -43,7 +43,7 @@ public class SqlUtils {
     public static final String UPDATE_PUBLICATION = "UPDATE publication SET" +
             " publication_title=?, publication_price=?, publication_topic=? WHERE publication_id=?";
     public static final String GET_ALL_SUBSCRIPTIONS = "SELECT " +
-            "subscription_id, user_id, user_login, user_name, publication_id, publication_title, publication_price, topic_id, topic_name " +
+            "subscription_id, user_id, user_login, user_name, user_role, user_money, publication_id, publication_title, publication_price, topic_id, topic_name, status " +
             "FROM subscription " +
             "JOIN user ON user = user_id " +
             "JOIN publication ON publication = publication_id " +
@@ -52,4 +52,6 @@ public class SqlUtils {
 
     public static final String CREATE_SUBSCRIPTION = "INSERT INTO subscription " +
             "(user, publication, status) VALUES (?, ?, ?)";
+    public static final String UPDATE_SUBSCRIPTION = "UPDATE subscription SET" +
+            " user=?, publication=?, status=? WHERE subscription_id=?";
 }

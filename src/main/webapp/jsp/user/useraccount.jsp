@@ -10,6 +10,9 @@
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/header.jsp" %>
+${user}
+<br>
+${userDTO}
 <c:if test="${sessionScope.user ne null}">
     <div class="greetings"><fmt:message key="user.account.hello"/>, ${sessionScope.user.name}</div>
 </c:if>

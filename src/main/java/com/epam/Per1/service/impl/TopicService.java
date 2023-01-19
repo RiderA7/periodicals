@@ -1,9 +1,10 @@
 package com.epam.Per1.service.impl;
 
-import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.TopicDao;
 import com.epam.Per1.entity.Topic;
-import com.epam.Per1.service.IService;
+import com.epam.Per1.exception.DbException;
+import com.epam.Per1.exception.NoSuchElementException;
+import com.epam.Per1.service.Service;
 import com.epam.Per1.utils.SqlParams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
-public class TopicService implements IService<Topic> {
+public class TopicService implements Service<Topic> {
 
     private static Logger log = LogManager.getLogger(TopicService.class);
     private TopicDao topicDao;
@@ -41,20 +42,29 @@ public class TopicService implements IService<Topic> {
     }
 
     @Override
-    public Optional<Topic> getByLogin(String name) {
-        return Optional.empty();
+    public Topic getByLogin(String name) throws NoSuchElementException{
+        Optional<Topic> topic;
+        try {
+            topic = topicDao.getTopicByName(name);
+        } catch (DbException e) {
+            String error = "Can't find Topic with name " + name;
+            log.error(error, e);
+            throw new NoSuchElementException(error);
+        }
+        return topic.get();
     }
 
     @Override
-    public Optional<Topic> getById(int id) {
+    public Topic getById(int id) throws NoSuchElementException{
         Optional<Topic> optionalTopic = Optional.empty();
         try {
             optionalTopic = topicDao.getTopicById(id);
         } catch (DbException e) {
             String error = "Can't get topic with id=" + id;
             log.error(error);
+            throw new NoSuchElementException(error);
         }
-        return optionalTopic;
+        return optionalTopic.get();
     }
 
     @Override

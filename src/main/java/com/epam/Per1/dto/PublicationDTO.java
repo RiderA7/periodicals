@@ -1,9 +1,6 @@
 package com.epam.Per1.dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,6 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 @EqualsAndHashCode(of = {"name", "price"})
+@ToString
 public class PublicationDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private int id;

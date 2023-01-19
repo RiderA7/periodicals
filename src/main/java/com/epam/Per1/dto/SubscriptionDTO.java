@@ -1,9 +1,6 @@
 package com.epam.Per1.dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,8 +8,10 @@ import java.io.Serializable;
 @Setter
 @Builder
 @EqualsAndHashCode(of = {"user", "publication"})
+@ToString
 public class SubscriptionDTO implements Serializable {
     private static final long serialVersionUID = 1L;
+    private int id;
     private UserDTO user;
     private PublicationDTO publication;
     private String status;

@@ -5,53 +5,25 @@
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-<c:set var="title" value="Subscriptions <i class='las la-battery-one-quarters'></i>" scope="page"/>
+<fmt:message key="user.subscriptions.title" var="title"/>
+<%--<c:set var="title" value="Subscriptions <i class='las la-battery-one-quarters'></i>" scope="page"/>--%>
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/header.jsp" %>
-${publications}<br>
-<c:if test="${sessionScope.user.roleId == 2}">
-    <form action="publications" method="post">
-        <input class="btn" type="submit" name="add" value="ADD NEW PUBLICATION">
-    </form>
-</c:if>
-<c:if test="${sessionScope.activeTopic ne null}">
-<form action="publications" method="post">
-    <div class="bar info">Current topic: ${sessionScope.activeTopic.name}
-        <button class="btn" name="removeTopic" value="removeTopic" title="remove">
-            <i class="las la-times"></i>
-        </button>
-    </div>
-    </c:if>
-    <table>
+${subscriptions}<br>
+    <table class="table">
         <tr>
-            <th>Title</th>
-            <th>Topic</th>
-            <th>Price</th>
-            <th>Misc</th>
+            <th><fmt:message key="user.subscriptions.table.title"/>Title</th>
+            <th><fmt:message key="user.subscriptions.table.topic"/>Topic</th>
+            <th><fmt:message key="user.subscriptions.table.price"/>Price</th>
+            <th><fmt:message key="user.subscriptions.table.misc"/>Misc</th>
         </tr>
-        <c:forEach var="pub" items="${publications}">
+        <c:forEach var="sub" items="${subscriptions}">
             <tr>
-                <td>${pub.name}</td>
-                <td>${pub.topic.name}</td>
-                <td>${pub.price}</td>
+                <td>${sub.publication.name}</td>
+                <td>${sub.publication.topic}</td>
+                <td>${sub.publication.price}</td>
                 <td>
-                    <c:if test="${sessionScope.user.roleId == 2}">
-                        <form action="publications" method="post">
-                            <input type="hidden" name="pubId" value="${pub.id}">
-                            <input class="btn" type="submit" name="edit" value="EDIT">
-                        </form>
-                    </c:if>
-                    <c:if test="${sessionScope.user.roleId == 1}">
-                        <form action="account/subscribe" method="post">
-                            <input type="hidden" name="pubId" value="${pub.id}">
-                            <input class="btn" type="submit" name="subscribe" value="SUBSCRIBE">
-                        </form>
-                    </c:if>
-                    <form action="publications" method="post">
-                        <input type="hidden" name="pubId" value="${pub.id}">
-                        <input class="btn" type="submit" name="view" value="VIEW">
-                    </form>
                 </td>
             </tr>
         </c:forEach>

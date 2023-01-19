@@ -20,7 +20,7 @@ public class Subscription extends Entity{
     public String toString() {
         return "Subscription{" +
                 "id=" + getId() +
-                "user=" + user +
+                ", user=" + user +
                 ", publication=" + publication +
                 ", status=" + status +
                 '}';

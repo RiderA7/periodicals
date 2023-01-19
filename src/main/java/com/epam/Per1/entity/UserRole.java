@@ -19,7 +19,7 @@ public class UserRole extends Entity{
     public String toString() {
         return "UserRole{" +
                 "id=" + getId() +
-                "role='" + role + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 

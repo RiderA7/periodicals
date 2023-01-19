@@ -35,7 +35,10 @@ public class MySqlSubscriptionDao implements SubscriptionDao {
                 .setId(rs.getInt("subscription_id"))
                 .setUser(new User.Builder()
                         .setId(rs.getInt("user_id"))
+                        .setLogin(rs.getString("user_login"))
                         .setName(rs.getString("user_name"))
+                        .setRoleId(rs.getInt("user_role"))
+                        .setMoney(rs.getInt("user_money"))
                         .getUser())
                 .setPublication(new Publication.Builder()
                         .setId(rs.getInt("publication_id"))
@@ -46,6 +49,7 @@ public class MySqlSubscriptionDao implements SubscriptionDao {
                                 .setName(rs.getString("topic_name"))
                                 .getTopic())
                         .getPublication())
+                .setStatus(rs.getInt("status"))
                 .getSubscription();
     }
 
@@ -53,6 +57,7 @@ public class MySqlSubscriptionDao implements SubscriptionDao {
     public int countAll(SqlParams sqlParams) throws DbException {
         String sql = Utils.prepareSqlWithPaging(sqlParams, SqlUtils.COUNT_ALL_SUBSCRIPTIONS);
         int count = 0;
+        log.debug("SubscriptionDao.countAll with sql= " + sql);
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
@@ -75,7 +80,7 @@ public class MySqlSubscriptionDao implements SubscriptionDao {
         List<Subscription> subscriptions = new ArrayList<>();
         String sql = SqlUtils.GET_ALL_SUBSCRIPTIONS;
         sql = Utils.prepareSqlWithPaging(sqlParams, sql);
-        System.out.println(sql);
+        log.info(sql);
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
@@ -108,6 +113,7 @@ public class MySqlSubscriptionDao implements SubscriptionDao {
             ps.setInt(++k, subscription.getPublication().getId());
             ps.setInt(++k, subscription.getStatus());
 //            ps.setDate(++k, new Date().getTime());
+            log.info(ps);
             if (ps.executeUpdate() == 0) {
                 throw new DbException("Publication not created!");
             }
@@ -119,6 +125,21 @@ public class MySqlSubscriptionDao implements SubscriptionDao {
 
     @Override
     public boolean update(Subscription subscription) throws DbException {
-        return false;
+        boolean updated = false;
+        try (Connection con = connectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(SqlUtils.UPDATE_SUBSCRIPTION)){
+            int k = 0;
+            ps.setInt(++k, subscription.getUser().getId());
+            ps.setInt(++k, subscription.getPublication().getId());
+            ps.setInt(++k, subscription.getStatus());
+            ps.setInt(++k, subscription.getId());
+            log.info(ps);
+            if (ps.executeUpdate() != 0) {
+                updated = true;
+            }
+        } catch (SQLException e) {
+            throw new DbException("Publication not updated! (dao)",e);
+        }
+        return updated;
     }
 }

@@ -1,9 +1,10 @@
 package com.epam.Per1.service.impl;
 
-import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.PublicationDao;
 import com.epam.Per1.entity.Publication;
-import com.epam.Per1.service.IService;
+import com.epam.Per1.exception.DbException;
+import com.epam.Per1.exception.NoSuchElementException;
+import com.epam.Per1.service.Service;
 import com.epam.Per1.utils.SqlParams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
-public class PublicationService implements IService<Publication> {
+public class PublicationService implements Service<Publication> {
 
     private static Logger log = LogManager.getLogger(PublicationService.class);
     private PublicationDao publicationDao;
@@ -50,20 +51,29 @@ public class PublicationService implements IService<Publication> {
     }
 
     @Override
-    public Optional<Publication> getByLogin(String name) {
-        return Optional.empty();
+    public Publication getByLogin(String name) {
+        Optional<Publication> optionalPublication;
+        try {
+            optionalPublication = publicationDao.getByName(name);
+        } catch (DbException e) {
+            String error = "Can't find publication with title " + name;
+            log.error(error, e);
+            throw new NoSuchElementException(error);
+        }
+        return optionalPublication.get();
     }
 
     @Override
-    public Optional<Publication> getById(int id) {
+    public Publication getById(int id) {
         Optional<Publication> optionalPublication = Optional.empty();
         try {
             optionalPublication = publicationDao.getById(id);
         } catch (DbException e) {
             String error = "Can't get publication with id=" + id;
             log.error(error);
+            throw new NoSuchElementException(error);
         }
-        return optionalPublication;
+        return optionalPublication.get();
     }
 
     @Override
