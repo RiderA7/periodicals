@@ -45,6 +45,7 @@
         <input type="submit" class="btn btn-primary" value="<fmt:message key="general.register.button"/>">
     </form>
 </div>
-<%@ include file="../inc/footer.jsp" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<tags:footer />
 </body>
 </html>

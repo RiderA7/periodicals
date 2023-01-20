@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+
 <fmt:setLocale value="${cookie['lang'].value}"/>
 <fmt:setBundle basename="messages"/>
 <html>
@@ -19,6 +21,7 @@ Hellllllllloooooooooo!!!!
 <%--<a href="probe">probe</a>--%>
 <%--<a href="ind.jsp">ind</a></body>--%>
 <%--<a href="account/login">login</a>--%>
-<%@ include file="jsp/inc/footer.jsp" %>
+<%--<%@ include file="jsp/inc/footer.jsp" %>--%>
+<tags:footer />
 </body>
 </html>

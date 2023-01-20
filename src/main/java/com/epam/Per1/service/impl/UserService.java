@@ -9,6 +9,7 @@ import com.epam.Per1.entity.User;
 import com.epam.Per1.entity.UserRole;
 import com.epam.Per1.exception.NoSuchElementException;
 import com.epam.Per1.service.Service;
+import com.epam.Per1.utils.Commands;
 import com.epam.Per1.utils.Mapper;
 import com.epam.Per1.utils.Pages;
 import com.epam.Per1.utils.SqlParams;
@@ -81,8 +82,8 @@ public class UserService implements Service<User> {
         session.setAttribute("role", userRole);
         String page;
         switch (userRole.getId()) {
-            case 1: page = Pages.USER_ACCOUNT; break;
-            case 2: page = Pages.ADMIN_ACCOUNT; break;
+            case 1: page = Commands.USER_ACCOUNT; break;
+            case 2: page = Commands.ADMIN_ACCOUNT; break;
             default: page = Pages.LOGIN_PAGE;
         }
         return page;

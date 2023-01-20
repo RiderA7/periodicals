@@ -44,6 +44,11 @@ public class SubscriptionService implements Service<SubscriptionDTO> {
 
     @Override
     public boolean create(SubscriptionDTO subscription) {
+        try {
+            return subscriptionDao.create(Mapper.toSubscription(subscription));
+        } catch (DbException e) {
+            log.error("Can't create publication id=" + subscription.getId(), e);
+        }
         return false;
     }
 

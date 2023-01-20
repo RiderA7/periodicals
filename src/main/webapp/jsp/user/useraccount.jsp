@@ -16,6 +16,7 @@ ${userDTO}
 <c:if test="${sessionScope.user ne null}">
     <div class="greetings"><fmt:message key="user.account.hello"/>, ${sessionScope.user.name}</div>
 </c:if>
-<%@ include file="../inc/footer.jsp" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<tags:footer />
 </body>
 </html>

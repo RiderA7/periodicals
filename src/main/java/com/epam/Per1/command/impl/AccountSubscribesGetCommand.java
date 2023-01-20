@@ -73,11 +73,10 @@ public class AccountSubscribesGetCommand implements ActionCommand {
 
     private SqlParams PrepareSqlParams(UserDTO user, PagingParams pagingParams) {
         String where = (user.getId() == 0) ? "" : "user="+ user.getId();
-        SqlParams sqlParams = new SqlParams.Builder()
+        return new SqlParams.Builder()
                 .setWhere(where)
                 .setOffsetAndLimit(pagingParams)
                 .getSqlParams();
-        return sqlParams;
     }
 
     private UserDTO LoadUserFromSession(HttpSession session) {

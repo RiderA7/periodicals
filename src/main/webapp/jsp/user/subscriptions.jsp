@@ -10,13 +10,13 @@
 <%@ include file="../inc/head.jsp" %>
 <body>
 <%@ include file="../inc/header.jsp" %>
-${subscriptions}<br>
+<%--${subscriptions}<br>--%>
     <table class="table">
         <tr>
-            <th><fmt:message key="user.subscriptions.table.title"/>Title</th>
-            <th><fmt:message key="user.subscriptions.table.topic"/>Topic</th>
-            <th><fmt:message key="user.subscriptions.table.price"/>Price</th>
-            <th><fmt:message key="user.subscriptions.table.misc"/>Misc</th>
+            <th><fmt:message key="user.subscriptions.table.title"/></th>
+            <th><fmt:message key="user.subscriptions.table.topic"/></th>
+            <th><fmt:message key="user.subscriptions.table.price"/></th>
+            <th><fmt:message key="user.subscriptions.table.misc"/></th>
         </tr>
         <c:forEach var="sub" items="${subscriptions}">
             <tr>
@@ -29,6 +29,7 @@ ${subscriptions}<br>
         </c:forEach>
     </table>
     <%@ include file="../inc/paging.jsp" %>
-    <%@ include file="../inc/footer.jsp" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<tags:footer />
 </body>
 </html>

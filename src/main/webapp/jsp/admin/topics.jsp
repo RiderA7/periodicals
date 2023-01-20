@@ -57,6 +57,7 @@
 <%--    </form>--%>
 <%--    <c:remove var="topic" scope="session" />--%>
 <%--</c:if>--%>
-<%@ include file="../inc/footer.jsp" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<tags:footer />
 </body>
 </html>

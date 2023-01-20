@@ -47,6 +47,7 @@
     </c:forEach>
 </table>
 <%@ include file="../inc/paging.jsp" %>
-<%@ include file="../inc/footer.jsp" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<tags:footer />
 </body>
 </html>

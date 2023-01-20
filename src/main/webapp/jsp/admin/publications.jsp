@@ -54,6 +54,7 @@
 </form>
 <c:remove var="publication" scope="session" />
 <c:remove var="action" scope="session" />
-<%@ include file="../inc/footer.jsp" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<tags:footer />
 </body>
 </html>

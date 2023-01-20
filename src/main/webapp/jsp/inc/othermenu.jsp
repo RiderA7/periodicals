@@ -17,7 +17,7 @@
     </a>
 </li><!-- End Publications Nav -->
 <li class="nav-item">
-    <a class="nav-link collapsed" href="${pageContext.request.contextPath}/account/login">
+    <a class="nav-link collapsed" href="${pageContext.request.contextPath}/login">
         <i class="bi bi-grid"></i>
         <span><fmt:message key="menu.other.login"/></span>
     </a>

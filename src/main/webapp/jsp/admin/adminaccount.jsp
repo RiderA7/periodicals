@@ -11,6 +11,7 @@
 <body>
 <%@ include file="../inc/header.jsp" %>
 
-<%@ include file="../inc/footer.jsp" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<tags:footer />
 </body>
 </html>

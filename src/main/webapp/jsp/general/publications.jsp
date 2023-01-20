@@ -70,6 +70,7 @@
         <a href="?page=1"><fmt:message key="general.publication.table.nodata"/></a>
     </div>
 </c:if>
-<%@ include file="../inc/footer.jsp" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<tags:footer />
 </body>
 </html>

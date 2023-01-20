@@ -12,7 +12,7 @@
 <%@ include file="../inc/header.jsp" %>
 <div>
     <form class="row g-3"
-          action="${pageContext.request.contextPath}/account/login"
+          action="${pageContext.request.contextPath}/login"
           method="post">
         <div class="col-md-12">
             <div class="form-floating">
@@ -32,9 +32,11 @@
     </form>
     <div class="alert alert-light border-light alert-dismissible fade show" role="alert">
         <i class="bi bi-collection me-1"></i><fmt:message key="general.login.register1"/>
-        <a href="${pageContext.request.contextPath}/account/register"><fmt:message key="general.login.register2"/></a>
+        <a href="${pageContext.request.contextPath}/register"><fmt:message key="general.login.register2"/></a>
     </div>
 </div>
-<%@ include file="../inc/footer.jsp" %>
+<%--<%@ include file="../inc/footer.jsp" %>--%>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<tags:footer />
 </body>
 </html>

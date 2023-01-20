@@ -33,6 +33,7 @@ public class AccountReplenishPostCommand implements ActionCommand {
             User newUser = null;
             try {
                 newUser = (User) req.getSession().getAttribute("user");
+                newUser = userService.getById(newUser.getId());
                 log.info("User " + newUser.getName() + " try to replenish account by " + deposit);
                 log.info("Balance before: " + newUser.getMoney());
                 newUser = userService.buildUser(newUser, deposit);
