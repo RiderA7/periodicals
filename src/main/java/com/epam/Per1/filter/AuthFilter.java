@@ -20,14 +20,16 @@ import java.util.Locale;
 @WebFilter({"/account/*", "/admin/*"})
 public class AuthFilter extends HttpFilter {
 
-    private UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
-    private Logger log = LogManager.getLogger(AuthFilter.class);
+    private UserService userService;
+    private Logger log;
 
-    public void setUserService(UserService userService){
-        this.userService = userService;
+    public AuthFilter(){
+        userService = new UserService(DaoFactory.getInstance().getUserDao());
+        log = LogManager.getLogger(AuthFilter.class);
     }
-    public void setLogger(Logger logger){
-        this.log = logger;
+    public AuthFilter(UserService userService, Logger log){
+        this.userService = userService;
+        this.log = log;
     }
 
     @Override
@@ -35,19 +37,24 @@ public class AuthFilter extends HttpFilter {
             throws IOException, ServletException {
 //        log.debug("AuthFilter start");
 
-        ifNotAuthorizedThenGoToLoginPage(req, res);
+        if(ifNotAuthorized(req)){
+            req.getRequestDispatcher(Pages.LOGIN_PAGE).forward(req, res);
+        } else {
 
-        UserDTO user = (UserDTO) req.getSession().getAttribute("userDTO");
-        user = refreshUserDataInSession(req, user);
+            UserDTO user = (UserDTO) req.getSession().getAttribute("userDTO");
+            user = refreshUserDataInSession(req, user);
 
-        isAccessAllowedAccordingByRole(req, res, user);
+            if(isAccessAllowedAccordingByRole(req, user)){
+                req.getRequestDispatcher(Pages.LOGIN_PAGE).forward(req, res);
+            } else {
 
 //        log.debug("AuthFilter end");
-        chain.doFilter(req, res);
+                chain.doFilter(req, res);
+            }
+        }
     }
 
-    private void isAccessAllowedAccordingByRole(HttpServletRequest req, HttpServletResponse res, UserDTO user)
-            throws ServletException, IOException {
+    private boolean isAccessAllowedAccordingByRole(HttpServletRequest req, UserDTO user) {
         String servletPath = req.getServletPath().split("/")[1];
         log.debug("Filter: servletPath = " + servletPath + " and role is " + user.getRole().getRole());
         if(servletPath.toUpperCase(Locale.ROOT).equals("ACCOUNT")
@@ -57,8 +64,9 @@ public class AuthFilter extends HttpFilter {
             String message = "authorization.required";
             log.info("Filter: " + message);
             req.getSession().setAttribute("err", message);
-            req.getRequestDispatcher(Pages.LOGIN_PAGE).forward(req, res);
+            return true;
         }
+        return false;
     }
 
     private UserDTO refreshUserDataInSession(HttpServletRequest req, UserDTO user) {
@@ -68,13 +76,13 @@ public class AuthFilter extends HttpFilter {
         return user;
     }
 
-    private void ifNotAuthorizedThenGoToLoginPage(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+    private boolean ifNotAuthorized(HttpServletRequest req){
         if(req.getSession().getAttribute("userDTO") == null){
             String message = "authorization.required";
             log.info("Filter: " + message);
             req.getSession().setAttribute("err", message);
-            req.getRequestDispatcher(Pages.LOGIN_PAGE).forward(req, res);
+            return true;
         }
+        return false;
     }
 }
