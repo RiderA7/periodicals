@@ -15,6 +15,6 @@ public class PublicationDTO implements Serializable {
     private int id;
     private String name;
     private BigDecimal price;
-    private String topic;
+    private TopicDTO topic;
 
 }

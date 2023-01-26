@@ -20,8 +20,15 @@ import java.util.Locale;
 @WebFilter({"/account/*", "/admin/*"})
 public class AuthFilter extends HttpFilter {
 
-    private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
-    private static Logger log = LogManager.getLogger(AuthFilter.class);
+    private UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
+    private Logger log = LogManager.getLogger(AuthFilter.class);
+
+    public void setUserService(UserService userService){
+        this.userService = userService;
+    }
+    public void setLogger(Logger logger){
+        this.log = logger;
+    }
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
@@ -42,11 +49,11 @@ public class AuthFilter extends HttpFilter {
     private void isAccessAllowedAccordingByRole(HttpServletRequest req, HttpServletResponse res, UserDTO user)
             throws ServletException, IOException {
         String servletPath = req.getServletPath().split("/")[1];
-        log.debug("Filter: servletPath = " + servletPath + " and role is " + user.getRole());
+        log.debug("Filter: servletPath = " + servletPath + " and role is " + user.getRole().getRole());
         if(servletPath.toUpperCase(Locale.ROOT).equals("ACCOUNT")
-                && !user.getRole().toUpperCase(Locale.ROOT).equals("USER")
+                && !user.getRole().getRole().toUpperCase(Locale.ROOT).equals("USER")
         || servletPath.toUpperCase(Locale.ROOT).equals("ADMIN")
-                && !user.getRole().toUpperCase(Locale.ROOT).equals("ADMINISTRATOR")){
+                && !user.getRole().getRole().toUpperCase(Locale.ROOT).equals("ADMINISTRATOR")){
             String message = "authorization.required";
             log.info("Filter: " + message);
             req.getSession().setAttribute("err", message);

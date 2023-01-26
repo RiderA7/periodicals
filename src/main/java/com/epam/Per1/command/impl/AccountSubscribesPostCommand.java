@@ -83,6 +83,6 @@ public class AccountSubscribesPostCommand implements ActionCommand {
         } else {
             req.getSession().setAttribute("err", "subscribe.error");
         };
-        return new CommandResult(Commands.SUBSCRIPTIONS);
+        return new CommandResult(Commands.SUBSCRIPTIONS, true);
     }
 }

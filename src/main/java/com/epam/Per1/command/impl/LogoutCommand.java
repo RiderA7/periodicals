@@ -28,6 +28,7 @@ public class LogoutCommand implements ActionCommand {
             log.info("Session expired - no logout");
         }
         session.removeAttribute("user");
+        session.removeAttribute("userDTO");
         session.removeAttribute("role");
         session.setAttribute("suc", "logged.out");
         return new CommandResult(Pages.WELCOME_PAGE, true);

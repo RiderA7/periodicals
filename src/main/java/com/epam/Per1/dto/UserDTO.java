@@ -14,10 +14,10 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private String login;
+    @ToString.Exclude private transient String password;
     private String name;
     private BigDecimal money;
-    private int roleId;
-    private String role;
+    private UserRoleDTO role;
     private boolean isBlocked;
 
 }

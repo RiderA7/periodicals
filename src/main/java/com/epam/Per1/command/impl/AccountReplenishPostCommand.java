@@ -26,7 +26,7 @@ public class AccountReplenishPostCommand implements ActionCommand {
             deposit = Integer.parseInt(req.getParameter("replenish"));
             if (!Validator.validateDeposit(deposit)) {
                 log.info("invalid deposit format was received:" + deposit);
-                req.setAttribute("err", "Deposit not valid (must be positive)");
+                req.getSession().setAttribute("err", "user.deposit.not.valid");
                 return new CommandResult(Pages.USER_REPLENISH);
             }
             boolean updated = false;
@@ -45,11 +45,11 @@ public class AccountReplenishPostCommand implements ActionCommand {
                 req.getSession().setAttribute("user", newUser);
                 log.info("User " + newUser.getName() + " replenished account by " + deposit);
                 log.info("Balance after: " + newUser.getMoney());
-                return new CommandResult(Pages.USER_PROFILE);
+                return new CommandResult(Pages.USER_PROFILE, true);
             } else return new CommandResult(Pages.USER_REPLENISH);
         } catch (NullPointerException e){
             log.error("Error during replenishing account");
-            return new CommandResult(Pages.USER_UPDATE);
+            return new CommandResult(Pages.USER_REPLENISH);
         }
     }
 

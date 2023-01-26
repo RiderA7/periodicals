@@ -24,13 +24,13 @@ public class AccountUpdatePostCommand implements ActionCommand {
         String login = req.getParameter("login");
         if (login == null || !Validator.validateLogin(login)) {
             log.info("invalid login format was received:" + login);
-            req.setAttribute("err", "Login not valid");
+            req.getSession().setAttribute("err", "user.update.login.invalid");
             return new CommandResult(Pages.USER_UPDATE);
         }
         String name = req.getParameter("name");
         if (name == null || !Validator.validateName(name)) {
             log.info("invalid name format was received:" + name);
-            req.setAttribute("err", "Name not valid");
+            req.getSession().setAttribute("err", "user.update.name.invalid");
             return new CommandResult(Pages.USER_UPDATE);
         }
         boolean updated = false;
@@ -41,10 +41,11 @@ public class AccountUpdatePostCommand implements ActionCommand {
             updated = userService.update(newUser);
         } catch (NullPointerException e) {
             log.error("No user logged in for update!");
+            req.getSession().setAttribute("err", "user.update.error");
         }
         if (updated) {
             req.getSession().setAttribute("user", newUser);
-            return new CommandResult(Pages.USER_PROFILE);
+            return new CommandResult(Pages.USER_PROFILE, true);
         } else return new CommandResult(Pages.USER_UPDATE);
     }
 

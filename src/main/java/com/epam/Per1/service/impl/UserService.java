@@ -150,9 +150,9 @@ public class UserService implements Service<User> {
                 .setLogin(login)
                 .setName(name)
                 .setPassword(user.getPassword())
-                .setRoleId(user.getRoleId())
-                .setMoney((int) user.getMoney() * 100)
-                .setIsBlocked(user.isBlocked() ? 1 : 0)
+                .setRole(user.getRole())
+                .setMoney(user.getMoney())
+                .setIsBlocked(user.isBlocked())
                 .getUser();
     }
     public User buildUser(User user, String password){
@@ -161,9 +161,9 @@ public class UserService implements Service<User> {
                 .setLogin(user.getLogin())
                 .setName(user.getName())
                 .setPassword(password)
-                .setRoleId(user.getRoleId())
-                .setMoney((int) user.getMoney() * 100)
-                .setIsBlocked(user.isBlocked() ? 1 : 0)
+                .setRole(user.getRole())
+                .setMoney(user.getMoney())
+                .setIsBlocked(user.isBlocked())
                 .getUser();
     }
     public User buildUser(User user, int deposit){
@@ -172,9 +172,9 @@ public class UserService implements Service<User> {
                 .setLogin(user.getLogin())
                 .setName(user.getName())
                 .setPassword(user.getPassword())
-                .setRoleId(user.getRoleId())
-                .setMoney((int) (user.getMoney() + deposit) * 100)
-                .setIsBlocked(user.isBlocked() ? 1 : 0)
+                .setRole(user.getRole())
+                .setMoney(user.getMoney() + deposit)
+                .setIsBlocked(user.isBlocked())
                 .getUser();
     }
     public User buildUser(User user, boolean ban){
@@ -183,9 +183,9 @@ public class UserService implements Service<User> {
                 .setLogin(user.getLogin())
                 .setName(user.getName())
                 .setPassword(user.getPassword())
-                .setRoleId(user.getRoleId())
-                .setMoney((int) user.getMoney() * 100)
-                .setIsBlocked(ban ? 1 : 0)
+                .setRole(user.getRole())
+                .setMoney(user.getMoney())
+                .setIsBlocked(ban)
                 .getUser();
     }
 

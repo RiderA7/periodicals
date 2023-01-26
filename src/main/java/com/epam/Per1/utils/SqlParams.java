@@ -1,6 +1,11 @@
 package com.epam.Per1.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class SqlParams {
+    public List<String> whereList = new ArrayList<>();
     private String where = "";
     private String groupBy = "";
     private String sort = "";
@@ -14,8 +19,20 @@ public class SqlParams {
         this.limit = pagingParams.getLimit();
     }
 
+    public void addWhere(String where){
+        this.whereList.add(where);
+    }
+    public void clearWhere(){
+        this.whereList.clear();
+    }
+    public String getWhereList(){
+        if(whereList.size()==0){ return "";}
+        return whereList.stream()
+                .collect(Collectors.joining(" AND ", " WHERE ", ""));
+    }
+
     public String getWhere() {
-        return where;
+        return getWhereList();
     }
     public String getGroupBy() {
         return groupBy;

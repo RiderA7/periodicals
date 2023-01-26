@@ -26,6 +26,14 @@
         </div>
     </form>
 </c:if>
+<form action="" method="get">
+    <input type="text" name="filter">
+    <select name="order">
+        <option value="title"><fmt:message key="general.publication.filter.title"/></option>
+        <option value="price"><fmt:message key="general.publication.filter.price"/></option>
+    </select>
+    <input type="submit" value="FILTER">
+</form>
 <c:if test="${publications.size() > 0}">
     <table class="table">
         <tr>
@@ -40,14 +48,14 @@
                 <td>${pub.topic.name}</td>
                 <td>${pub.price}</td>
                 <td>
-                    <c:if test="${sessionScope.user.roleId == 2}">
+                    <c:if test="${sessionScope.user.role.id == 2}">
                         <form action="publications" method="post">
                             <input type="hidden" name="pubId" value="${pub.id}">
                             <input class="btn btn-success" type="submit"
                                    name="edit" value="<fmt:message key="general.publication.table.edit"/>">
                         </form>
                     </c:if>
-                    <c:if test="${sessionScope.user.roleId == 1}">
+                    <c:if test="${sessionScope.user.role.id == 1}">
                         <form action="account/subscribe" method="post">
                             <input type="hidden" name="pubId" value="${pub.id}">
                             <input class="btn btn-primary" type="submit"

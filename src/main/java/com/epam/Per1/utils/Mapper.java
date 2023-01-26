@@ -1,54 +1,43 @@
 package com.epam.Per1.utils;
 
-import com.epam.Per1.dto.PublicationDTO;
-import com.epam.Per1.dto.SubscriptionDTO;
-import com.epam.Per1.dto.TopicDTO;
+import com.epam.Per1.dto.*;
 import com.epam.Per1.entity.*;
-import com.epam.Per1.exception.DbException;
-import com.epam.Per1.dao.DaoFactory;
-import com.epam.Per1.dto.UserDTO;
-import com.epam.Per1.service.impl.TopicService;
-import com.epam.Per1.service.impl.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 
 public class Mapper {
 
-    private static Logger log = LogManager.getLogger(Mapper.class);
-    private static final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
-    private static final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
+//    private static Logger log = LogManager.getLogger(Mapper.class);
+
+    public static UserRole toUserRole(UserRoleDTO userRoleDTO){
+        return new UserRole(userRoleDTO.getId(), userRoleDTO.getRole());
+    }
+
+    public static UserRoleDTO toUserRoleDTO(UserRole userRole){
+        return new UserRoleDTO(userRole.getId(), userRole.getUserRole());
+    }
 
     public static User toUser(UserDTO userDTO){
-        User user = userService.getByLogin(userDTO.getLogin());
         return new User.Builder()
-                .setId(user.getId())
+                .setId(userDTO.getId())
                 .setLogin(userDTO.getLogin())
+                .setPassword(userDTO.getPassword())
                 .setName(userDTO.getName())
-                .setMoney(Double.valueOf(userDTO.getMoney().doubleValue()*100.0).intValue())
-                .setIsBlocked(userDTO.isBlocked()?1:0)
-                .setRoleId(userDTO.getRoleId())
+                .setMoney(userDTO.getMoney().doubleValue())
+                .setIsBlocked(userDTO.isBlocked())
+//                .setRoleId(userDTO.getRoleId())
+                .setRole(new UserRole(userDTO.getRole().getId(), userDTO.getRole().getRole()))
                 .getUser();
     }
 
     public static UserDTO toUserDTO(User user){
-        log.debug("found user = " + user);
-        UserRole userRole;
-        try {
-            userRole = DaoFactory.getInstance().getUserRoleDao().getUserRole(user.getRoleId());
-//            log.debug("DAO");
-        } catch (DbException e) {
-            userRole = new UserRole.Builder().setId(1).setUserRole("USER").getUserRole();
-//            log.debug("EXEPT");
-        }
-//        log.debug("userRole="+userRole);
         return UserDTO.builder()
                 .id(user.getId())
                 .login(user.getLogin())
                 .name(user.getName())
-                .roleId(user.getRoleId())
-                .role(userRole.getUserRole())
+                .password(user.getPassword())
+//                .roleId(user.getRole().getId())
+                .role(Mapper.toUserRoleDTO(user.getRole()))
                 .money(BigDecimal.valueOf(user.getMoney()))
                 .isBlocked(user.isBlocked())
                 .build();
@@ -75,7 +64,7 @@ public class Mapper {
         return new Publication.Builder()
                 .setId(publicationDTO.getId())
                 .setName(publicationDTO.getName())
-                .setTopic(topicService.getByLogin(publicationDTO.getTopic()))
+                .setTopic(toTopic(publicationDTO.getTopic()))
                 .setPrice(publicationDTO.getPrice().doubleValue())
                 .getPublication();
     }
@@ -83,7 +72,7 @@ public class Mapper {
         return PublicationDTO.builder()
                 .id(publication.getId())
                 .name(publication.getName())
-                .topic(publication.getTopic().getName())
+                .topic(toTopicDTO(publication.getTopic()))
                 .price(BigDecimal.valueOf(publication.getPrice()))
                 .build();
     }
@@ -92,12 +81,14 @@ public class Mapper {
         return new Topic.Builder()
                 .setId(topicDTO.getId())
                 .setName(topicDTO.getName())
+                .setPubs(topicDTO.getPubs())
                 .getTopic();
     }
     public static TopicDTO toTopicDTO(Topic topic){
         return TopicDTO.builder()
                 .id(topic.getId())
                 .name(topic.getName())
+                .pubs(topic.getPubs())
                 .build();
     }
 }

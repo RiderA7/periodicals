@@ -1,11 +1,11 @@
 package com.epam.Per1.dao.MySql;
 
-import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.UserDao;
 import com.epam.Per1.entity.User;
+import com.epam.Per1.entity.UserRole;
+import com.epam.Per1.exception.DbException;
 import com.epam.Per1.utils.SqlParams;
-import com.epam.Per1.utils.SqlUtils;
 import com.epam.Per1.utils.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.epam.Per1.utils.SqlUtils.*;
 
 public class MySqlUserDao implements UserDao {
 
@@ -36,9 +38,10 @@ public class MySqlUserDao implements UserDao {
                 .setName(rs.getString("user_name"))
                 .setLogin(rs.getString("user_login"))
                 .setPassword(rs.getString("user_password_md5"))
-                .setRoleId(rs.getInt("user_role"))
+                .setRole(new UserRole(rs.getInt("user_role"),rs.getString("role_name")))
+//                .setRoleId(rs.getInt("user_role"))
                 .setMoney(rs.getInt("user_money"))
-                .setIsBlocked(rs.getInt("user_blocked"))
+                .setIsBlocked(rs.getInt("user_blocked")==1)
                 .getUser();
     }
 
@@ -46,7 +49,7 @@ public class MySqlUserDao implements UserDao {
     public Optional<User> login(String login, char[] password) throws DbException {
         String hashPassword = Utils.hash(password);
         try (Connection con = connectionPool.getConnection();
-            PreparedStatement ps = con.prepareStatement(SqlUtils.LOGIN)) {
+            PreparedStatement ps = con.prepareStatement(LOGIN)) {
             ps.setString(1, login);
             ps.setString(2, hashPassword);
             try (ResultSet rs = ps.executeQuery()){
@@ -61,7 +64,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public boolean create(User user) throws DbException {
         try (Connection con = connectionPool.getConnection();
-             PreparedStatement ps = con.prepareStatement(SqlUtils.CREATE_USER)){
+             PreparedStatement ps = con.prepareStatement(CREATE_USER)){
             int k = 0;
             ps.setString(++k, user.getLogin());
             ps.setString(++k, user.getName());
@@ -84,7 +87,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public Optional<User> getUserByLogin(String login) throws DbException {
         try (Connection con = connectionPool.getConnection();
-             PreparedStatement ps = con.prepareStatement(SqlUtils.FIND_USER_BY_LOGIN)) {
+             PreparedStatement ps = con.prepareStatement(FIND_USER_BY_LOGIN)) {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()){
                 if (!rs.next()) return Optional.empty();
@@ -98,7 +101,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public Optional<User> getUserById(int id) throws DbException {
         try (Connection con = connectionPool.getConnection();
-             PreparedStatement ps = con.prepareStatement(SqlUtils.FIND_USER_BY_ID)) {
+             PreparedStatement ps = con.prepareStatement(FIND_USER_BY_ID)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()){
                 if (!rs.next()) return Optional.empty();
@@ -113,13 +116,13 @@ public class MySqlUserDao implements UserDao {
     public boolean updateUser(User user) throws DbException {
         boolean updated = false;
         try (Connection con = connectionPool.getConnection();
-             PreparedStatement ps = con.prepareStatement(SqlUtils.UPDATE_USER)){
+             PreparedStatement ps = con.prepareStatement(UPDATE_USER)){
             int k = 0;
             ps.setString(++k, user.getLogin());
             ps.setString(++k, user.getName());
             ps.setString(++k, user.getPassword());
-            ps.setLong(++k, user.getRoleId());
-            ps.setInt(++k, (int)user.getMoney()*100);
+            ps.setLong(++k, user.getRole().getId());
+            ps.setDouble(++k, user.getMoney());
             ps.setInt(++k, user.isBlocked()?1:0);
             ps.setLong(++k, user.getId());
 //            System.out.println(ps);
@@ -143,7 +146,7 @@ public class MySqlUserDao implements UserDao {
     public int countAllUsers() throws DbException {
         int count = 0;
         try (Connection con = connectionPool.getConnection();
-             PreparedStatement ps = con.prepareStatement(SqlUtils.COUNT_ALL_USERS)){
+             PreparedStatement ps = con.prepareStatement(COUNT_ALL_USERS)){
                 ResultSet rs = ps.executeQuery();
                 while(rs.next()){
                     count = rs.getInt(1);
@@ -157,7 +160,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public List<User> getLimitUsers(SqlParams sqlParams) throws DbException {
         List<User> users = new ArrayList<>();
-        String sql = SqlUtils.SELECT_LIMIT_USERS;
+        String sql = SELECT_LIMIT_USERS;
         sql = Utils.prepareSqlWithPaging(sqlParams, sql);
         try (Connection con = connectionPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {

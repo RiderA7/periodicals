@@ -25,14 +25,14 @@ public class AccountChangePassPostCommand implements ActionCommand {
         String password = req.getParameter("password");
         if (password == null || !Validator.validatePassword(password)) {
             log.info("invalid password format was received:" + password);
-            req.setAttribute("err", "Password not valid");
+            req.getSession().setAttribute("err", "user.register.password.invalid");
             return new CommandResult(Pages.USER_CHANGE_PASSWORD);
         }
 
         String confirm = req.getParameter("password2");
         if (!confirm.equals(password)) {
             log.info("Passwords not match: " + password + " / " + confirm);
-            req.setAttribute("err", "Passwords not match!");
+            req.getSession().setAttribute("err", "user.register.passwords.not.match");
             return new CommandResult((Pages.USER_CHANGE_PASSWORD));
         }
         boolean updated = false;
@@ -46,7 +46,7 @@ public class AccountChangePassPostCommand implements ActionCommand {
         }
         if (updated) {
             req.getSession().setAttribute("user", newUser);
-            return new CommandResult(Pages.USER_PROFILE);
+            return new CommandResult(Pages.USER_PROFILE, true);
         } else return new CommandResult(Pages.USER_CHANGE_PASSWORD);
     }
 

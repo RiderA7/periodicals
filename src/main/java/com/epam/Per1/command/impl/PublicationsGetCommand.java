@@ -30,7 +30,7 @@ public class PublicationsGetCommand implements ActionCommand {
         HttpSession session = req.getSession();
         Topic activeTopic = LoadActiveTopicFromSession(session);
         PagingParams pagingParams = PreparePagingParams(req, session, activeTopic);
-        SqlParams sqlParams = PrepareSqlParams(activeTopic, pagingParams);
+        SqlParams sqlParams = PrepareSqlParams(req, activeTopic, pagingParams);
         LoadPublicationListToRequest(req, sqlParams);
         StringBuilder pageParamsGet = PreparePageParamsGet(pagingParams);
         return new CommandResult(pageParamsGet.toString());
@@ -48,14 +48,14 @@ public class PublicationsGetCommand implements ActionCommand {
         int totalPublications = publicationService.countAll(activeTopic.getId());
         log.debug("Total pubs:" + totalPublications);
         PagingParams pagingParams;
-        if(session.getAttribute("paging_publications") != null){
+        if (session.getAttribute("paging_publications") != null) {
             pagingParams = (PagingParams) session.getAttribute("paging_publications");
             pagingParams.setTotal(totalPublications);
         } else {
             pagingParams = new PagingParams(totalPublications, 2);
         }
-        if(req.getParameter("page") != null){
-            pagingParams.setPage(Integer.parseInt(req.getParameter("page"))-1);
+        if (req.getParameter("page") != null) {
+            pagingParams.setPage(Integer.parseInt(req.getParameter("page")) - 1);
         }
         session.setAttribute("paging_publications", pagingParams);
         return pagingParams;
@@ -66,18 +66,23 @@ public class PublicationsGetCommand implements ActionCommand {
         req.setAttribute("publications", publications);
     }
 
-    private SqlParams PrepareSqlParams(Topic activeTopic, PagingParams pagingParams) {
-        String where = (activeTopic.getId() == 0) ? "" : "topic_id="+ activeTopic.getId();
+    private SqlParams PrepareSqlParams(HttpServletRequest req, Topic activeTopic, PagingParams pagingParams) {
         SqlParams sqlParams = new SqlParams.Builder()
-                .setWhere(where)
                 .setOffsetAndLimit(pagingParams)
                 .getSqlParams();
+        if (activeTopic.getId() != 0) {
+            sqlParams.addWhere("topic_id=" + activeTopic.getId());
+        }
+        if (req.getParameter("filter") != null) {
+            sqlParams.addWhere("publication_title LIKE '%" + req.getParameter("filter") + "%'");
+        }
+        log.debug("where = " + sqlParams.getWhereList());
         return sqlParams;
     }
 
     private Topic LoadActiveTopicFromSession(HttpSession session) {
         Topic activeTopic = new Topic();
-        if(session.getAttribute("activeTopic") != null){
+        if (session.getAttribute("activeTopic") != null) {
             activeTopic = (Topic) session.getAttribute("activeTopic");
         }
         return activeTopic;

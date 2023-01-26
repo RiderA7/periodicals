@@ -6,6 +6,13 @@ public class Topic extends Entity{
     int pubs = 0;
     boolean pubsUpdated = false;
 
+    public Topic(){}
+
+    public Topic(int topicId, String title){
+        super(topicId);
+        this.name = title;
+    }
+
     public String getName() {
         return name;
     }

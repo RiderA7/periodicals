@@ -28,28 +28,28 @@ public class RegisterCommand implements ActionCommand {
 
         if (login == null || !Validator.validateLogin(login)) {
             log.info("invalid login format was received:" + login);
-            req.setAttribute("err", "Login not valid");
+            req.getSession().setAttribute("err", "user.register.login.invalid");
             return new CommandResult(Pages.REGISTER_PAGE);
         }
 
         String password = req.getParameter("password");
         if (password == null || !Validator.validatePassword(password)) {
             log.info("invalid password format was received:" + password);
-            req.setAttribute("err", "Password not valid");
+            req.getSession().setAttribute("err", "user.register.password.invalid");
             return new CommandResult(Pages.REGISTER_PAGE);
         }
 
         String confirm = req.getParameter("password2");
         if (!confirm.equals(password)) {
             log.info("Passwords not match: " + password + " / " + confirm);
-            req.setAttribute("err", "Passwords not match!");
+            req.getSession().setAttribute("err", "user.register.passwords.not.match");
             return new CommandResult((Pages.REGISTER_PAGE));
         }
 
         String name = req.getParameter("name");
         if (name == null || !Validator.validateName(name)) {
             log.info("invalid name format was received:" + name);
-            req.setAttribute("err", "Name not valid");
+            req.getSession().setAttribute("err", "user.register.name.invalid");
             return new CommandResult(Pages.REGISTER_PAGE);
         }
 
@@ -62,7 +62,7 @@ public class RegisterCommand implements ActionCommand {
             }
         }
         log.info("Something wrong during registration!");
-        req.setAttribute("err", "Registration maybe not success. Ask Administrator");
+        req.getSession().setAttribute("err", "user.register.error");
         return new CommandResult(Pages.REGISTER_PAGE);
     }
 

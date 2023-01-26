@@ -5,6 +5,7 @@ public class User extends Entity {
     private String login;
     private String name;
     private String password;
+    private UserRole role;
     private int roleId;
     private double money;
     private boolean isBlocked;
@@ -18,19 +19,21 @@ public class User extends Entity {
                 .setLogin(user.getLogin())
                 .setName(user.getName())
                 .setPassword(user.getPassword())
+                .setRole(user.getRole())
                 .setRoleId(user.getRoleId())
-                .setMoney((int)user.getMoney()*100)
-                .setIsBlocked(user.isBlocked()?1:0)
+                .setMoney(user.getMoney())
+                .setIsBlocked(user.isBlocked())
                 .getUser();
     }
 
     public User(int id, String login, String name, String password,
-                int roleId, double money, boolean isBlocked) {
+                UserRole userRole, double money, boolean isBlocked) {
         super(id);
         this.login = login;
         this.name = name;
         this.password = password;
-        this.roleId = roleId;
+        this.role = userRole;
+        this.roleId = userRole.getId();
         this.money = money;
         this.isBlocked = isBlocked;
     }
@@ -47,8 +50,12 @@ public class User extends Entity {
         return password;
     }
 
+    public UserRole getRole(){
+        return role;
+    }
+
     public int getRoleId() {
-        return roleId;
+        return role.getId();
     }
 
     public double getMoney() {
@@ -69,7 +76,8 @@ public class User extends Entity {
                 "id=" + getId() +
                 ", login='" + login + '\'' +
                 ", name='" + name + '\'' +
-                ", roleId=" + roleId +
+                ", roleId=" + role.getId() +
+                ", role=" + role.getUserRole() +
                 ", money=" + money +
                 ", isBlocked=" + isBlocked +
                 '}';
@@ -103,13 +111,18 @@ public class User extends Entity {
             return this;
         }
 
-        public Builder setMoney(int money) {
-            user.money = money / 100.0;
+        public Builder setRole(UserRole userRole){
+            user.role = userRole;
             return this;
         }
 
-        public Builder setIsBlocked(int isBlocked) {
-            user.isBlocked = isBlocked != 0;
+        public Builder setMoney(double money) {
+            user.money = money;
+            return this;
+        }
+
+        public Builder setIsBlocked(boolean isBlocked) {
+            user.isBlocked = isBlocked;
             return this;
         }
 

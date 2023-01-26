@@ -1,10 +1,15 @@
 package com.epam.Per1.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Utils {
+
+    private static Logger log = LogManager.getLogger(Utils.class);
 
     public static String hash(char[] text){
         StringBuilder hashed = new StringBuilder();
@@ -25,6 +30,7 @@ public class Utils {
     }
 
     public static String prepareSqlWithPaging(SqlParams sqlParams, String sql) {
+        log.debug("PrepareSQL: "+sqlParams.toString() + " :: " + sql);
         if(!sqlParams.getWhere().equals("")) sql += sqlParams.getWhere();
         if(!sqlParams.getGroupBy().equals("")) sql += sqlParams.getGroupBy();
         if(!sqlParams.getSort().equals("")) sql += sqlParams.getSort();

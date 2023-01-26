@@ -4,9 +4,9 @@ public class UserRole extends Entity{
 
     private String role;
 
-    UserRole(){}
+    public UserRole(){}
 
-    UserRole(int id, String role){
+    public UserRole(int id, String role){
         super(id);
         this.role = role;
     }

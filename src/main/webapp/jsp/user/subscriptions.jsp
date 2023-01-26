@@ -21,7 +21,7 @@
         <c:forEach var="sub" items="${subscriptions}">
             <tr>
                 <td>${sub.publication.name}</td>
-                <td>${sub.publication.topic}</td>
+                <td>${sub.publication.topic.name}</td>
                 <td>${sub.publication.price}</td>
                 <td>
                 </td>

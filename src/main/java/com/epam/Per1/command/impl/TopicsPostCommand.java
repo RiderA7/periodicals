@@ -48,7 +48,7 @@ public class TopicsPostCommand implements ActionCommand {
                 log.info("activeTopic is not set");
             }
             req.getSession().setAttribute("activeTopic", optionalTopic);
-            return new CommandResult(Commands.PUBLICATIONS);
+            return new CommandResult(Commands.PUBLICATIONS, true);
         }
 
             if (req.getParameter("action") != null) {

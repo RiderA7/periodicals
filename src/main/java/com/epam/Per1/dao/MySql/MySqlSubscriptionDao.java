@@ -1,12 +1,9 @@
 package com.epam.Per1.dao.MySql;
 
+import com.epam.Per1.entity.*;
 import com.epam.Per1.exception.DbException;
 import com.epam.Per1.dao.ConnectionPool;
 import com.epam.Per1.dao.SubscriptionDao;
-import com.epam.Per1.entity.Publication;
-import com.epam.Per1.entity.Subscription;
-import com.epam.Per1.entity.Topic;
-import com.epam.Per1.entity.User;
 import com.epam.Per1.utils.SqlParams;
 import com.epam.Per1.utils.SqlUtils;
 import com.epam.Per1.utils.Utils;
@@ -37,7 +34,8 @@ public class MySqlSubscriptionDao implements SubscriptionDao {
                         .setId(rs.getInt("user_id"))
                         .setLogin(rs.getString("user_login"))
                         .setName(rs.getString("user_name"))
-                        .setRoleId(rs.getInt("user_role"))
+                        .setRole(new UserRole(rs.getInt("user_role"),
+                                rs.getString("role_name")))
                         .setMoney(rs.getInt("user_money"))
                         .getUser())
                 .setPublication(new Publication.Builder()
