@@ -18,6 +18,8 @@
 <br/>
 <h3>requestUri: ${sessionScope.requestUri}</h3>
 <br/>
+<h3>Message: ${sessionScope.throwable}</h3>
+<br/>
 <c:remove var="statusCode" scope="session"/>
 <c:remove var="servletName" scope="session"/>
 <c:remove var="requestUri" scope="session"/>

@@ -38,7 +38,7 @@ public class AppExceptionHandler extends HttpServlet {
         // Analyze the servlet exception
         Throwable throwable = (Throwable) request
                 .getAttribute("jakarta.servlet.error.exception");
-        System.out.println(throwable);
+        log.error("ERROR: " + throwable);
         request.getSession().setAttribute("throwable", throwable);
         Integer statusCode = (Integer) request
                 .getAttribute("jakarta.servlet.error.status_code");
