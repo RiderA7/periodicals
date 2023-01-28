@@ -30,11 +30,12 @@ public class Utils {
     }
 
     public static String prepareSqlWithPaging(SqlParams sqlParams, String sql) {
-        log.debug("PrepareSQL: "+sqlParams.toString() + " :: " + sql);
+        log.debug("PrepareSQL (in) : "  + sql + " :: " + sqlParams.toString());
         if(!sqlParams.getWhere().equals("")) sql += sqlParams.getWhere();
         if(!sqlParams.getGroupBy().equals("")) sql += sqlParams.getGroupBy();
         if(!sqlParams.getSort().equals("")) sql += sqlParams.getSort();
         if(!sqlParams.getLimits().equals("")) sql += sqlParams.getLimits();
+        log.debug("PrepareSQL (out): "+sql);
         return sql;
     }
 

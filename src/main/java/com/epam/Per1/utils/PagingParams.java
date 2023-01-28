@@ -1,12 +1,29 @@
 package com.epam.Per1.utils;
 
-public class PagingParams {
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
+
+@Getter
+@Setter
+@ToString
+public class PagingParams implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int offset;
-    private int limit;
+    private int limit = 2;
     private int total;
     private int maxPageNum;
     private int currentPage;
+    private String filter = "";
+    private String orderBy = "";
+    private String sort = "";
+
+    public PagingParams(){}
 
     public PagingParams(int total, int limit) {
         this.total = total;
@@ -40,34 +57,4 @@ public class PagingParams {
         setPage(this.currentPage-1);
     }
 
-    public int getOffset() {
-        return offset;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public int getMaxPageNum() {
-        return maxPageNum;
-    }
-
-    public int getCurrentPage() {
-        return currentPage;
-    }
-
-    @Override
-    public String toString() {
-        return "PagingParams{" +
-                "offset=" + offset +
-                ", limit=" + limit +
-                ", total=" + total +
-                ", maxPageNum=" + maxPageNum +
-                ", currentPage=" + currentPage +
-                '}';
-    }
 }

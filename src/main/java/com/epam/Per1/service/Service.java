@@ -9,6 +9,7 @@ public interface Service<T> {
 
     List<T> getAll();
     List<T> getLimit(SqlParams sqlParams);
+    int countAll();
 // C
     boolean create(T t);
 // R
@@ -18,6 +19,5 @@ public interface Service<T> {
     boolean update(T t);
 // D
     boolean delete(T t);
-    int countAll();
 
 }

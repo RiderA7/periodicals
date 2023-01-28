@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface PublicationDao {
     int countAll(int topicId) throws DbException;
+    int countAll(SqlParams sqlParams) throws DbException;
     List<Publication> getAll(int topicId) throws DbException;
     List<Publication> getLimit(SqlParams sqlParams) throws DbException;
     Optional<Publication> getById(int id) throws DbException;

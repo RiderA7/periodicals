@@ -60,6 +60,22 @@ public class MySqlPublicationDao implements PublicationDao {
         return count;
     }
 
+    public int countAll(SqlParams sqlParams) throws DbException {
+        int count = 0;
+        String sql = Utils.prepareSqlWithPaging(sqlParams, SqlUtils.COUNT_ALL_PUBLICATIONS);
+        try (Connection con = connectionPool.getConnection();
+             PreparedStatement ps =
+                     con.prepareStatement(sql)){
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DbException("Can't count publications", e);
+        }
+        return count;
+    }
+
     @Override
     public List<Publication> getAll(int topicId) throws DbException {
         List<Publication> publications = new ArrayList<>();

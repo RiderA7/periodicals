@@ -20,20 +20,26 @@
         <div class="alert alert-primary alert-dismissible fade show" role="alert">
             <i class="bi bi-star me-1"></i>
             <fmt:message key="general.publication.current.topic"/>: ${sessionScope.activeTopic.name}
-            <button class="btn-close" name="removeTopic" value="removeTopic" title="<fmt:message key="general.publication.remove.topic"/>">
+            <button class="btn-close" name="removeTopic" value="removeTopic"
+                    title="<fmt:message key="general.publication.remove.topic"/>">
                 <i class="las la-times"></i>
             </button>
         </div>
     </form>
 </c:if>
-<form action="" method="get">
-    <input type="text" name="filter">
-    <select name="order">
-        <option value="title"><fmt:message key="general.publication.filter.title"/></option>
-        <option value="price"><fmt:message key="general.publication.filter.price"/></option>
-    </select>
-    <input type="submit" value="FILTER">
-</form>
+<div class="row">
+    <form action="" method="get">
+        <input type="text" name="filter" value="${param.filter}">
+        <select name="order">
+            <option value="title" ${param.sort eq 'title' ? 'selected' : ''}><fmt:message
+                    key="general.publication.filter.title"/></option>
+            <option value="price" ${param.sort eq 'price' ? 'selected' : ''}><fmt:message
+                    key="general.publication.filter.price"/></option>
+        </select>
+        <input type="submit" value="V" class="btn btn-info">
+        <a href="?reset" class="btn btn-warning"><i class="las la-times"></i></a>
+    </form>
+</div>
 <c:if test="${publications.size() > 0}">
     <table class="table">
         <tr>
@@ -79,6 +85,6 @@
     </div>
 </c:if>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
-<tags:footer />
+<tags:footer/>
 </body>
 </html>

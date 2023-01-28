@@ -119,4 +119,12 @@ public class PublicationService implements Service<Publication> {
         }
         return 0;
     }
+    public int countAll(SqlParams sqlParams) {
+        try {
+            return publicationDao.countAll(sqlParams);
+        } catch (DbException e) {
+            log.error("Can't count publications with sqlParams=" + sqlParams + " in DB!!!");
+        }
+        return 0;
+    }
 }

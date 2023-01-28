@@ -1,9 +1,12 @@
 package com.epam.Per1.utils;
 
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@ToString
 public class SqlParams {
     public List<String> whereList = new ArrayList<>();
     private String where = "";

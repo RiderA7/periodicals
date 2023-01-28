@@ -27,60 +27,163 @@ public class PublicationsGetCommand implements ActionCommand {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        HttpSession session = req.getSession();
+//        Topic activeTopic = LoadActiveTopicFromSession(session);
+//        PagingParams pagingParams = PreparePagingParams(req, session, activeTopic);
+//        SqlParams sqlParams = PrepareSqlParams(req, activeTopic, pagingParams);
+        SqlParams sqlParams = new SqlParams();
+        PagingParams pagingParams = new PagingParams();
         HttpSession session = req.getSession();
-        Topic activeTopic = LoadActiveTopicFromSession(session);
-        PagingParams pagingParams = PreparePagingParams(req, session, activeTopic);
-        SqlParams sqlParams = PrepareSqlParams(req, activeTopic, pagingParams);
-        LoadPublicationListToRequest(req, sqlParams);
-        StringBuilder pageParamsGet = PreparePageParamsGet(pagingParams);
-        return new CommandResult(pageParamsGet.toString());
-    }
-
-    private StringBuilder PreparePageParamsGet(PagingParams pagingParams) {
-        StringBuilder pageParamsGet;
-        pageParamsGet = new StringBuilder(Pages.PUBLICATIONS)
-                .append("?").append("currentPage=").append(pagingParams.getCurrentPage())
-                .append("&").append("maxPageNum=").append(pagingParams.getMaxPageNum());
-        return pageParamsGet;
-    }
-
-    private PagingParams PreparePagingParams(HttpServletRequest req, HttpSession session, Topic activeTopic) {
-        int totalPublications = publicationService.countAll(activeTopic.getId());
-        log.debug("Total pubs:" + totalPublications);
-        PagingParams pagingParams;
         if (session.getAttribute("paging_publications") != null) {
             pagingParams = (PagingParams) session.getAttribute("paging_publications");
-            pagingParams.setTotal(totalPublications);
-        } else {
-            pagingParams = new PagingParams(totalPublications, 2);
+            log.debug("PagingParams after loading from session:" + pagingParams);
         }
+        if(req.getParameter("reset") != null){
+            pagingParams.setFilter("");
+            pagingParams.setOrderBy("");
+            pagingParams.setSort("");
+        }
+        Topic activeTopic = loadActiveTopicFromSession(session);
+        if (activeTopic.getId() != 0) {
+            sqlParams.addWhere("topic_id=" + activeTopic.getId());
+        }
+        if(!getFilterFromRequest(req).equals("")){
+            pagingParams.setFilter(getFilterFromRequest(req));
+        }
+        if(!getOrderFromRequest(req).equals("")) {
+            pagingParams.setOrderBy(getOrderFromRequest(req));
+        }
+        if(!getSortFromRequest(req).equals("")) {
+            pagingParams.setSort(getSortFromRequest(req));
+        }
+        if (!pagingParams.getFilter().equals("")) {
+            sqlParams.addWhere("publication_title LIKE '%" + pagingParams.getFilter() + "%'");
+        }
+        log.debug("where = " + sqlParams.getWhereList());
+        int totalPublications = publicationService.countAll(sqlParams);
+        log.debug("Total pubs:" + totalPublications);
+        pagingParams.setTotal(totalPublications);
         if (req.getParameter("page") != null) {
             pagingParams.setPage(Integer.parseInt(req.getParameter("page")) - 1);
         }
         session.setAttribute("paging_publications", pagingParams);
-        return pagingParams;
+        sqlParams.setOffsetAndLimit(pagingParams);
+        if(!pagingParams.getOrderBy().equals("")){
+            String sort = "ASC";
+            if(pagingParams.getSort().equals("DESC")){
+                sort = pagingParams.getSort();
+            }
+            if(pagingParams.getOrderBy().equals("title")) {
+                sqlParams.setSort("ORDER BY publication_title " + sort);
+            }
+            if(pagingParams.getOrderBy().equals("price")) {
+                sqlParams.setSort("ORDER BY publication_price " + sort);
+            }
+        }
+        log.debug(sqlParams);
+        log.debug(pagingParams);
+        loadPublicationListToRequest(req, sqlParams);
+        StringBuilder pageParamsGet = preparePageParamsGet(pagingParams);
+        log.debug("pageParamsGet = " + pageParamsGet);
+        return new CommandResult(pageParamsGet.toString());
     }
 
-    private void LoadPublicationListToRequest(HttpServletRequest req, SqlParams sqlParams) {
+    private String getSortFromRequest(HttpServletRequest req) {
+        if (req.getParameter("sort") != null) {
+            return req.getParameter("sort");
+        }
+        return "ASC";
+    }
+
+    private String getOrderFromRequest(HttpServletRequest req) {
+        if (req.getParameter("order") != null) {
+            return req.getParameter("order");
+        }
+        return "";
+    }
+
+    private StringBuilder preparePageParamsGet(PagingParams pagingParams) {
+        StringBuilder pageParamsGet;
+        pageParamsGet = new StringBuilder(Pages.PUBLICATIONS)
+                .append("?").append("currentPage=").append(pagingParams.getCurrentPage())
+                .append("&").append("maxPageNum=").append(pagingParams.getMaxPageNum())
+                .append("&").append("filter=").append(pagingParams.getFilter())
+                .append("&").append("sort=").append(pagingParams.getOrderBy());
+        return pageParamsGet;
+    }
+
+    private String getFilterFromRequest(HttpServletRequest req) {
+        if (req.getParameter("filter") != null) {
+            return req.getParameter("filter");
+        }
+        return "";
+    }
+
+//    private void prepareParams(HttpServletRequest req, PagingParams pagingParams, SqlParams sqlParams) {
+//        HttpSession session = req.getSession();
+//        Topic activeTopic = loadActiveTopicFromSession(session);
+//        if (activeTopic.getId() != 0) {
+//            sqlParams.addWhere("topic_id=" + activeTopic.getId());
+//        }
+//        if (req.getParameter("filter") != null) {
+//            sqlParams.addWhere("publication_title LIKE '%" + getFilterFromRequest(req) + "%'");
+//        }
+//        log.debug("where = " + sqlParams.getWhereList());
+//        int totalPublications = publicationService.countAll(sqlParams);
+//        log.debug("Total pubs:" + totalPublications);
+//        if (session.getAttribute("paging_publications") != null) {
+//            pagingParams = (PagingParams) session.getAttribute("paging_publications");
+//            pagingParams.setTotal(totalPublications);
+//            log.debug("PagingParams after loading from session:" + pagingParams);
+//        } else {
+//            pagingParams = new PagingParams(totalPublications, 2);
+//            log.debug("PagingParams after creation:" + pagingParams);
+//        }
+//        if (req.getParameter("page") != null) {
+//            pagingParams.setPage(Integer.parseInt(req.getParameter("page")) - 1);
+//        }
+//        session.setAttribute("paging_publications", pagingParams);
+//        sqlParams.setOffsetAndLimit(pagingParams);
+//        System.out.println("Before exit: " + pagingParams);
+//    }
+
+//    private PagingParams PreparePagingParams(HttpServletRequest req, HttpSession session, Topic activeTopic) {
+//        int totalPublications = publicationService.countAll(activeTopic.getId());
+//        log.debug("Total pubs:" + totalPublications);
+//        PagingParams pagingParams;
+//        if (session.getAttribute("paging_publications") != null) {
+//            pagingParams = (PagingParams) session.getAttribute("paging_publications");
+//            pagingParams.setTotal(totalPublications);
+//        } else {
+//            pagingParams = new PagingParams(totalPublications, 2);
+//        }
+//        if (req.getParameter("page") != null) {
+//            pagingParams.setPage(Integer.parseInt(req.getParameter("page")) - 1);
+//        }
+//        session.setAttribute("paging_publications", pagingParams);
+//        return pagingParams;
+//    }
+
+    private void loadPublicationListToRequest(HttpServletRequest req, SqlParams sqlParams) {
         List<Publication> publications = publicationService.getLimit(sqlParams);
         req.setAttribute("publications", publications);
     }
 
-    private SqlParams PrepareSqlParams(HttpServletRequest req, Topic activeTopic, PagingParams pagingParams) {
-        SqlParams sqlParams = new SqlParams.Builder()
-                .setOffsetAndLimit(pagingParams)
-                .getSqlParams();
-        if (activeTopic.getId() != 0) {
-            sqlParams.addWhere("topic_id=" + activeTopic.getId());
-        }
-        if (req.getParameter("filter") != null) {
-            sqlParams.addWhere("publication_title LIKE '%" + req.getParameter("filter") + "%'");
-        }
-        log.debug("where = " + sqlParams.getWhereList());
-        return sqlParams;
-    }
+//    private SqlParams PrepareSqlParams(HttpServletRequest req, Topic activeTopic, PagingParams pagingParams) {
+//        SqlParams sqlParams = new SqlParams.Builder()
+//                .setOffsetAndLimit(pagingParams)
+//                .getSqlParams();
+//        if (activeTopic.getId() != 0) {
+//            sqlParams.addWhere("topic_id=" + activeTopic.getId());
+//        }
+//        if (req.getParameter("filter") != null) {
+//            sqlParams.addWhere("publication_title LIKE '%" + req.getParameter("filter") + "%'");
+//        }
+//        log.debug("where = " + sqlParams.getWhereList());
+//        return sqlParams;
+//    }
 
-    private Topic LoadActiveTopicFromSession(HttpSession session) {
+    private Topic loadActiveTopicFromSession(HttpSession session) {
         Topic activeTopic = new Topic();
         if (session.getAttribute("activeTopic") != null) {
             activeTopic = (Topic) session.getAttribute("activeTopic");
