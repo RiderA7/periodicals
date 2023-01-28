@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/mytags.tld" prefix="m" %>
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -23,6 +24,9 @@
                     <i class="bi bi-search"></i>
                 </a>
             </li><!-- End Search Icon-->
+            <li class="nav-item notifications">
+                <fmt:message key="now"/>: <m:today/>
+            </li>
         </ul>
 
         <div class="nav-item dropdown">

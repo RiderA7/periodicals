@@ -29,6 +29,10 @@
     </content>
     <orderEntry type="jdk" jdkName="openjdk-19" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.servlet:jakarta.servlet-api:6.0.0" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.el:jakarta.el-api:5.0.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.24" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
@@ -41,11 +45,6 @@
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.19.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.19.0" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:2.0.0" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.servlet:jakarta.servlet-api:5.0.0" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.el:jakarta.el-api:4.0.0" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:3.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.activation:jakarta.activation:2.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-core:4.11.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy:1.12.19" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy-agent:1.12.19" level="project" />
