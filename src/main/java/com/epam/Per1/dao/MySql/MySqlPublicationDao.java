@@ -182,4 +182,21 @@ public class MySqlPublicationDao implements PublicationDao {
         }
         return updated;
     }
+
+    @Override
+    public boolean delete(Publication publication) throws DbException {
+        boolean deleted = false;
+        try (Connection con = connectionPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(SqlUtils.DELETE_PUBLICATION)){
+            int k = 0;
+            ps.setInt(++k, publication.getId());
+//            System.out.println(ps);
+            if (ps.executeUpdate() != 0) {
+                deleted = true;
+            }
+        } catch (SQLException e) {
+            throw new DbException("Publication not deleted! (dao)",e);
+        }
+        return deleted;
+    }
 }

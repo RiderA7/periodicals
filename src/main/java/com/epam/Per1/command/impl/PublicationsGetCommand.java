@@ -39,18 +39,23 @@ public class PublicationsGetCommand implements ActionCommand {
             log.debug("PagingParams after loading from session:" + pagingParams);
         }
         if(req.getParameter("reset") != null){
+            log.debug("Resetting paging");
             pagingParams.setFilter("");
             pagingParams.setOrderBy("");
             pagingParams.setSort("");
+            pagingParams.setPage(0);
         }
         Topic activeTopic = loadActiveTopicFromSession(session);
         if (activeTopic.getId() != 0) {
-            sqlParams.addWhere("topic_id=" + activeTopic.getId());
+            log.debug("Set activeTopic");
+            sqlParams.addWhere("publication_topic=" + activeTopic.getId());
         }
         if(!getFilterFromRequest(req).equals("")){
+            log.debug("Set filter");
             pagingParams.setFilter(getFilterFromRequest(req));
         }
         if(!getOrderFromRequest(req).equals("")) {
+            log.debug("Set order");
             pagingParams.setOrderBy(getOrderFromRequest(req));
         }
         if(!getSortFromRequest(req).equals("")) {
@@ -58,8 +63,8 @@ public class PublicationsGetCommand implements ActionCommand {
         }
         if (!pagingParams.getFilter().equals("")) {
             sqlParams.addWhere("publication_title LIKE '%" + pagingParams.getFilter() + "%'");
+            log.debug("where = " + sqlParams.getWhereList());
         }
-        log.debug("where = " + sqlParams.getWhereList());
         int totalPublications = publicationService.countAll(sqlParams);
         log.debug("Total pubs:" + totalPublications);
         pagingParams.setTotal(totalPublications);

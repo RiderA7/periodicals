@@ -45,6 +45,19 @@ public class PublicationsPostCommand implements ActionCommand {
             return new CommandResult(Pages.ADMIN_PUBLICATIONS,true);
         }
 
+        if(isActionDeletePublication(req)){
+            Publication publication = publicationService.getById(Integer.parseInt(req.getParameter("pubId")));
+            String message = "general.publication.delete.";
+            if(publicationService.delete(publication)){
+                message += "success";
+                req.getSession().setAttribute("suc",message);
+            } else {
+                message += "fail";
+                req.getSession().setAttribute("err",message);
+            }
+            return new CommandResult(Commands.PUBLICATIONS, true);
+        }
+
         if(req.getParameter("removeTopic") != null){
             log.info("remove session activeTopic");
             req.getSession().removeAttribute("activeTopic");
@@ -101,6 +114,10 @@ log.error("NOT IMPLEMENTED YET");
 
     private boolean isActionEditPublication(HttpServletRequest req) {
         return req.getParameter("edit") != null && req.getParameter("pubId") != null;
+    }
+
+    private boolean isActionDeletePublication(HttpServletRequest req) {
+        return req.getParameter("delete") != null && req.getParameter("pubId") != null;
     }
 
     private boolean createPublication(Publication publication){

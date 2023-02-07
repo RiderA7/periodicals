@@ -44,6 +44,8 @@ public class SqlUtils {
             "(publication_title, publication_price, publication_topic) VALUES (?, ?, ?)";
     public static final String UPDATE_PUBLICATION = "UPDATE publication SET" +
             " publication_title=?, publication_price=?, publication_topic=? WHERE publication_id=?";
+    public static final String DELETE_PUBLICATION = "DELETE FROM publication" +
+            " WHERE publication_id=?";
     public static final String GET_ALL_SUBSCRIPTIONS = "SELECT " +
             "subscription_id, user_id, user_login, user_name, user_role, role_name, user_money, publication_id, publication_title, publication_price, topic_id, topic_name, status " +
             "FROM subscription " +

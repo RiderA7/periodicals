@@ -88,6 +88,11 @@ public class PublicationService implements Service<Publication> {
 
     @Override
     public boolean delete(Publication publication) {
+        try {
+            return publicationDao.delete(publication);
+        } catch (DbException e) {
+            log.error("Can't delete publication id=" + publication.getId(), e);
+        }
         return false;
     }
 

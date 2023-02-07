@@ -54,25 +54,33 @@
                 <td>${pub.topic.name}</td>
                 <td>${pub.price}</td>
                 <td>
-                    <c:if test="${sessionScope.user.role.id == 2}">
-                        <form action="publications" method="post">
+                    <div class="row">
+                        <c:if test="${sessionScope.user.role.id == 2}">
+                            <form action="publications" method="post" class="col-2">
+                                <input type="hidden" name="pubId" value="${pub.id}">
+                                <input class="btn btn-success" type="submit"
+                                       name="edit" value="<fmt:message key="general.publication.table.edit"/>">
+                            </form>
+                            <form action="publications" method="post" class="col-2">
+                                <input type="hidden" name="pubId" value="${pub.id}">
+                                <input class="btn btn-danger" type="submit"
+                                       name="delete" value="<fmt:message key="general.publication.table.delete"/>">
+                            </form>
+                        </c:if>
+                        <c:if test="${sessionScope.user.role.id == 1}">
+                            <form action="account/subscribe" method="post" class="col-2">
+                                <input type="hidden" name="pubId" value="${pub.id}">
+                                <input class="btn btn-primary" type="submit"
+                                       name="subscribe"
+                                       value="<fmt:message key="general.publication.table.subscribe"/>">
+                            </form>
+                        </c:if>
+                        <form action="publications" method="post" class="col-2">
                             <input type="hidden" name="pubId" value="${pub.id}">
-                            <input class="btn btn-success" type="submit"
-                                   name="edit" value="<fmt:message key="general.publication.table.edit"/>">
+                            <input class="btn btn-info" type="submit"
+                                   name="view" value="<fmt:message key="general.publication.table.view"/>">
                         </form>
-                    </c:if>
-                    <c:if test="${sessionScope.user.role.id == 1}">
-                        <form action="account/subscribe" method="post">
-                            <input type="hidden" name="pubId" value="${pub.id}">
-                            <input class="btn btn-primary" type="submit"
-                                   name="subscribe" value="<fmt:message key="general.publication.table.subscribe"/>">
-                        </form>
-                    </c:if>
-                    <form action="publications" method="post">
-                        <input type="hidden" name="pubId" value="${pub.id}">
-                        <input class="btn btn-info" type="submit"
-                               name="view" value="<fmt:message key="general.publication.table.view"/>">
-                    </form>
+                    </div>
                 </td>
             </tr>
         </c:forEach>

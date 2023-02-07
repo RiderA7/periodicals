@@ -16,4 +16,5 @@ public interface PublicationDao {
     Optional<Publication> getByName(String name) throws DbException;
     boolean create(Publication publication) throws DbException;
     boolean update(Publication publication) throws DbException;
+    boolean delete(Publication publication) throws DbException;
 }
