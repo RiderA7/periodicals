@@ -11,6 +11,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Account change password GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AccountChangePassGetCommand implements ActionCommand {
     private static Logger log = LogManager.getLogger(AccountChangePassGetCommand.class);
 

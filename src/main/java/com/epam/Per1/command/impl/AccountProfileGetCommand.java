@@ -12,6 +12,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Account view profile GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AccountProfileGetCommand implements ActionCommand {
     private static Logger log = LogManager.getLogger(AccountProfileGetCommand.class);
 

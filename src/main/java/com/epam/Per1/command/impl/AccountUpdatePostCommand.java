@@ -15,6 +15,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Account update POST-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AccountUpdatePostCommand implements ActionCommand {
     private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
     private static Logger log = LogManager.getLogger(AccountUpdatePostCommand.class);

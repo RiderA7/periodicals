@@ -5,6 +5,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * ActionFactory class. Contains all available actions and method to get any of them.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class ActionFactory {
 
     private static Logger log = LogManager.getLogger(ActionFactory.class);

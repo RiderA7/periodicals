@@ -22,6 +22,11 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Account subscriptions list GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AccountSubscribesGetCommand implements ActionCommand {
     private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
     private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());

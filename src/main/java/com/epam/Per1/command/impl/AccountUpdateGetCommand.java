@@ -12,6 +12,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Account update GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AccountUpdateGetCommand implements ActionCommand {
     private static Logger log = LogManager.getLogger(AccountUpdateGetCommand.class);
 

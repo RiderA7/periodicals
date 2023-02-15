@@ -13,6 +13,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Account GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AccountCommand implements ActionCommand {
     private static Logger log = LogManager.getLogger(AccountCommand.class);
     private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());

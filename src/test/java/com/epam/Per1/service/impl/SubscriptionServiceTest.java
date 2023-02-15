@@ -1,5 +1,6 @@
 package com.epam.Per1.service.impl;
 
+import com.epam.Per1.dao.MySql.MySqlSubscriptionDao;
 import com.epam.Per1.dao.SubscriptionDao;
 import com.epam.Per1.dto.*;
 import com.epam.Per1.entity.Subscription;
@@ -20,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 class SubscriptionServiceTest {
 
-    SubscriptionDao subscriptionDao = mock(SubscriptionDao.class);
+    SubscriptionDao subscriptionDao = mock(MySqlSubscriptionDao.class);
 
     @BeforeEach
     void setUp() {

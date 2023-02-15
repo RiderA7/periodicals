@@ -16,6 +16,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Account change password POST-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AccountChangePassPostCommand implements ActionCommand {
     private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
     private static Logger log = LogManager.getLogger(AccountChangePassPostCommand.class);

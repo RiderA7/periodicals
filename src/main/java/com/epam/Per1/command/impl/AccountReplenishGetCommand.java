@@ -12,6 +12,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Account replenish GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AccountReplenishGetCommand implements ActionCommand {
     private static Logger log = LogManager.getLogger(AccountReplenishGetCommand.class);
 

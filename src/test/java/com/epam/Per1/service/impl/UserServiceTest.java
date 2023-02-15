@@ -1,5 +1,6 @@
 package com.epam.Per1.service.impl;
 
+import com.epam.Per1.dao.MySql.MySqlUserDao;
 import com.epam.Per1.dao.UserDao;
 import com.epam.Per1.entity.User;
 import com.epam.Per1.entity.UserRole;
@@ -18,7 +19,7 @@ class UserServiceTest {
 
     @Test
     public void getByLoginPositiveTest(){
-        UserDao userDao = mock(UserDao.class);
+        UserDao userDao = mock(MySqlUserDao.class);
         User user = new User(1, "user", "", "", new UserRole(1, "user"), 0.0, false);
         Optional<User> optionalUser =
                 Optional.of(user);
