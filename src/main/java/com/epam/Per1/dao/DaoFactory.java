@@ -2,6 +2,11 @@ package com.epam.Per1.dao;
 
 import com.epam.Per1.dao.MySql.MySqlDao;
 
+/**
+ * Abstract factory that provides concrete factories to obtain DAOs
+ *
+ * @author Alexander Bukhalenkov
+ */
 public abstract class DaoFactory {
 
     private static DaoFactory instance;

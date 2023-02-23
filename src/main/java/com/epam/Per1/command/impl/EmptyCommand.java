@@ -6,6 +6,11 @@ import com.epam.Per1.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Empty (default) controller command. Gets welcome page.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class EmptyCommand implements ActionCommand {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {

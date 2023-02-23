@@ -18,6 +18,16 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Login user POST-method controller command.
+ * Gets login and password values from the request.
+ * Validates this values, if input data is not valid, or no such user is presented in the database (user is null),
+ * returns router to the same page with message about incorrect login or password.
+ * Otherwise, finds the user by this values and sets sessions attributes and
+ * returns router to the welcome page.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class LoginCommand implements ActionCommand {
 
     private static Logger log = LogManager.getLogger(LoginCommand.class);

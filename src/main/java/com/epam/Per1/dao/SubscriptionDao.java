@@ -7,6 +7,11 @@ import com.epam.Per1.utils.SqlParams;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Subscription DAO interface.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public interface SubscriptionDao {
     int countAll(SqlParams sqlParams) throws DbException;
     List<Subscription> getAll(SqlParams sqlParams) throws DbException;

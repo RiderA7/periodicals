@@ -18,6 +18,11 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Admin Users list GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AdminUsersGetCommand implements ActionCommand {
     private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
     private static Logger log = LogManager.getLogger(AdminUsersGetCommand.class);

@@ -16,6 +16,18 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Register user POST-method controller command.
+ * Gets login, password, password confirmation, name
+ * values from the request.
+ * Validates this values, if input data is not valid, returns router to the same page with message
+ * about incorrect input data.
+ * Otherwise, register new user (creates entity and updates database),
+ * sets sessions attributes for current user and
+ * returns router to the client registration page.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class RegisterCommand implements ActionCommand {
 
     private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());

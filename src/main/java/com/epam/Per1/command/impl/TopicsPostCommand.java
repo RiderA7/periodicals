@@ -16,6 +16,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Topics list POST-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class TopicsPostCommand implements ActionCommand {
     private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
     private static Logger log = LogManager.getLogger(TopicsPostCommand.class);

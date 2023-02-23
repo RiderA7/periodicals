@@ -9,6 +9,11 @@ import javax.sql.DataSource;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Class to configure and obtain HikariDataSource. Use it to connect to database
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class MyDataSourceHikari {
     private static Logger log = LogManager.getLogger(MyDataSourceHikari.class);
 

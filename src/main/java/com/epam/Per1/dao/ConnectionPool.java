@@ -4,6 +4,11 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Connection pool for DB.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class ConnectionPool {
 
     private static ConnectionPool instance = null;

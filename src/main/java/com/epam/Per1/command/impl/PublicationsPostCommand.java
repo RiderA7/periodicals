@@ -19,6 +19,11 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Publications list POST-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class PublicationsPostCommand implements ActionCommand {
     private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
     private final PublicationService publicationService = new PublicationService(DaoFactory.getInstance().getPublicationDao());

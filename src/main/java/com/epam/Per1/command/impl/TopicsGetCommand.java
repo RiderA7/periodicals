@@ -18,6 +18,11 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Topics list GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class TopicsGetCommand implements ActionCommand {
     private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
     private static Logger log = LogManager.getLogger(TopicsGetCommand.class);

@@ -11,6 +11,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Admin page GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AdminCommand implements ActionCommand {
     private static Logger log = LogManager.getLogger(AdminCommand.class);
 

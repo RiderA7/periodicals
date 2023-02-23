@@ -2,6 +2,11 @@ package com.epam.Per1.dao.MySql;
 
 import com.epam.Per1.dao.*;
 
+/**
+ * DAO implementation for the MySQL DB
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class MySqlDao extends DaoFactory {
 
     private static String PROPERTIES_FILE;

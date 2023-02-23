@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * ActionFactory class. Contains all available actions and method to get any of them.
+ * ActionFactory class. Define command.
  *
  * @author Alexander Bukhalenkov
  */

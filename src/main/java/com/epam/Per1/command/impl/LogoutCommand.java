@@ -13,6 +13,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Logout user POST-method controller command.
+ * Invalidates user session.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class LogoutCommand implements ActionCommand {
 
     private static Logger log = LogManager.getLogger(LogoutCommand.class);

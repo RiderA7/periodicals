@@ -7,6 +7,11 @@ import com.epam.Per1.utils.SqlParams;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Publication DAO interface.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public interface PublicationDao {
     int countAll(int topicId) throws DbException;
     int countAll(SqlParams sqlParams) throws DbException;

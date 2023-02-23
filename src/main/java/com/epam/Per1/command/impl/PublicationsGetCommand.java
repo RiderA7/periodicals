@@ -20,6 +20,11 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Publications list GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class PublicationsGetCommand implements ActionCommand {
     private final TopicService topicService = new TopicService(DaoFactory.getInstance().getTopicDao());
     private final PublicationService publicationService = new PublicationService(DaoFactory.getInstance().getPublicationDao());

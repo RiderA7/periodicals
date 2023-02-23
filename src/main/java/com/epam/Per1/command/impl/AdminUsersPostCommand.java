@@ -13,6 +13,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Admin Users list POST-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class AdminUsersPostCommand implements ActionCommand {
     private final UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
     private static Logger log = LogManager.getLogger(AdminUsersPostCommand.class);

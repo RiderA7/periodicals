@@ -1,5 +1,14 @@
 package com.epam.Per1.command;
 
+/**
+ * The {@code CommandResult} class
+ * contains two fields -
+ * page and isRedirect,
+ * that are used with a controller to find out where and how
+ * a request and response should be processed after the controller.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class CommandResult {
     private String page;
     private boolean redirect;

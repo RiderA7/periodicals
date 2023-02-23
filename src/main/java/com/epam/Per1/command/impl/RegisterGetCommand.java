@@ -9,6 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/**
+ * Register user GET-method controller command.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class RegisterGetCommand implements ActionCommand {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

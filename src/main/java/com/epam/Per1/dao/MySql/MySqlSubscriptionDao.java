@@ -18,6 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * DAO implementation for the MySQL DB
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class MySqlSubscriptionDao implements SubscriptionDao {
 
     private static Logger log = LogManager.getLogger(MySqlSubscriptionDao.class);

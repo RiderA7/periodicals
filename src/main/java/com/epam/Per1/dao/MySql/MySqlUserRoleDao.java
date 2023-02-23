@@ -12,6 +12,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO implementation for the MySQL DB
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class MySqlUserRoleDao implements UserRoleDao {
 
     private static Logger log = LogManager.getLogger(MySqlUserRoleDao.class);

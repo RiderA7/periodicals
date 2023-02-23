@@ -20,6 +20,11 @@ import java.util.Optional;
 
 import static com.epam.Per1.utils.SqlUtils.*;
 
+/**
+ * DAO implementation for the MySQL DB
+ *
+ * @author Alexander Bukhalenkov
+ */
 public class MySqlUserDao implements UserDao {
 
     private static Logger log = LogManager.getLogger(MySqlUserDao.class);

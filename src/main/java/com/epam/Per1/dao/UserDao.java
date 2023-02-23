@@ -7,6 +7,11 @@ import com.epam.Per1.utils.SqlParams;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * User DAO interface.
+ *
+ * @author Alexander Bukhalenkov
+ */
 public interface UserDao {
 
     int countAllUsers() throws DbException;
