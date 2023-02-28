@@ -33,6 +33,10 @@ public class LoginCommand implements ActionCommand {
     private static Logger log = LogManager.getLogger(LoginCommand.class);
     UserService userService = new UserService(DaoFactory.getInstance().getUserDao());
 
+    public void setUserService(UserService userService){
+        this.userService = userService;
+    }
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
@@ -48,21 +52,25 @@ public class LoginCommand implements ActionCommand {
         }
 
         try {
-            Optional<User> userOptional = DaoFactory.getInstance().getUserDao().login(login, password);
+            String page;
+            boolean redirect;
+            Optional<User> userOptional = userService.login(login, password);
             if (userOptional.isEmpty()) {
                 String error = "User " + login + " not found";
                 log.info(error);
                 req.getSession().setAttribute("err", "login.must.be.valid");
-                return new CommandResult(Pages.LOGIN_PAGE);
+                page = Pages.LOGIN_PAGE;
+                redirect = false;
             } else {
                 if (userOptional.get().isBlocked()) {
                     log.info("User " + userOptional.get().getName() + " BANNED!");
                     req.getSession().setAttribute("err", "login.account.banned");
                     return new CommandResult(Pages.LOGIN_PAGE);
                 }
-                String page = userService.login(userOptional.get(), req.getSession());
-                return new CommandResult(page, true);
+                page = userService.setUserLogin(userOptional.get(), req.getSession());
+                redirect = true;
             }
+            return new CommandResult(page, redirect);
         } catch (DbException e) {
             log.error(Utils.getErrMessage(e));
             throw new AppException(e);

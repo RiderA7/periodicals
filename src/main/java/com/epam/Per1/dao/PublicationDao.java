@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Publication DAO interface.
+ * The PublicationDao interface provides methods for accessing and manipulating Publication objects in a database.
+ * It defines methods for counting and retrieving Publication objects, as well as creating, updating, and deleting them.
  *
  * @author Alexander Bukhalenkov
  */

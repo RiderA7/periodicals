@@ -67,14 +67,13 @@ public class UserService implements Service<User> {
         return created;
     }
 
-    public String login(User user, HttpSession session) {
+    public Optional<User> login(String login, char[] password){
+        return userDao.login(login, password);
+    }
+
+    public String setUserLogin(User user, HttpSession session) {
         log.info("User "+user.getLogin()+" logged in");
-        UserRole userRole;
-        try {
-            userRole = userRoleDao.getUserRole(user.getRoleId());
-        } catch (DbException e) {
-            userRole = new UserRole.Builder().setId(1).setUserRole("USER").getUserRole();
-        }
+        UserRole userRole = user.getRole();
         log.info("Got role " + userRole.getUserRole());
         UserDTO userDTO = Mapper.toUserDTO(user);
         session.setAttribute("userDTO", userDTO);

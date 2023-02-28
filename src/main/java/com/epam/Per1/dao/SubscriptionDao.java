@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Subscription DAO interface.
+ * The SubscriptionDao interface provides methods for accessing and manipulating Subscription objects in a database.
+ * It defines methods for counting and retrieving Subscription objects, as well as creating and updating them.
  *
  * @author Alexander Bukhalenkov
  */

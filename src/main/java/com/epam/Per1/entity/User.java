@@ -70,6 +70,10 @@ public class User extends Entity {
         this.password = password;
     }
 
+    public void setBlocked(boolean blocked){
+        this.isBlocked = blocked;
+    }
+
     @Override
     public String toString() {
         return "User{" +

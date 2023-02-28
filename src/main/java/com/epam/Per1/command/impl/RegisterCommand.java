@@ -69,7 +69,7 @@ public class RegisterCommand implements ActionCommand {
         if (userService.create(user)) {
             user = userService.getByLogin(user.getLogin());
             if (user != null) {
-                String page = userService.login(user, req.getSession());
+                String page = userService.setUserLogin(user, req.getSession());
                 return new CommandResult(page, true);
             }
         }

@@ -27,6 +27,9 @@ import static com.epam.Per1.utils.Pages.WELCOME_PAGE;
 @WebServlet(name = "Controller", urlPatterns = {"/account/*", "/admin/*", "/topics", "/publications", "/login", "/register"})
 public class Controller extends HttpServlet {
 
+    /**
+     * The logger object used to log messages related to this class.
+     */
     private static Logger log = LogManager.getLogger(Controller.class);
 
     @Override
@@ -39,6 +42,18 @@ public class Controller extends HttpServlet {
         doRequest(req, resp);
     }
 
+    /**
+     * Processes the request and generates a response.
+     * Uses an ActionFactory object to obtain an ActionCommand object that can handle the request.
+     * Calls the execute method of the ActionCommand object to obtain a CommandResult object.
+     * If the CommandResult object contains a page, forwards the request to the specified page.
+     * If the CommandResult object does not contain a page, redirects the request to the WELCOME_PAGE.
+     *
+     * @param req  the HttpServletRequest object representing the request being made
+     * @param resp the HttpServletResponse object representing the response to be generated
+     * @throws ServletException if there is a servlet-related problem
+     * @throws IOException      if there is an I/O problem
+     */
     private void doRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         log.info("enter controller");
         ActionFactory actionFactory = new ActionFactory();
